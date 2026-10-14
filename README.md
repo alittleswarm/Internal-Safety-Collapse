@@ -8,7 +8,7 @@
 <h2 align="center">Internal Safety Collapse in Frontier Large Language Models</h2>
 <h3 align="center">NeurIPS 2026 (Main Track)</h3>
 <p align="center">
-  <a href="https://github.com/wuyoscar/Internal-Safety-Collapse"><img src="assets/isc_banner.png" width="1000" alt="ISC-Bench banner"></a>
+  <a href="https://github.com/wuyoscar/Internal-Safety-Collapse"><img src="assets/isc_banner.jpg" width="1000" alt="ISC-Bench banner"></a>
 </p>
 
 
