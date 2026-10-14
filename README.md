@@ -33,7 +33,7 @@ We call this **Internal Safety Collapse**: the model's safety behavior holds up 
 Full history in [`CHANGELOG.md`](CHANGELOG.md).
 
 
-<video src="https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15" controls width="600"></video>
+https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 ### What ISC is used for
 
