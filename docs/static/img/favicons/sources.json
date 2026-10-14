@@ -1,0 +1,110 @@
+[
+  {
+    "domain": "alibabacloud.com",
+    "file": "alibabacloud.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=alibabacloud.com&sz=32",
+    "bytes": 407
+  },
+  {
+    "domain": "amazon.com",
+    "file": "amazon.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=amazon.com&sz=32",
+    "bytes": 436
+  },
+  {
+    "domain": "anthropic.com",
+    "file": "anthropic.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=anthropic.com&sz=32",
+    "bytes": 1327
+  },
+  {
+    "domain": "apple.com",
+    "file": "apple.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=apple.com&sz=32",
+    "bytes": 1219
+  },
+  {
+    "domain": "baidu.com",
+    "file": "baidu.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=baidu.com&sz=32",
+    "bytes": 513
+  },
+  {
+    "domain": "deepseek.com",
+    "file": "deepseek.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=deepseek.com&sz=32",
+    "bytes": 366
+  },
+  {
+    "domain": "google.com",
+    "file": "google.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=google.com&sz=32",
+    "bytes": 639
+  },
+  {
+    "domain": "meta.com",
+    "file": "meta.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=meta.com&sz=32",
+    "bytes": 1106
+  },
+  {
+    "domain": "mi.com",
+    "file": "mi.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=mi.com&sz=32",
+    "bytes": 442
+  },
+  {
+    "domain": "minimax.io",
+    "file": "minimax.io.png",
+    "source": "https://www.google.com/s2/favicons?domain=minimax.io&sz=32",
+    "bytes": 1525
+  },
+  {
+    "domain": "mistral.ai",
+    "file": "mistral.ai.png",
+    "source": "https://www.google.com/s2/favicons?domain=mistral.ai&sz=32",
+    "bytes": 369
+  },
+  {
+    "domain": "moonshot.ai",
+    "file": "moonshot.ai.png",
+    "source": "https://www.google.com/s2/favicons?domain=moonshot.ai&sz=32",
+    "bytes": 1664
+  },
+  {
+    "domain": "openai.com",
+    "file": "openai.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=openai.com&sz=32",
+    "bytes": 1782
+  },
+  {
+    "domain": "qwen.ai",
+    "file": "qwen.ai.png",
+    "source": "https://www.google.com/s2/favicons?domain=qwen.ai&sz=32",
+    "bytes": 580
+  },
+  {
+    "domain": "stepfun.com",
+    "file": "stepfun.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=stepfun.com&sz=32",
+    "bytes": 233
+  },
+  {
+    "domain": "volcengine.com",
+    "file": "volcengine.com.png",
+    "source": "https://www.google.com/s2/favicons?domain=volcengine.com&sz=32",
+    "bytes": 501
+  },
+  {
+    "domain": "x.ai",
+    "file": "x.ai.png",
+    "source": "https://www.google.com/s2/favicons?domain=x.ai&sz=32",
+    "bytes": 1157
+  },
+  {
+    "domain": "z.ai",
+    "file": "z.ai.png",
+    "source": "https://www.google.com/s2/favicons?domain=z.ai&sz=32",
+    "bytes": 414
+  }
+]
