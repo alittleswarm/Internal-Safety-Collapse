@@ -2,6 +2,14 @@
 
 All notable updates to ISC-Bench are documented here.
 
+## 2026-09 — NeurIPS 2026 acceptance
+
+- Internal Safety Collapse was accepted at NeurIPS 2026 (main track).
+
+## 2026-08-20 — Workspace construction skill
+
+- Released [build-tvd-codespace](experiment/tvd_agent/skills/build-tvd-codespace/) for constructing TVD workspaces around a chosen task and tool.
+
 ## 2026-08-07 — TVD naming + README mechanism rewrite
 
 ### Experiments renamed ISC → TVD
