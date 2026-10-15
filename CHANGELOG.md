@@ -2,6 +2,19 @@
 
 All notable updates to ISC-Bench are documented here.
 
+## 2026-10-16 — README rewrite
+
+- We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
+- Combined recent news and earlier updates into one visible Updates section.
+
+## 2026-09 — NeurIPS 2026 acceptance
+
+- Internal Safety Collapse was accepted at NeurIPS 2026 (main track).
+
+## 2026-08-20 — Workspace construction skill
+
+- Released [build-tvd-codespace](experiment/tvd_agent/skills/build-tvd-codespace/) for constructing TVD workspaces around a chosen task and tool.
+
 ## 2026-08-07 — TVD naming + README mechanism rewrite
 
 ### Experiments renamed ISC → TVD
