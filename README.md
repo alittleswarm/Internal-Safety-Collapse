@@ -20,7 +20,7 @@
 
 </details>
 
-**ISC is a safety failure during task completion:** a model produces unsafe content while completing a workflow. **TVD** (Task, Validator, Data) is the setup we use to study it. The repository includes an executable agent workflow and a prompt-based approximation for chat.
+**ISC is a safety failure during task completion:** a model supplies unsafe content to satisfy a workflow's requirements. **TVD** (Task, Validator, Data) is the setup we use to study it. The repository includes an executable agent workflow and a prompt-based approximation for chat.
 
 | I want to… | Go to |
 |---|---|
@@ -44,7 +44,7 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 ## B · Code: run the agent workflow
 
-Start with **[TVD Agent](experiment/tvd_agent/)**. The agent reads a workspace, edits files, runs the validator, and uses real feedback to continue the task.
+Start with **[TVD Agent](experiment/tvd_agent/)**. The workspace's task, validator, and data define the experiment. The agent executes it: read files, fill gaps, run checks, and use the feedback.
 
 - **Run it:** [setup and commands](experiment/tvd_agent/#setup).
 - **Read a small workspace:** [`template/my_favorite/`](experiment/tvd_agent/template/my_favorite/).
@@ -282,7 +282,7 @@ Follow the linked guides for input preparation, extraction, and scoring.
 
 ## G · Mechanism and reference
 
-**Task** defines what needs to be completed. **Validator** checks the result. **Data** holds the inputs or unfinished fields. In an executed run, failed checks give the agent feedback for another edit. ISC occurs when completing that workflow produces unsafe content.
+**Task** defines what needs to be completed. **Validator** checks the result. **Data** holds the inputs or unfinished fields. In an executed run, failed checks give the agent feedback for another edit. ISC occurs when the model fills those gaps with unsafe content to make the workflow pass.
 
 [![TVD execution modes: a real agent workflow and a text-only chat simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
