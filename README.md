@@ -350,6 +350,4 @@ Research use only. ISC supports red-teaming, evaluation, and mitigation research
 
 **Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to [LINUX DO](https://linux.do).
 
-<a href="https://github.com/wuyoscar/Internal-Safety-Collapse"><img src="assets/isc_banner.jpg" width="1000" alt="ISC-Bench banner"></a>
-
 </details>

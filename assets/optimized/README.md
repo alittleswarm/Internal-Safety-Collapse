@@ -13,7 +13,7 @@ cwebp -lossless -z 9 -exact -metadata all -mt assets/fig2_tvd_framework.png -o a
 cwebp -lossless -z 9 -exact -metadata all -mt assets/trigger_example/cross_domain_panel.png -o assets/optimized/cross_domain_panel.webp
 ```
 
-The banner is a 2000-pixel-wide JPEG at quality 90. Model icons shared by the README and project website live in `docs/static/img/favicons/`; `sources.json` records their original URLs.
+Model icons shared by the README and project website live in `docs/static/img/favicons/`; `sources.json` records their original URLs.
 
 The current README mechanism figure is `tvd-execution-modes.webp`, exported from `../tvd-execution-modes.drawio.png`. The PNG embeds an editable draw.io diagram. The older `tvd_mechanism` files remain available for historical reference.
 
