@@ -10,10 +10,13 @@
 | See what others have reproduced | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
 
+**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+
 [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 ## Updates
 
+- **2026-10-16** Added full README translations in Chinese, Japanese, Spanish, French, and German.
 - **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 - **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
