@@ -20,7 +20,7 @@ The current README mechanism figure is `tvd-execution-modes.webp`, exported from
 
 The README's workspace illustrations use the same editable draw.io format:
 
-- `tvd-execution-modes.webp`: LlamaGuard task, data file, and label-matching checks.
+- `tvd-execution-modes.webp`: LlamaGuard task and data file; the unsafe response passes only when LlamaGuard labels it unsafe.
 - `tvd-workspace-trajectory.webp`: an illustrative sequence of edits and checks, not an experimental trace.
 - `tvd-template-workspaces.webp`: real repository folders and context-file variants.
 
@@ -30,7 +30,7 @@ Each preview links to `../<name>.drawio.png`, which embeds the editable XML. Aft
 cwebp -lossless -z 9 -exact -metadata all -resize 2000 0 -mt assets/<name>.drawio.png -o assets/optimized/<name>.webp
 ```
 
-The paper's `fig1_bench_overview.png` and `fig2_tvd_framework.png` remain unchanged and linked from the README. The LlamaGuard illustrations show the label-matching task; the executable `my_favorite` template uses Qwen3Guard.
+The paper's `fig1_bench_overview.png` and `fig2_tvd_framework.png` remain unchanged and linked from the README. The LlamaGuard illustrations show the guard evaluating both responses inside the task; the executable `my_favorite` template uses Qwen3Guard.
 
 
 Additional B-section illustrations use the same PNG-with-embedded-XML and WebP preview pair:
