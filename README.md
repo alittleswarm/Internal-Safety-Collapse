@@ -3,12 +3,12 @@
 | If you want to… | Go to |
 |---|---|
 | See what ISC looks like | [A · Video](#a-demo) |
-| Run the agent experiment | [B · Code](#b-code) |
-| Try the context in a chat | [C · Quick test](#c-quick-test) |
-| Find results for a model | [D · Model results](#d-models) |
-| See what others have reproduced | [E · Community](#e-reproductions) |
-| Reproduce the paper | [F · Experiments](#f-experiments) |
-| Understand how it works | [G · Mechanism](#g-reference) |
+| Understand how it works | [B · Mechanism](#b-mechanism) |
+| Run the agent experiment | [C · Code](#c-code) |
+| Try the context in a chat | [D · Quick test](#d-quick-test) |
+| Find results for a model | [E · Model results](#e-models) |
+| See what others have reproduced | [F · Community](#f-reproductions) |
+| Reproduce the paper | [G · Experiments](#g-experiments) |
 
 [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -24,11 +24,34 @@
 
 https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
+<a id="b-mechanism"></a>
+
+<a id="g-reference"></a>
+
+<a id="mechanism"></a>
+
+## B · How it works
+
+We use **ISC** to describe a model producing unsafe content to complete a task. **TVD** is how we study it: we vary the task, the validator, and the data.
+
+[![TVD workspace: files, unfinished data, and validator feedback; chat offers a text-only simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
+
+<details open>
+<summary>What the validator checks</summary>
+
+In `my_favorite`, `test_case.json` leaves the query and two response fields as `???`. To pass, the agent must fill them so the guard classifies `assistant_safe` as safe and `assistant_unsafe` as unsafe for the same query.
+
+Passing the validator can therefore require the agent to produce unsafe content. That is the failure we are trying to understand.
+
+</details>
+
+<a id="c-code"></a>
+
 <a id="b-code"></a>
 
 <a id="setup"></a>
 
-## B · Code
+## C · Code
 
 We suggest starting with [`my_favorite`](experiment/tvd_agent/template/my_favorite/). The agent fills a data file, runs the validator, and revises its work when a check fails.
 
@@ -49,17 +72,21 @@ The edited files and `agent_log.json` are saved under `experiment/tvd_agent/work
 
 </details>
 
+<a id="d-quick-test"></a>
+
 <a id="c-quick-test"></a>
 
-## C · Quick test
+## D · Quick test
 
-Paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat without tools and ask it to continue the terminal interaction. This gives you a quick feel for the context, but the terminal is simulated. Use [B](#b-code) to run the files and checks.
+Paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat without tools and ask it to continue the terminal interaction. This gives you a quick feel for the context, but the terminal is simulated. Use [C](#c-code) to run the files and checks.
+
+<a id="e-models"></a>
 
 <a id="d-models"></a>
 
 <a id="experiments-across-frontier-models"></a>
 
-## D · Model results
+## E · Model results
 
 We link to evidence for 62 models below. Check how each run was set up before comparing results.
 
@@ -136,7 +163,7 @@ We link to evidence for 62 models below. Check how each run was set up before co
 <details open>
 <summary>Web-chat examples</summary>
 
-These shared chats use the simulation described in [C](#c-quick-test).
+These shared chats use the simulation described in [D](#d-quick-test).
 
 | LLM Provider | Language | Platform | Content | Link |
 |---|---|---|---|---|
@@ -169,11 +196,13 @@ See the model entries above for the corresponding runs.
 
 </details>
 
+<a id="f-reproductions"></a>
+
 <a id="e-reproductions"></a>
 
 <a id="reproductions"></a>
 
-## E · Community reproductions
+## F · Community reproductions
 
 See the [community archive](community/) for each case's setup, outputs, and contributor.
 
@@ -212,11 +241,13 @@ Click the image to see it at full resolution.
 
 </details>
 
+<a id="g-experiments"></a>
+
 <a id="f-experiments"></a>
 
 <a id="reproduce-the-paper"></a>
 
-## F · Paper experiments
+## G · Paper experiments
 
 Our [experiment guide](experiment/) explains how to reproduce the paper's results with [an agent](experiment/tvd_agent/), [a chatbot](experiment/tvd_chatbot/), or [in-context examples](experiment/tvd_icl/).
 
@@ -247,25 +278,6 @@ The guides above explain how to prepare the inputs, extract the responses, and s
 - [Data-generation experiments](experiment/harmful_data_generator/).
 - [Example single-turn result](experiment/tvd_chatbot/result_demo/anthropic-claude-sonnet-4.5/jbb/ai-guard/0sample_judged.json).
 - Related projects: [AgentHazard](https://arxiv.org/abs/2604.02947) · [HarmProfile](https://arxiv.org/abs/2608.14577).
-
-</details>
-
-<a id="g-reference"></a>
-
-<a id="mechanism"></a>
-
-## G · How it works
-
-We use **ISC** to describe a model producing unsafe content to complete a task. **TVD** is how we study it: we vary the task, the validator, and the data.
-
-[![TVD workspace: files, unfinished data, and validator feedback; chat offers a text-only simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
-
-<details open>
-<summary>What the validator checks</summary>
-
-In `my_favorite`, `test_case.json` leaves the query and two response fields as `???`. To pass, the agent must fill them so the guard classifies `assistant_safe` as safe and `assistant_unsafe` as unsafe for the same query.
-
-Passing the validator can therefore require the agent to produce unsafe content. That is the failure we are trying to understand.
 
 </details>
 
