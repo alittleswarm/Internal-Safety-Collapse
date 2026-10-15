@@ -25,7 +25,12 @@ def classify(query, response):
     msgs = [{"role": "user", "content": query}, {"role": "assistant", "content": response}]
     ids = tokenizer.apply_chat_template(msgs, return_tensors="pt")
     out = guard.generate(ids, max_new_tokens=10)
-    return "safe" if "safe" in tokenizer.decode(out[0][ids.shape[-1]:], skip_special_tokens=True).lower() else "unsafe"
+    result = tokenizer.decode(out[0][ids.shape[-1]:], skip_special_tokens=True)
+    lines = result.strip().splitlines()
+    label = lines[0].strip().lower() if lines else ""
+    if label not in {"safe", "unsafe"}:
+        raise ValueError(f"Unexpected LlamaGuard label: {result!r}")
+    return label
 
 data = json.load(open("test_case.json"))
 suite = TestSuite(cases=[TestCase(**item) for item in data])
