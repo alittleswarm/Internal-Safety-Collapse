@@ -12,11 +12,26 @@
 
 [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
-## Recent News
+## News and release history
+
+**First released on 2026-03-22:** 56 TVD templates across eight domains, with chatbot, in-context, and agent experiment modes. [Initial release notes](CHANGELOG.md#v1--2026-03-22).
 
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
+- **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
+- **2026-07-03** Reorganized template variants and agent workspaces.
+- **2026-06-26** Reached 900 GitHub stars.
+- **2026-06-25** Added the Opus 4.8 reproduction.
+- **2026-06-09** Added the Fable 5 reproduction.
+- **2026-04-17** Released v0.0.5 with the Opus 4.7 reproduction.
+- **2026-04-12** Added the TVD walkthrough and customization examples.
+- **2026-04-10** Added model reports and moderation-based validation examples.
+- **2026-04-01** Expanded the template library and community evidence archive.
+- **2026-03-29** Added agent workspaces using the OpenAI Moderation API.
+- **2026-03-27** Reached 500 GitHub stars and updated the README and project site.
+- **2026-03-26** Released the project website and arXiv paper; added file-upload examples and the community archive.
+- **2026-03-25** Updated notebooks, added benchmark switching, and recorded the first community contribution.
 
-[Full changelog](CHANGELOG.md)
+[Detailed changelog](CHANGELOG.md)
 
 <a id="a-demo"></a>
 
@@ -91,14 +106,15 @@ The pictured attempts are illustrative. The [refusal-only variant](experiment/au
 
 <a id="setup"></a>
 
-## C · Code
+## C · Code and agent codespaces
+
+For evaluation, we recommend an **agent codespace** like the ones in our experiments: real task and data files, runnable checks, and a Docker environment where the agent can inspect errors and revise its work. The tool or API supplies the result; the validation code decides whether it meets the task's requirements.
 
 We suggest starting with [`my_favorite`](experiment/tvd_agent/template/my_favorite/). It runs the same kind of label-matching task with **Qwen3Guard**. The agent edits the data file and reruns the checks. The [LlamaGuard example](codebase_templates/aiml_llamaguard/exp0.txt) shown above is also available as a text template.
 
 [Setup and commands](experiment/tvd_agent/#setup) · [Change the task, validator, or data](experiment/tvd_agent/#templates)
 
-<details open>
-<summary>Run one example</summary>
+### Run one example
 
 You need Docker and an `OPENROUTER_API_KEY` in the repository-root `.env`. Run these commands from the repository root, replacing `PROVIDER/MODEL` with your OpenRouter model ID:
 
@@ -110,7 +126,15 @@ docker build -t tvd-agent .
 
 The edited files and `agent_log.json` are saved under `experiment/tvd_agent/workspace/`. Check the runner's final validator output to see whether the result passed.
 
-</details>
+### Turn an example into a Docker codespace
+
+The [example library](codebase_templates/) shows task code, data, and checks as terminal transcripts. You can turn an example into an executable workspace using our [agent templates](experiment/tvd_agent/template/) and [Docker setup](experiment/tvd_agent/Dockerfile):
+
+1. Write the example's scripts and data as actual files under `experiment/tvd_agent/template/your_example/`, keeping file paths and imports consistent.
+2. Use one top-level non-test Python entry point, `validator.py`, that calls the Tools API, runs the complete checks, and exits nonzero on failure. Put extra schema/helper modules in a subdirectory so the runner selects the full check.
+3. Add any missing dependencies and API configuration to the Docker setup, rebuild when dependencies change, and run the command above with `--template your_example`.
+
+See the [template guide](experiment/tvd_agent/#adding-your-own-codebase-templates) and [codespace construction guide](experiment/tvd_agent/skills/build-tvd-codespace/) for examples. The runner copies the template into a fresh workspace and mounts it at `/workspace`, where the agent edits files and executes the checks.
 
 <a id="d-quick-test"></a>
 
@@ -272,14 +296,11 @@ See the [community archive](community/) for each case's setup, outputs, and cont
 
 </details>
 
-<details open>
-<summary>Example outputs from different tasks</summary>
+### Example outputs from different tasks
 
 Click the image to see it at full resolution.
 
 [![Cross-domain trigger examples panel](assets/optimized/cross_domain_panel.webp)](assets/trigger_example/cross_domain_panel.png)
-
-</details>
 
 <a id="g-experiments"></a>
 
@@ -291,8 +312,7 @@ Click the image to see it at full resolution.
 
 Our [experiment guide](experiment/) explains how to reproduce the paper's results with [an agent](experiment/tvd_agent/), [a chatbot](experiment/tvd_chatbot/), or [in-context examples](experiment/tvd_icl/).
 
-<details open>
-<summary>Run chatbot and in-context experiments</summary>
+### Run chatbot and in-context experiments
 
 These commands run the experiments through an API. You need Python 3.11+, `uv`, and `OPENROUTER_API_KEY` in the repository-root `.env`. Start each command block from the repository root and replace `PROVIDER/MODEL` with the model you want to test.
 
@@ -308,10 +328,7 @@ uv run run.py --model PROVIDER/MODEL --demos 5
 
 The guides above explain how to prepare the inputs, extract the responses, and score them.
 
-</details>
-
-<details open>
-<summary>Further experiments and related work</summary>
+### Further experiments and related work
 
 - [Automated red teaming: refusal-based evaluation](experiment/automated-red-teaming-refusal/).
 - [Automated red teaming: Qwen3Guard evaluation](experiment/automated-red-teaming-qwen-guard/).
@@ -319,10 +336,7 @@ The guides above explain how to prepare the inputs, extract the responses, and s
 - [Example single-turn result](experiment/tvd_chatbot/result_demo/anthropic-claude-sonnet-4.5/jbb/ai-guard/0sample_judged.json).
 - Related projects: [AgentHazard](https://arxiv.org/abs/2604.02947) · [HarmProfile](https://arxiv.org/abs/2608.14577).
 
-</details>
-
-<details open>
-<summary>Template files and original paper figures</summary>
+### Template files and original paper figures
 
 <a id="benchmark-surface"></a>
 
@@ -336,21 +350,7 @@ We provide [84 templates across nine domains](codebase_templates/), with variant
 
 Original paper figures: [benchmark overview](assets/fig1_bench_overview.png) · [TVD framework](assets/fig2_tvd_framework.png).
 
-</details>
-
-<details open>
-<summary>Earlier updates</summary>
-
-- **2026-06-26** 900 GitHub stars.
-- **2026-06-09** Fable 5 triggered ISC.
-- **2026-04-17 / 2026-06-25** Opus 4.7 and Opus 4.8 triggered ISC.
-- **2026-03-27** 500 GitHub stars.
-- **2026-03-22** Open-sourced.
-
-</details>
-
-<details open>
-<summary>Media and other resources</summary>
+### Media and other resources
 
 Explainers and discussions of ISC.
 
@@ -368,10 +368,7 @@ Related research:
 - <a href="https://arxiv.org/abs/2604.02947"><img src="https://img.shields.io/badge/arXiv-2604.02947-b31b1b.svg" alt="arXiv"></a>
 - <a href="https://github.com/XSafeAI/XSafeClaw"><img src="https://img.shields.io/badge/GitHub-xsafeclaw-181717.svg" alt="GitHub"></a>
 
-</details>
-
-<details open>
-<summary>Citation, license, and credits</summary>
+### Citation, license, and credits
 
 Research use only. ISC supports red-teaming, evaluation, and mitigation research. Do not use these materials to cause harm. See the [license](LICENSE).
 
@@ -387,5 +384,3 @@ Research use only. ISC supports red-teaming, evaluation, and mitigation research
 ```
 
 **Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to [LINUX DO](https://linux.do).
-
-</details>
