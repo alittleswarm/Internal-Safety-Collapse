@@ -10,10 +10,13 @@
 | See what others have reproduced | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
 
+**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+
 [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 ## Updates
 
+- **2026-10-16** Added full README translations in Chinese, Japanese, Spanish, French, and German.
 - **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 - **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
@@ -319,23 +322,15 @@ Click the image to see it at full resolution.
 
 ## G · Paper experiments
 
-To reproduce the paper's results, start with the [experiment guide](experiment/). It covers runs with [an agent](experiment/tvd_agent/), [a chatbot](experiment/tvd_chatbot/), and [in-context examples](experiment/tvd_icl/).
+Start with the [TVD Agent experiment](experiment/tvd_agent/) to see ISC in a working project. The agent reads the task files, fills in missing data, runs the validator, and uses its errors to revise the files. This is the loop shown in [B](#b-mechanism).
 
-### Run chatbot and in-context experiments
+### Agent: run the task in a workspace
 
-These commands run the experiments through an API. You need Python 3.11+, `uv`, and `OPENROUTER_API_KEY` in the repository-root `.env`. Start each command block from the repository root and replace `PROVIDER/MODEL` with the model you want to test.
+The [runnable example in C](#run-one-example) uses Qwen3Guard to show this loop in Docker. To reproduce a reported result, match the task, model, and scoring setup in the [paper](https://arxiv.org/abs/2603.23509) and [experiment guide](experiment/).
 
-```bash
-cd experiment/tvd_chatbot
-uv run run.py --model PROVIDER/MODEL --bench jbb --task ai-guard --samples 0
-```
+### Chatbot and ICL: text-only settings
 
-```bash
-cd experiment/tvd_icl
-uv run run.py --model PROVIDER/MODEL --demos 5
-```
-
-The chatbot and in-context guides explain how to prepare inputs, extract responses, and score the runs.
+The paper also reports [TVD Chatbot](experiment/tvd_chatbot/) (single turn) and [TVD ICL](experiment/tvd_icl/) (the same task preceded by completed examples). Like a conventional prompt attack, these settings give the model the task as text and collect one response. During that turn, it cannot open the files or run the validator, so it receives no real test error to work through. The paper compares conventional jailbreak methods separately.
 
 ### Further experiments and related work
 
