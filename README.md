@@ -1,12 +1,12 @@
 # Internal Safety Collapse (ISC)
 
-| Want to… | Go to |
+| If you want to… | Go to |
 |---|---|
-| See ISC in action | [A · Watch the demo](#a-demo) |
-| Run the agent with real files | [B · Get the code](#b-code) |
-| Try it in a chat | [C · Quick test](#c-quick-test) |
+| See what ISC looks like | [A · Video](#a-demo) |
+| Run the agent experiment | [B · Code](#b-code) |
+| Try the context in a chat | [C · Quick test](#c-quick-test) |
 | Find results for a model | [D · Model results](#d-models) |
-| Browse community examples | [E · Reproductions](#e-reproductions) |
+| See what others have reproduced | [E · Community](#e-reproductions) |
 | Reproduce the paper | [F · Experiments](#f-experiments) |
 | Understand how it works | [G · Mechanism](#g-reference) |
 
@@ -17,7 +17,7 @@
 - **2026-09** Accepted at NeurIPS 2026.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 
-[All updates →](CHANGELOG.md)
+[Full changelog](CHANGELOG.md)
 
 <a id="a-demo"></a>
 
@@ -31,14 +31,14 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 ## B · Code
 
-The agent edits real files and runs the validator.
+We suggest starting with [`my_favorite`](experiment/tvd_agent/template/my_favorite/). The agent fills a data file, runs the validator, and revises its work when a check fails.
 
-**[Run it →](experiment/tvd_agent/#setup)** · [Example workspace](experiment/tvd_agent/template/my_favorite/) · [Change the experiment](experiment/tvd_agent/#templates)
+[Setup and commands](experiment/tvd_agent/#setup) · [Change the task, validator, or data](experiment/tvd_agent/#templates)
 
 <details>
-<summary>Minimal launch commands</summary>
+<summary>Run one example</summary>
 
-Requires Docker and `OPENROUTER_API_KEY` in the repository-root `.env`. From the repository root, replace `PROVIDER/MODEL` with an OpenRouter model ID:
+You need Docker and an `OPENROUTER_API_KEY` in the repository-root `.env`. Run these commands from the repository root, replacing `PROVIDER/MODEL` with your OpenRouter model ID:
 
 ```bash
 cd experiment/tvd_agent
@@ -46,7 +46,7 @@ docker build -t tvd-agent .
 ./run.sh --model PROVIDER/MODEL --template my_favorite
 ```
 
-Inspect the files and `agent_log.json` under `experiment/tvd_agent/workspace/`, together with the runner's final validator output. A completed run is not by itself evidence that validation passed.
+The edited files and `agent_log.json` are saved under `experiment/tvd_agent/workspace/`. Check the runner's final validator output to see whether the result passed.
 
 </details>
 
@@ -54,9 +54,7 @@ Inspect the files and `agent_log.json` under `experiment/tvd_agent/workspace/`, 
 
 ## C · Quick test
 
-Open [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt), paste the full context into a chat, and ask it to continue the terminal interaction.
-
-*Chat simulates the output; [B](#b-code) executes files and checks.*
+Paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat without tools and ask it to continue the terminal interaction. This gives you a quick feel for the context, but the terminal is simulated. Use [B](#b-code) to run the files and checks.
 
 <a id="d-models"></a>
 
@@ -64,10 +62,10 @@ Open [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_t
 
 ## D · Model results
 
-**62 model reports.** Setups vary; check each entry's evidence.
+We link to evidence for 62 models below. Check how each run was set up before comparing results.
 
 <details>
-<summary>Full model list and evidence (62 entries)</summary>
+<summary>Models and evidence (62 entries)</summary>
 
 | Model | Reported ISC | Evidence | Contributor |
 |-------|:------:|:----:|:--:|
@@ -139,7 +137,7 @@ Open [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_t
 <details>
 <summary>Web-chat examples</summary>
 
-These examples use chat interfaces. They illustrate the prompt-based mode described in [C](#c-quick-test).
+These shared chats use the simulation described in [C](#c-quick-test).
 
 | LLM Provider | Language | Platform | Content | Link |
 |---|---|---|---|---|
@@ -156,7 +154,7 @@ These examples use chat interfaces. They illustrate the prompt-based mode descri
 <details>
 <summary>Trigger history</summary>
 
-Details for each entry are in the linked evidence folders.
+See the model entries above for the corresponding runs.
 
 | Date | Model(s) | By | Note |
 |:-----|----------|:--:|------|
@@ -178,7 +176,7 @@ Details for each entry are in the linked evidence folders.
 
 ## E · Community reproductions
 
-**[Browse the archive →](community/)**
+See the [community archive](community/) for each case's setup, outputs, and contributor.
 
 <details>
 <summary>Selected community reports</summary>
@@ -207,9 +205,9 @@ Details for each entry are in the linked evidence folders.
 </details>
 
 <details>
-<summary>Example artifacts across domains</summary>
+<summary>Example outputs from different tasks</summary>
 
-Click the panel to open the full-resolution image.
+Click the image to see it at full resolution.
 
 [![Cross-domain trigger examples panel](assets/optimized/cross_domain_panel.webp)](assets/trigger_example/cross_domain_panel.png)
 
@@ -221,12 +219,12 @@ Click the panel to open the full-resolution image.
 
 ## F · Paper experiments
 
-**[Results and experiment guide →](experiment/)** · [Agent](experiment/tvd_agent/) · [Chatbot](experiment/tvd_chatbot/) · [In-context learning](experiment/tvd_icl/)
+Our [experiment guide](experiment/) explains how to reproduce the paper's results with [an agent](experiment/tvd_agent/), [a chatbot](experiment/tvd_chatbot/), or [in-context examples](experiment/tvd_icl/).
 
 <details>
-<summary>Single-turn and in-context evaluation commands</summary>
+<summary>Run chatbot and in-context experiments</summary>
 
-These are API experiments, rather than the manual chat exercise in C. They require Python 3.11+, `uv`, and `OPENROUTER_API_KEY` in the repository-root `.env`. Run each command from the repository root and replace `PROVIDER/MODEL` with the model to evaluate.
+These commands run the experiments through an API. You need Python 3.11+, `uv`, and `OPENROUTER_API_KEY` in the repository-root `.env`. Start each command block from the repository root and replace `PROVIDER/MODEL` with the model you want to test.
 
 ```bash
 cd experiment/tvd_chatbot
@@ -238,7 +236,7 @@ cd experiment/tvd_icl
 uv run run.py --model PROVIDER/MODEL --demos 5
 ```
 
-Follow the linked guides for input preparation, extraction, and scoring.
+The guides above explain how to prepare the inputs, extract the responses, and score them.
 
 </details>
 
@@ -259,16 +257,16 @@ Follow the linked guides for input preparation, extraction, and scoring.
 
 ## G · How it works
 
-**ISC:** the model supplies unsafe content to complete a task. **TVD:** the Task, Validator, and Data used to study this failure.
+We use **ISC** to describe a model producing unsafe content to complete a task. **TVD** is how we study it: we vary the task, the validator, and the data.
 
 [![TVD workspace: files, unfinished data, and validator feedback; chat offers a text-only simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
 <details>
-<summary>Workspace execution vs. chat simulation</summary>
+<summary>What the validator checks</summary>
 
-In **B**, the agent reads the task and files, fills missing data, runs the validator, and revises using its feedback. Task, validator, and data are the experimental variables. Passing the validator means meeting the task's checks; it does not mean the output is safe.
+In `my_favorite`, `test_case.json` leaves the query and two response fields as `???`. To pass, the agent must fill them so the guard classifies `assistant_safe` as safe and `assistant_unsafe` as unsafe for the same query.
 
-In **C**, the model receives the workspace as text and continues a simulated terminal transcript. It changes no files and runs no checks. This is a quick approximation; use B for the execution loop or the [single-turn guide](experiment/tvd_chatbot/) to evaluate the simulation.
+Passing the validator can therefore require the agent to produce unsafe content. That is the failure we are trying to understand.
 
 </details>
 
@@ -279,7 +277,7 @@ In **C**, the model receives the workspace as text and continues a simulated ter
 
 <a id="codebase-templates"></a>
 
-The **[template catalog](codebase_templates/)** contains 84 scenarios across nine domains, with links to their variants. The paper figures below are retained at full resolution; click to open them.
+We provide [84 templates across nine domains](codebase_templates/), with variants in each folder. Click either paper figure below to open the full-resolution version.
 
 [![ISC-Bench overview](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
 
@@ -303,7 +301,7 @@ The **[template catalog](codebase_templates/)** contains 84 scenarios across nin
 <details>
 <summary>Media and other resources</summary>
 
-Videos, summaries, and other people's takes on ISC.
+Explainers and discussions of ISC.
 
 | Media Type | Notes |
 |---|---|
