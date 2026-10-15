@@ -31,3 +31,12 @@ cwebp -lossless -z 9 -exact -metadata all -resize 2000 0 -mt assets/<name>.drawi
 ```
 
 The paper's `fig1_bench_overview.png` and `fig2_tvd_framework.png` remain unchanged and linked from the README. The LlamaGuard illustrations show the label-matching task; the executable `my_favorite` template uses Qwen3Guard.
+
+
+Additional B-section illustrations use the same PNG-with-embedded-XML and WebP preview pair:
+
+- `tvd-query-steering`: a blank query versus a supplied query in the LlamaGuard data shape.
+- `tvd-score-steering`: the fixed `>= 0.5` toxicity check, with explicitly illustrative scores.
+- `tvd-prompt-generation`: the Qwen3Guard automated red-teaming workspace, with candidate content omitted.
+
+These are explanatory drawings, not screenshots of newly executed experiments. Their field names and conditions come from the source links beside each README figure.
