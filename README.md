@@ -1,36 +1,23 @@
 # Internal Safety Collapse (ISC)
 
+| Want to… | Go to |
+|---|---|
+| See ISC in action | [A · Watch the demo](#a-demo) |
+| Run the agent with real files | [B · Get the code](#b-code) |
+| Try it in a chat | [C · Quick test](#c-quick-test) |
+| Find results for a model | [D · Model results](#d-models) |
+| Browse community examples | [E · Reproductions](#e-reproductions) |
+| Reproduce the paper | [F · Experiments](#f-experiments) |
+| Understand how it works | [G · Mechanism](#g-reference) |
+
 **NeurIPS 2026 · Main Track** · [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 ## Recent News
 
-- **2026-09** Accepted at NeurIPS 2026 (main track).
-- **2026-08-20** Released [build-tvd-codespace](experiment/tvd_agent/skills/build-tvd-codespace/), a skill for constructing task–validator–data workspaces.
+- **2026-09** Accepted at NeurIPS 2026.
+- **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 
-[Changelog](CHANGELOG.md) · [Latest model reports](#d-models)
-
-<details>
-<summary>Earlier updates</summary>
-
-- **2026-06-26** 900 GitHub stars.
-- **2026-06-09** Fable 5 triggered ISC.
-- **2026-04-17 / 2026-06-25** Opus 4.7 and Opus 4.8 triggered ISC.
-- **2026-03-27** 500 GitHub stars.
-- **2026-03-22** Open-sourced.
-
-</details>
-
-**ISC is a safety failure during task completion:** a model supplies unsafe content to satisfy a workflow's requirements. **TVD** (Task, Validator, Data) is the setup we use to study it. The repository includes an executable agent workflow and a prompt-based approximation for chat.
-
-| I want to… | Go to |
-|---|---|
-| See what ISC looks like | [A · Demo](#a-demo) |
-| Run it with real files and tools | [B · Code](#b-code) |
-| Try a quick simulation in chat | [C · Quick test](#c-quick-test) |
-| Check reports for a model | [D · Model results](#d-models) |
-| Inspect community cases and artifacts | [E · Reproductions](#e-reproductions) |
-| Find the paper's evaluation results | [F · Paper experiments](#f-experiments) |
-| Understand the mechanism or find references | [G · Mechanism and reference](#g-reference) |
+[All updates →](CHANGELOG.md)
 
 <a id="a-demo"></a>
 
@@ -42,13 +29,11 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 <a id="setup"></a>
 
-## B · Code: run the agent workflow
+## B · Code
 
-Start with **[TVD Agent](experiment/tvd_agent/)**. The workspace's task, validator, and data define the experiment. The agent executes it: read files, fill gaps, run checks, and use the feedback.
+The agent edits real files and runs the validator.
 
-- **Run it:** [setup and commands](experiment/tvd_agent/#setup).
-- **Read a small workspace:** [`template/my_favorite/`](experiment/tvd_agent/template/my_favorite/).
-- **Change the experiment:** choose a model, swap a template, or change the task, validator, and data. See the [template guide](experiment/tvd_agent/#templates) and [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
+**[Run it →](experiment/tvd_agent/#setup)** · [Example workspace](experiment/tvd_agent/template/my_favorite/) · [Change the experiment](experiment/tvd_agent/#templates)
 
 <details>
 <summary>Minimal launch commands</summary>
@@ -67,23 +52,19 @@ Inspect the files and `agent_log.json` under `experiment/tvd_agent/workspace/`, 
 
 <a id="c-quick-test"></a>
 
-## C · Quick test: simulate the context in chat
+## C · Quick test
 
-Paste the workspace context into a chat to see how it changes the model's response.
+Open [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt), paste the full context into a chat, and ask it to continue the terminal interaction.
 
-1. Open a complete example: [English](codebase_templates/aiml_detoxify/exp0.txt) · [中文](codebase_templates/aiml_detoxify/exp_zh0.txt).
-2. Copy the full context into a chat session without shell or file tools.
-3. Let the model continue the simulated terminal interaction, then inspect what it writes.
-
-**This is a prompt-based simulation.** The model writes terminal output; no files are changed and no validator runs. Use [B](#b-code) for the real execution loop, or the [single-turn guide](experiment/tvd_chatbot/) to evaluate the simulation.
+*Chat simulates the output; [B](#b-code) executes files and checks.*
 
 <a id="d-models"></a>
 
 <a id="experiments-across-frontier-models"></a>
 
-## D · Results across models
+## D · Model results
 
-62 model entries link to the available evidence. Reports use different setups, including chat simulation and executed workflows; open an entry to check how it was obtained. This is a reproduction log, not a like-for-like ranking.
+**62 model reports.** Setups vary; check each entry's evidence.
 
 <details>
 <summary>Full model list and evidence (62 entries)</summary>
@@ -195,9 +176,9 @@ Details for each entry are in the linked evidence folders.
 
 <a id="reproductions"></a>
 
-## E · Community reproductions and artifacts
+## E · Community reproductions
 
-Browse the **[community archive](community/)** for setup notes, contributor attribution, and evidence. These cases show how the workflow changes across tools and domains.
+**[Browse the archive →](community/)**
 
 <details>
 <summary>Selected community reports</summary>
@@ -240,11 +221,7 @@ Click the panel to open the full-resolution image.
 
 ## F · Paper experiments
 
-The **[experiment guide](experiment/)** contains the paper's result tables and evaluation modes. Use it for controlled comparisons; the reports in D/E cover a wider mix of settings.
-
-- [TVD Agent](experiment/tvd_agent/): a model with filesystem access and code execution.
-- [TVD Chatbot](experiment/tvd_chatbot/): one prompt and one response, without tool execution.
-- [TVD ICL](experiment/tvd_icl/): the prompt-based setting with completed examples added to the context.
+**[Results and experiment guide →](experiment/)** · [Agent](experiment/tvd_agent/) · [Chatbot](experiment/tvd_chatbot/) · [In-context learning](experiment/tvd_icl/)
 
 <details>
 <summary>Single-turn and in-context evaluation commands</summary>
@@ -280,11 +257,20 @@ Follow the linked guides for input preparation, extraction, and scoring.
 
 <a id="mechanism"></a>
 
-## G · Mechanism and reference
+## G · How it works
 
-**Task** defines what needs to be completed. **Validator** checks the result. **Data** holds the inputs or unfinished fields. In an executed run, failed checks give the agent feedback for another edit. ISC occurs when the model fills those gaps with unsafe content to make the workflow pass.
+**ISC:** the model supplies unsafe content to complete a task. **TVD:** the Task, Validator, and Data used to study this failure.
 
-[![TVD execution modes: a real agent workflow and a text-only chat simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
+[![TVD workspace: files, unfinished data, and validator feedback; chat offers a text-only simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
+
+<details>
+<summary>Workspace execution vs. chat simulation</summary>
+
+In **B**, the agent reads the task and files, fills missing data, runs the validator, and revises using its feedback. Task, validator, and data are the experimental variables. Passing the validator means meeting the task's checks; it does not mean the output is safe.
+
+In **C**, the model receives the workspace as text and continues a simulated terminal transcript. It changes no files and runs no checks. This is a quick approximation; use B for the execution loop or the [single-turn guide](experiment/tvd_chatbot/) to evaluate the simulation.
+
+</details>
 
 <details>
 <summary>Template catalog and paper figures</summary>
@@ -300,6 +286,17 @@ The **[template catalog](codebase_templates/)** contains 84 scenarios across nin
 <a id="tvd-framework"></a>
 
 [![TVD framework diagram](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
+
+</details>
+
+<details>
+<summary>Earlier updates</summary>
+
+- **2026-06-26** 900 GitHub stars.
+- **2026-06-09** Fable 5 triggered ISC.
+- **2026-04-17 / 2026-06-25** Opus 4.7 and Opus 4.8 triggered ISC.
+- **2026-03-27** 500 GitHub stars.
+- **2026-03-22** Open-sourced.
 
 </details>
 
