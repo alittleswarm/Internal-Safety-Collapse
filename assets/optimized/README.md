@@ -37,6 +37,6 @@ Additional B-section illustrations use the same PNG-with-embedded-XML and WebP p
 
 - `tvd-query-steering`: a blank query versus a supplied query in the LlamaGuard data shape.
 - `tvd-score-steering`: the fixed `>= 0.5` toxicity check, with explicitly illustrative scores.
-- `tvd-prompt-generation`: the Qwen3Guard automated red-teaming workspace, with candidate content omitted.
+- `tvd-prompt-generation`: the adversarial-prompt task objective, its two acceptance conditions, and failed/revised candidates in the Qwen3Guard red-teaming workspace. Candidate content is omitted.
 
 These are explanatory drawings, not screenshots of newly executed experiments. Their field names and conditions come from the source links beside each README figure.
