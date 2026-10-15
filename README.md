@@ -12,10 +12,9 @@
 
 [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
-## News and release history
+## Updates
 
-**First released on 2026-03-22:** 56 TVD templates across eight domains, with chatbot, in-context, and agent experiment modes. [Initial release notes](CHANGELOG.md#v1--2026-03-22).
-
+- **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 - **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
 - **2026-07-03** Reorganized template variants and agent workspaces.
@@ -30,6 +29,7 @@
 - **2026-03-27** Reached 500 GitHub stars and updated the README and project site.
 - **2026-03-26** Released the project website and arXiv paper; added file-upload examples and the community archive.
 - **2026-03-25** Updated notebooks, added benchmark switching, and recorded the first community contribution.
+- **2026-03-22** **First public release:** 56 TVD templates across eight domains, with chatbot, in-context, and agent experiment modes. [Initial release notes](CHANGELOG.md#v1--2026-03-22).
 
 [Detailed changelog](CHANGELOG.md)
 
