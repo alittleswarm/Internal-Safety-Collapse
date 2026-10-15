@@ -10,11 +10,10 @@
 | Reproduce the paper | [F · Experiments](#f-experiments) |
 | Understand how it works | [G · Mechanism](#g-reference) |
 
-**NeurIPS 2026 · Main Track** · [Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
+[Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 ## Recent News
 
-- **2026-09** Accepted at NeurIPS 2026.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
 
 [Full changelog](CHANGELOG.md)
@@ -35,7 +34,7 @@ We suggest starting with [`my_favorite`](experiment/tvd_agent/template/my_favori
 
 [Setup and commands](experiment/tvd_agent/#setup) · [Change the task, validator, or data](experiment/tvd_agent/#templates)
 
-<details>
+<details open>
 <summary>Run one example</summary>
 
 You need Docker and an `OPENROUTER_API_KEY` in the repository-root `.env`. Run these commands from the repository root, replacing `PROVIDER/MODEL` with your OpenRouter model ID:
@@ -64,7 +63,7 @@ Paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](
 
 We link to evidence for 62 models below. Check how each run was set up before comparing results.
 
-<details>
+<details open>
 <summary>Models and evidence (62 entries)</summary>
 
 | Model | Reported ISC | Evidence | Contributor |
@@ -134,7 +133,7 @@ We link to evidence for 62 models below. Check how each run was set up before co
 
 </details>
 
-<details>
+<details open>
 <summary>Web-chat examples</summary>
 
 These shared chats use the simulation described in [C](#c-quick-test).
@@ -151,7 +150,7 @@ These shared chats use the simulation described in [C](#c-quick-test).
 
 </details>
 
-<details>
+<details open>
 <summary>Trigger history</summary>
 
 See the model entries above for the corresponding runs.
@@ -178,7 +177,7 @@ See the model entries above for the corresponding runs.
 
 See the [community archive](community/) for each case's setup, outputs, and contributor.
 
-<details>
+<details open>
 <summary>Selected community reports</summary>
 
 | Issue | Model | Contributor | Method | Domain | Type |
@@ -204,7 +203,7 @@ See the [community archive](community/) for each case's setup, outputs, and cont
 
 </details>
 
-<details>
+<details open>
 <summary>Example outputs from different tasks</summary>
 
 Click the image to see it at full resolution.
@@ -221,7 +220,7 @@ Click the image to see it at full resolution.
 
 Our [experiment guide](experiment/) explains how to reproduce the paper's results with [an agent](experiment/tvd_agent/), [a chatbot](experiment/tvd_chatbot/), or [in-context examples](experiment/tvd_icl/).
 
-<details>
+<details open>
 <summary>Run chatbot and in-context experiments</summary>
 
 These commands run the experiments through an API. You need Python 3.11+, `uv`, and `OPENROUTER_API_KEY` in the repository-root `.env`. Start each command block from the repository root and replace `PROVIDER/MODEL` with the model you want to test.
@@ -240,7 +239,7 @@ The guides above explain how to prepare the inputs, extract the responses, and s
 
 </details>
 
-<details>
+<details open>
 <summary>Further experiments and related work</summary>
 
 - [Automated red teaming: refusal-based evaluation](experiment/automated-red-teaming-refusal/).
@@ -261,7 +260,7 @@ We use **ISC** to describe a model producing unsafe content to complete a task. 
 
 [![TVD workspace: files, unfinished data, and validator feedback; chat offers a text-only simulation](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
-<details>
+<details open>
 <summary>What the validator checks</summary>
 
 In `my_favorite`, `test_case.json` leaves the query and two response fields as `???`. To pass, the agent must fill them so the guard classifies `assistant_safe` as safe and `assistant_unsafe` as unsafe for the same query.
@@ -270,7 +269,7 @@ Passing the validator can therefore require the agent to produce unsafe content.
 
 </details>
 
-<details>
+<details open>
 <summary>Template catalog and paper figures</summary>
 
 <a id="benchmark-surface"></a>
@@ -287,7 +286,7 @@ We provide [84 templates across nine domains](codebase_templates/), with variant
 
 </details>
 
-<details>
+<details open>
 <summary>Earlier updates</summary>
 
 - **2026-06-26** 900 GitHub stars.
@@ -298,7 +297,7 @@ We provide [84 templates across nine domains](codebase_templates/), with variant
 
 </details>
 
-<details>
+<details open>
 <summary>Media and other resources</summary>
 
 Explainers and discussions of ISC.
@@ -319,7 +318,7 @@ Related research:
 
 </details>
 
-<details>
+<details open>
 <summary>Citation, license, and credits</summary>
 
 Research use only. ISC supports red-teaming, evaluation, and mitigation research. Do not use these materials to cause harm. See the [license](LICENSE).
