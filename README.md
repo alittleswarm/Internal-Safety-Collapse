@@ -1,4 +1,10 @@
+🌐 **English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
+
 # Internal Safety Collapse (ISC)
+
+📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509)
+
+🧭 **Project:** [Website](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 | If you want to… | Go to |
 |---|---|
@@ -9,10 +15,6 @@
 | Find results for a model | [E · Model results](#e-models) |
 | See what others have reproduced | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
-
-**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md)
-
-[Paper](https://arxiv.org/abs/2603.23509) · [Project page](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
 ## Updates
 
