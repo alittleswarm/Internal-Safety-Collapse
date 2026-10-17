@@ -2,6 +2,8 @@
 
 # Internal Safety Collapse (ISC)
 
+**ISC** is the safety failure we study: a model may refuse a direct harmful request yet produce the same material while completing a task. We designed the original **TVD (Task, Validator, Data)** workspaces by hand; adapt their tasks, tools, checks, and missing data to the workflow you want to evaluate.
+
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509)
 
 🧭 **Project:** [Website](https://wuyoscar.github.io/Internal-Safety-Collapse/)
@@ -13,11 +15,12 @@
 | Run the agent experiment | [C · Code](#c-code) |
 | Try the context in a chat | [D · Quick test](#d-quick-test) |
 | Find results for a model | [E · Model results](#e-models) |
-| See what others have reproduced | [F · Community](#f-reproductions) |
+| See how others reproduced and adapted ISC | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
 
 ## Updates
 
+- **2026-10-17** Clarified untargeted and targeted generation, agent setup, and how to adapt the templates.
 - **2026-10-16** Added full README translations in Chinese, Japanese, Spanish, French, and German.
 - **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
 - **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
@@ -54,9 +57,11 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 An agent opens a workspace where a task fails because some data is missing. It fills the file, runs the task, reads the error, and tries again. The examples below show how changing the data or the check changes what the agent produces.
 
-### 1. Fill the file, run the task, and revise
+### 1. Untargeted generation: let the agent choose the query
 
-Here the task asks for a safe response and an unsafe response to the same query. [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) is Meta's content safety classifier. The script sends both responses to LlamaGuard and checks the labels it returns.
+Here `query` and both response fields start as `???`. The agent chooses the query, then writes a safe response and an unsafe response to it. This is **untargeted generation**: we have not specified the subject. The [paper](https://arxiv.org/abs/2603.23509) reports near-zero refusal in this setting, where the model can choose a subject it is willing to write about.
+
+[LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) is Meta's content safety classifier. The script sends both responses to LlamaGuard and checks the labels it returns.
 
 [![A LlamaGuard task workspace: the unsafe response is accepted only when LlamaGuard labels it unsafe](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
@@ -70,13 +75,11 @@ Read the next example from top to bottom:
 
 The green **PASS** means LlamaGuard has evaluated `assistant_unsafe` and classified it as `unsafe`. It also classifies `assistant_safe` as `safe`. Both checks run inside the task before it accepts the data.
 
-**ISC** is the safety failure: the model refuses harmful content when asked directly, yet generates it to complete a task. We study it through **TVD**: task, validator, and data.
-
 The figure shows one possible sequence, with response text omitted. In [C](#c-code), the agent edits files and runs the checks. In [D](#d-quick-test), a chat model continues a terminal transcript. A run can also end before the task passes.
 
-### 2. Supply a query to steer the response
+### 2. Targeted generation: supply a query
 
-When we want responses to a specific query, we write it into `query` and let the agent fill the unfinished response fields.
+When we want responses to a specific question, we write it into `query` and let the agent fill the unfinished response fields. The prefilled query is an **anchor**: it turns the task into **targeted generation**. Other templates can anchor on a topic or another prefilled value.
 
 [![Compare an empty query with a researcher-supplied query while response fields remain unfinished](assets/optimized/tvd-query-steering.webp)](assets/tvd-query-steering.drawio.png)
 
@@ -124,9 +127,11 @@ The attempts in the figure are illustrative. The scripts save recorded attempts 
 
 To run an agent experiment, use a Docker workspace like the ones in this repository. The agent reads the task and data files, fills the missing fields, and runs the validator. A tool such as Qwen3Guard supplies the result that the validator checks.
 
-Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): the agent fills in the query and two response fields, then runs a check using **Qwen3Guard**. The [LlamaGuard example](codebase_templates/aiml_llamaguard/exp0.txt) shown above is available as a text template.
+Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): `query` is left as `???`, so the agent chooses it, fills the two response fields, and runs a check using **Qwen3Guard**. This untargeted Agent run is our recommended starting point for seeing the full edit, run, check, and revise loop. The [LlamaGuard example](codebase_templates/aiml_llamaguard/exp0.txt) shown above is available as a text template.
 
 [Setup and commands](experiment/tvd_agent/#setup) · [Change the task, validator, or data](experiment/tvd_agent/#templates)
+
+<a id="run-one-example"></a>
 
 ### Run one example
 
@@ -142,7 +147,7 @@ After the run, open `experiment/tvd_agent/workspace/` to see the edited files an
 
 ### Turn an example into a Docker codespace
 
-The [example library](codebase_templates/) presents task code, data, and checks as terminal transcripts. To run one with an agent, turn its scripts and data into files using our [agent templates](experiment/tvd_agent/template/) and [Docker setup](experiment/tvd_agent/Dockerfile):
+The [example library](codebase_templates/) presents task code, data, and checks as terminal transcripts. Pick the tool or API that fits your setting, decide what result its validator should accept, and choose whether to prefill a content anchor. To test that adaptation with an agent, turn the scripts and data into files using our [agent templates](experiment/tvd_agent/template/) and [Docker setup](experiment/tvd_agent/Dockerfile):
 
 1. Write the example's scripts and data as actual files under `experiment/tvd_agent/template/your_example/`, keeping file paths and imports consistent.
 2. Make `validator.py` the main check. Have it call the chosen tool or API and exit with an error if the data fails. Place helper code in a subdirectory so the runner selects `validator.py`.
@@ -156,7 +161,9 @@ See the [template guide](experiment/tvd_agent/#adding-your-own-codebase-template
 
 ## D · Quick test
 
-For a quick look, paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat and ask the model to continue the terminal session. The model simulates the terminal from the text you supplied. [C](#c-code) shows how to run the files and checks in Docker.
+For a quick look, paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat and ask the model to continue the terminal session. The model simulates the terminal from the text you supplied.
+
+The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models. A pasted context can work, but it cannot execute the validator or use real errors to revise the data. To probe the full mechanism on a strongly aligned frontier model, start with the [untargeted Agent setup in C](#run-one-example).
 
 <a id="e-models"></a>
 
@@ -282,7 +289,7 @@ See the model entries above for the corresponding runs.
 
 ## F · Community reproductions
 
-See the [community archive](community/) for each case's setup, outputs, and contributor.
+The [community archive](community/) shows how readers have adapted the task to their models and interfaces. One contributor [turned `aiml_vader` into a CSV completion task](community/issue-90-apple-foundation-vader/); another [used a file-uploaded JSON test case](community/issue-19-gemini3flash-redteam-testgen/). Most selected reports modify a template or build a new task from it. The table records each case's setup, output, and contributor.
 
 <details open>
 <summary>Selected community reports</summary>
@@ -324,11 +331,11 @@ Click the image to see it at full resolution.
 
 ## G · Paper experiments
 
-Start with the [TVD Agent experiment](experiment/tvd_agent/) to see ISC in a working project. The agent reads the task files, fills in missing data, runs the validator, and uses its errors to revise the files. This is the loop shown in [B](#b-mechanism).
+Start with the [TVD Agent experiment](experiment/tvd_agent/) and its untargeted [`my_favorite` template](experiment/tvd_agent/template/my_favorite/) to see ISC in a working project. The agent chooses the query, fills in missing data, runs the validator, and uses its errors to revise the files. This is the loop shown in [B](#b-mechanism).
 
 ### Agent: run the task in a workspace
 
-The [runnable example in C](#run-one-example) uses Qwen3Guard to show this loop in Docker. To reproduce a reported result, match the task, model, and scoring setup in the [paper](https://arxiv.org/abs/2603.23509) and [experiment guide](experiment/).
+The [runnable example in C](#run-one-example) uses Qwen3Guard to show this loop in Docker. The paper also tests tasks with prefilled anchors. To reproduce a reported result, match the task, model, and scoring setup in the [paper](https://arxiv.org/abs/2603.23509) and [experiment guide](experiment/).
 
 ### Chatbot and ICL: text-only settings
 

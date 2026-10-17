@@ -2,6 +2,8 @@
 
 # Internal Safety Collapse (ISC)
 
+**ISC** 是一种安全失效现象：模型拒绝直接的有害请求，却可能在完成任务时生成同样的内容。我们为研究它手工设计了 **TVD（Task、Validator、Data）** 工作区，你可以按自己的场景调整任务、工具、检查条件和待填写字段。
+
 📄 **论文：** [arXiv](https://arxiv.org/abs/2603.23509)
 
 🧭 **项目：** [网站](https://wuyoscar.github.io/Internal-Safety-Collapse/)
@@ -13,11 +15,12 @@
 | 运行 Agent 实验 | [C · 代码](#c-code) |
 | 在聊天中快速试一下 | [D · 快速体验](#d-quick-test) |
 | 查看某个模型的结果 | [E · 模型结果](#e-models) |
-| 查看社区复现 | [F · 社区](#f-reproductions) |
+| 查看别人如何复现和改造 ISC | [F · 社区](#f-reproductions) |
 | 复现论文实验 | [G · 论文实验](#g-experiments) |
 
 ## 更新
 
+- **2026-10-17** 明确 ISC 与 TVD 的区别，补充非定向／定向生成、场景适配及 Agent 与文本设置的说明。
 - **2026-10-16** 增加完整的中文、日语、西班牙语、法语和德语 README。
 - **2026-10-16** 重写 README：增加阅读索引、工作区示例，并把 Agent 实验的运行步骤讲清楚。
 - **2026-08-20** 发布[工作区构建 skill](experiment/tvd_agent/skills/build-tvd-codespace/)。
@@ -52,9 +55,9 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 Agent 进入一个数据尚未填完的工作区，任务因此报错。它填入候选内容、运行任务、读取报错，再修改文件。下面四个例子展示：改变数据或检查条件，Agent 最终写出的内容也会变。
 
-### 1. 填写文件、运行任务、根据错误修改
+### 1. 非定向生成：让 Agent 自己选择 query
 
-这个任务要求同一个 query 有一条安全回答和一条不安全回答。[LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) 是 Meta 的内容安全分类器。脚本把两条回答交给它，并检查返回的标签。
+这里的 `query` 和两个回答字段最初都是 `???`。Agent 自己选择问题，再为它填写安全和不安全的回答，这叫**非定向生成（untargeted generation）**。[论文](https://arxiv.org/abs/2603.23509)观察到，这种设置下拒绝率接近零，因为模型可以选择自己愿意生成的内容。[LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) 是 Meta 的内容安全分类器，脚本把两条回答交给它，并检查返回的标签。
 
 [![LlamaGuard 工作区：只有被判为 unsafe 的回答才能通过不安全字段的检查](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
@@ -68,13 +71,11 @@ Agent 进入一个数据尚未填完的工作区，任务因此报错。它填�
 
 图中的绿色 **PASS** 表示 LlamaGuard 已经评估 `assistant_unsafe`，并把它判为 `unsafe`。`assistant_safe` 也必须被判为 `safe`。这些检查就在任务里运行，全部通过后才接受数据。
 
-**ISC** 是我们研究的安全失效：模型会拒绝直接给出有害内容，却在完成任务时生成它。我们用 **TVD**（Task、Validator、Data）来研究这种失效。
-
 图中展示的是一种可能的过程，回答正文已省略。[C 节](#c-code)的 Agent 会实际修改文件并运行检查；[D 节](#d-quick-test)则让聊天模型续写终端记录。真实运行也可能在通过检查前结束。
 
-### 2. 用给定 query 引导回答
+### 2. 定向生成：预先给定 query
 
-如果要针对某个问题生成回答，就先把它写进 `query`，让 Agent 填写剩下的回答字段。
+如果要针对某个问题生成回答，就先把它写进 `query`，让 Agent 填写剩下的回答字段。这叫**定向生成（targeted generation）**：预填的 query 是一个 anchor（锚点）。其他模板也可以用预填的主题或属性引导生成。
 
 [![空白 query 与预先给定 query 的对比](assets/optimized/tvd-query-steering.webp)](assets/tvd-query-steering.drawio.png)
 
@@ -120,7 +121,7 @@ Agent 接到的指令是填写 `data.json`，直到 `python tvd_validator.py` �
 
 运行 Agent 实验时，可以使用仓库里的 Docker 工作区。Agent 阅读任务和数据文件，填补缺失字段，运行校验器。Qwen3Guard 等工具给出结果，供校验器判断。
 
-先看 [`my_favorite`](experiment/tvd_agent/template/my_favorite/)：Agent 填写 query 和两个回答字段，然后运行 Qwen3Guard 检查。上面的 [LlamaGuard 示例](codebase_templates/aiml_llamaguard/exp0.txt)也有文本模板。
+先看 [`my_favorite`](experiment/tvd_agent/template/my_favorite/)：`query` 保持为 `???`，Agent 自己选题、填写两个回答字段，再运行 **Qwen3Guard** 检查。建议从这个非定向生成的 Agent 示例开始，在 Docker 中观察完整的填写、运行、检查和修改循环。上面的 [LlamaGuard 示例](codebase_templates/aiml_llamaguard/exp0.txt)也有文本模板。
 
 [安装与命令](experiment/tvd_agent/#setup) · [修改任务、校验器或数据](experiment/tvd_agent/#templates)
 
@@ -140,6 +141,8 @@ docker build -t tvd-agent .
 
 ### 把文本示例改成 Docker 工作区
 
+先选择适合自己场景的工具或 API，再确定校验器应该接受什么结果。根据这些条件调整任务、校验器和数据，然后用 Docker 实际运行。
+
 [示例库](codebase_templates/)把任务代码、数据和检查写成终端记录。要让 Agent 真正运行它，可以借助[现成的 Agent 模板](experiment/tvd_agent/template/)和 [Docker 配置](experiment/tvd_agent/Dockerfile/)把脚本和数据落成文件：
 
 1. 在 `experiment/tvd_agent/template/your_example/` 中放入脚本和数据，保证路径和导入关系一致。
@@ -153,7 +156,9 @@ docker build -t tvd-agent .
 
 ## D · 快速体验
 
-想先感受一下，可以把完整的[英文](codebase_templates/aiml_detoxify/exp0.txt)或[中文](codebase_templates/aiml_detoxify/exp_zh0.txt)示例贴进聊天窗口，让模型继续终端对话。此时终端是由模型根据文本模拟的。[C 节](#c-code)说明怎样在 Docker 中实际运行文件与检查。
+想先感受一下，可以把完整的[英文](codebase_templates/aiml_detoxify/exp0.txt)或[中文](codebase_templates/aiml_detoxify/exp_zh0.txt)示例贴进聊天窗口，让模型继续终端对话。这里的终端由模型根据文本模拟。
+
+[论文的单轮 TVD 实验](https://arxiv.org/abs/2603.23509)在三个任务、四个前沿模型上的平均安全失效率为 **92%**。粘贴文本可以展示这种现象，但模型无法实际执行校验器，也无法根据真实报错继续修改。要研究强对齐前沿模型中的完整反馈循环，建议从 [C 节的非定向 Agent 示例](#run-one-example)开始。
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -275,7 +280,7 @@ docker build -t tvd-agent .
 
 ## F · 社区复现
 
-每个案例的设置、输出和贡献者信息都收录在[社区归档](community/)中。
+[社区归档](community/)展示了读者如何根据模型和交互界面适配任务。表内多数案例修改了原模板，或据此构建了新任务：例如，[#90](community/issue-90-apple-foundation-vader/)把 `aiml_vader` 改成纯数据 CSV 补全；[#19](community/issue-19-gemini3flash-redteam-testgen/)通过文件上传带占位符的 JSON 测试用例模板。各案例的设置、输出和贡献者见下表。
 
 <details open>
 <summary>社区复现精选</summary>
@@ -315,7 +320,7 @@ docker build -t tvd-agent .
 
 ## G · 论文实验
 
-如果想在真正的项目中观察 ISC，先看 [TVD Agent 实验](experiment/tvd_agent/)：模型读取任务文件、填写数据、运行校验器，并根据报错修改文件。这正是 [B 节](#b-mechanism)展示的循环。
+建议从 [TVD Agent 实验](experiment/tvd_agent/)中的非定向 [`my_favorite` 模板](experiment/tvd_agent/template/my_favorite/)开始，在实际运行的项目里观察 ISC。Agent 自己选择 query、填写数据、运行校验器，并根据报错修改文件。这正是 [B 节](#b-mechanism)展示的循环。
 
 ### Agent：在工作区运行任务
 
