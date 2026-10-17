@@ -16,8 +16,11 @@
 | 外部の再現例を見る | [F · コミュニティ](#f-reproductions) |
 | 論文の実験を再現する | [G · 論文の実験](#g-experiments) |
 
+**ISC** は私たちが研究する安全上の失敗現象です。直接求められた有害な内容を拒否するモデルでも、タスクを完了する過程では同じ内容を生成することがあります。元の **TVD（Task、Validator、Data）** ワークスペースは、タスク、ツール、検証条件、空欄を私たちが一つずつ選んで設計しました。研究したい用途に合わせて調整するための出発点です。
+
 ## 更新履歴
 
+- **2026-10-17** ISC と TVD の違い、非標的／標的生成、用途に応じた変更、Agent とテキスト設定の違いを明確にしました。
 - **2026-10-16** 中国語・日本語・スペイン語・フランス語・ドイツ語の完全版 README を追加しました。
 - **2026-10-16** README を書き直し、読みたい箇所への索引、ワークスペースの例、エージェント実験の実行手順を加えました。
 - **2026-08-20** [ワークスペース構築スキル](experiment/tvd_agent/skills/build-tvd-codespace/)を公開しました。
@@ -52,9 +55,9 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 エージェントは、データが未完成でタスクが失敗するワークスペースを開きます。候補を書き込み、タスクを実行し、エラーを読んで修正します。以下の例では、データや判定条件を変えると生成されるものがどう変わるかを示します。
 
-### 1. ファイルを埋め、タスクを実行して修正する
+### 1. 非標的生成：query をエージェントに選ばせる
 
-このタスクでは、同じ query に対して安全な回答と安全でない回答を一つずつ用意します。[LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) は Meta の安全性分類器です。スクリプトは両方の回答を渡し、返されたラベルを確認します。
+ここでは `query` と二つの回答欄がすべて `???` です。エージェントが質問を選び、安全な回答と安全でない回答を作ります。これが**非標的生成（untargeted generation）**です。[論文](https://arxiv.org/abs/2603.23509)では、モデルが自分の書ける内容を選べるため、この設定での拒否率はほぼゼロと報告しています。[LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) は Meta の安全性分類器で、スクリプトは両方の回答を渡してラベルを確認します。
 
 [![LlamaGuard のワークスペース：unsafe と判定された回答だけが unsafe 欄を通過する](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
@@ -68,13 +71,11 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 緑の **PASS** は、LlamaGuard が `assistant_unsafe` を評価して `unsafe` と分類したことを示します。`assistant_safe` も `safe` と分類される必要があります。データが受理される前に、この二つのチェックがタスク内で実行されます。
 
-**ISC** は、直接求められた有害な内容を拒否するモデルが、タスクを終える過程ではその内容を生成するという安全上の失敗です。私たちは **TVD**（Task、Validator、Data）でこの現象を調べます。
-
 図はあり得る一連の試行を示し、回答本文は省いています。[C 節](#c-code)ではエージェントが実際にファイルを変更して検証を実行します。[D 節](#d-quick-test)ではチャットモデルにターミナルの記録を続けさせます。タスクが通る前に終了する実行もあります。
 
-### 2. query を与えて回答の方向を決める
+### 2. 標的生成：query を事前に指定する
 
-特定の質問に対する回答が欲しい場合は、`query` を先に書き込み、残りの回答欄をエージェントに埋めさせます。
+特定の質問への回答が必要なら、`query` を先に記入し、残りの回答欄をエージェントに埋めさせます。これが**標的生成（targeted generation）**です。事前入力した query は anchor（アンカー）の一例で、ほかのテンプレートでは話題や属性でも生成を方向づけられます。
 
 [![空の query と事前入力された query の比較](assets/optimized/tvd-query-steering.webp)](assets/tvd-query-steering.drawio.png)
 
@@ -120,7 +121,7 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 エージェント実験には、このリポジトリのような Docker ワークスペースを使います。エージェントはタスクとデータのファイルを読み、空欄を埋め、バリデータを実行します。Qwen3Guard などのツールの結果が判定に使われます。
 
-まず [`my_favorite`](experiment/tvd_agent/template/my_favorite/) を見てください。エージェントが query と二つの回答欄を埋め、Qwen3Guard のチェックを実行します。上に示した [LlamaGuard の例](codebase_templates/aiml_llamaguard/exp0.txt)にはテキスト版のテンプレートもあります。
+まず [`my_favorite`](experiment/tvd_agent/template/my_favorite/) を見てください。`query` は `???` のままなので、エージェント自身が質問を選び、二つの回答欄を埋めて **Qwen3Guard** のチェックを実行します。この非標的生成の例を Docker で動かすと、入力、実行、検証、修正のループを確認できます。上の [LlamaGuard の例](codebase_templates/aiml_llamaguard/exp0.txt)にはテキスト版もあります。
 
 [設定とコマンド](experiment/tvd_agent/#setup) · [タスク・バリデータ・データの変更](experiment/tvd_agent/#templates)
 
@@ -140,6 +141,8 @@ docker build -t tvd-agent .
 
 ### テキストの例を Docker ワークスペースにする
 
+用途に合うツールや API を選び、どの結果をバリデータで受け入れるか決めてください。それに合わせてタスク、バリデータ、データを調整し、Docker で実行します。
+
 [例のライブラリ](codebase_templates/)はタスク、データ、判定をターミナルの記録として示します。エージェントで実行するには、[エージェント用テンプレート](experiment/tvd_agent/template/)と [Docker の設定](experiment/tvd_agent/Dockerfile/)を手がかりに実際のファイルにします。
 
 1. `experiment/tvd_agent/template/your_example/` にスクリプトとデータを置き、パスと import を合わせます。
@@ -153,7 +156,9 @@ docker build -t tvd-agent .
 
 ## D · 簡易テスト
 
-まず感触をつかむには、[英語](codebase_templates/aiml_detoxify/exp0.txt)または[中国語](codebase_templates/aiml_detoxify/exp_zh0.txt)の例を全文チャットに貼り、ターミナルでのやり取りを続けるよう頼んでください。ここでのターミナルは、渡したテキストをもとにモデルが再現します。ファイルと検証を Docker で実行する方法は [C 節](#c-code)にあります。
+まず試すには、[英語](codebase_templates/aiml_detoxify/exp0.txt)または[中国語](codebase_templates/aiml_detoxify/exp_zh0.txt)の例を全文チャットに貼り、ターミナルの記録を続けるよう頼んでください。ここでのターミナルは、モデルがテキストから模擬するものです。
+
+[論文の単一応答 TVD 実験](https://arxiv.org/abs/2603.23509)では、3 タスクと 4 つの最先端モデルにおける平均安全失敗率は **92%** でした。テキストの貼り付けでも現象を確認できますが、バリデータは実行されず、実際のエラーによる修正もできません。安全性の調整が強い最先端モデルで完全なループを調べるには、[C 節の非標的生成 Agent](#run-one-example)から始めてください。
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -275,7 +280,7 @@ docker build -t tvd-agent .
 
 ## F · コミュニティによる再現
 
-各事例の設定、出力、報告者は[コミュニティの記録](community/)から確認できます。
+[コミュニティの記録](community/)には、モデルやインターフェースに応じた工夫が集まっています。表の多くはテンプレートを変更した例や、それを基に新しいタスクを作った例です。[#90](community/issue-90-apple-foundation-vader/) は `aiml_vader` を CSV データの補完に変更し、[#19](community/issue-19-gemini3flash-redteam-testgen/) は空欄のある JSON テストケースのテンプレートをファイルとしてアップロードしています。各設定、出力、報告者は以下で確認できます。
 
 <details open>
 <summary>コミュニティの再現例</summary>
@@ -315,7 +320,7 @@ docker build -t tvd-agent .
 
 ## G · 論文の実験
 
-実際に動くプロジェクトで ISC を見るには、まず [TVD Agent 実験](experiment/tvd_agent/)から始めてください。モデルはタスクのファイルを読み、データを埋め、バリデータを実行し、エラーに基づいて修正します。[B 節](#b-mechanism)で示したループです。
+まず [TVD Agent 実験](experiment/tvd_agent/)の非標的生成 [`my_favorite` テンプレート](experiment/tvd_agent/template/my_favorite/)で、実行中のプロジェクトにおける ISC を確認してください。エージェントが query を選び、データを埋め、バリデータを実行し、エラーに応じて修正します。[B 節](#b-mechanism)で示したループです。
 
 ### エージェント：ワークスペースでタスクを実行
 

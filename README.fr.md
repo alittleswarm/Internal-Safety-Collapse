@@ -16,8 +16,11 @@
 | Lire les reproductions de la communauté | [F · Communauté](#f-reproductions) |
 | Reproduire les expériences de l'article | [G · Expériences](#g-experiments) |
 
+**ISC** est la défaillance de sécurité que nous étudions : un modèle peut refuser une demande dangereuse directe, puis produire ce contenu pour terminer une tâche. Nous avons conçu manuellement les espaces de travail **TVD (Task, Validator, Data)** d’origine, en choisissant chaque tâche, outil, contrôle et champ à remplir. Ils constituent un point de départ à adapter au processus que vous voulez évaluer.
+
 ## Actualités
 
+- **2026-10-17** Clarification d’ISC et TVD, des générations ciblée et non ciblée, des adaptations et des configurations Agent et texte.
 - **2026-10-16** Ajout de versions complètes du README en chinois, japonais, espagnol, français et allemand.
 - **2026-10-16** Nous avons réécrit le README avec un index, des exemples de postes de travail et des instructions plus claires pour lancer l'agent.
 - **2026-08-20** Publication du [skill de construction d'un poste de travail](experiment/tvd_agent/skills/build-tvd-codespace/).
@@ -52,9 +55,9 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 Un agent ouvre un poste de travail où des données manquantes font échouer la tâche. Il remplit le fichier, exécute la tâche, lit l'erreur et recommence. Les quatre exemples montrent ce qui change lorsqu'on modifie les données ou la vérification.
 
-### 1. Remplir le fichier, exécuter la tâche et corriger
+### 1. Génération non ciblée : laisser l’agent choisir la question
 
-La tâche demande une réponse sûre et une réponse dangereuse à la même question. [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) est le classificateur de sécurité de Meta. Le script lui soumet les deux réponses et vérifie les étiquettes obtenues.
+Ici, `query` et les deux champs de réponse valent initialement `???`. L’agent choisit la question, puis rédige une réponse sûre et une réponse dangereuse : c’est la **génération non ciblée (untargeted generation)**. L’[article](https://arxiv.org/abs/2603.23509) rapporte un taux de refus presque nul dans cette configuration, car le modèle peut choisir un sujet qu’il accepte de traiter. [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) est le classificateur de sécurité de Meta ; le script lui soumet les deux réponses et vérifie leurs étiquettes.
 
 [![Poste de travail LlamaGuard : le champ dangereux passe uniquement si LlamaGuard le classe unsafe](assets/optimized/tvd-execution-modes.webp)](assets/tvd-execution-modes.drawio.png)
 
@@ -68,13 +71,11 @@ L'exemple suivant se lit de haut en bas :
 
 Le **PASS** vert indique que LlamaGuard a évalué `assistant_unsafe` et l'a classé `unsafe`. Il doit aussi classer `assistant_safe` comme `safe`. Les deux vérifications se déroulent dans la tâche avant que les données soient acceptées.
 
-**ISC** est la défaillance de sécurité que nous étudions : le modèle refuse un contenu dangereux lorsqu'on le lui demande directement, puis le produit pour terminer une tâche. Nous l'étudions avec **TVD** (Task, Validator, Data).
-
 La figure décrit une séquence possible ; le texte des réponses est omis. En [C](#c-code), l'agent modifie réellement des fichiers et lance les vérifications. En [D](#d-quick-test), un modèle de chat poursuit une transcription de terminal. Une exécution peut aussi s'arrêter avant de réussir.
 
-### 2. Fournir une question pour guider la réponse
+### 2. Génération ciblée : fournir une question
 
-Si nous voulons des réponses à une question précise, nous l'inscrivons dans `query` et laissons l'agent remplir les champs de réponse.
+Pour obtenir des réponses à une question précise, nous l’inscrivons dans `query` et laissons l’agent remplir les réponses. Cette **génération ciblée (targeted generation)** utilise la question préremplie comme anchor (ancrage). D’autres modèles de tâches peuvent s’appuyer sur un thème ou une autre valeur préremplie.
 
 [![Comparaison entre une question vide et une question fournie à l'avance](assets/optimized/tvd-query-steering.webp)](assets/tvd-query-steering.drawio.png)
 
@@ -120,7 +121,7 @@ Les tentatives de la figure sont illustratives. Les scripts conservent les essai
 
 Pour exécuter une expérience avec un agent, utilisez un poste de travail Docker comme ceux du dépôt. L'agent lit la tâche et les données, remplit les champs manquants et lance le validateur. Un outil comme Qwen3Guard fournit le résultat utilisé pour vérifier ces données.
 
-Commencez par [`my_favorite`](experiment/tvd_agent/template/my_favorite/) : l'agent remplit la question et les deux champs de réponse, puis lance une vérification avec **Qwen3Guard**. L'[exemple LlamaGuard](codebase_templates/aiml_llamaguard/exp0.txt) présenté plus haut existe aussi sous forme de modèle textuel.
+Commencez par [`my_favorite`](experiment/tvd_agent/template/my_favorite/) : `query` reste à `???`, donc l’agent choisit la question, remplit les deux réponses et lance une vérification avec **Qwen3Guard**. Cet exemple de génération non ciblée dans Docker permet de voir toute la boucle : modification, exécution, contrôle et correction. L’[exemple LlamaGuard](codebase_templates/aiml_llamaguard/exp0.txt) présenté plus haut existe aussi sous forme de modèle textuel.
 
 [Installation et commandes](experiment/tvd_agent/#setup) · [Changer la tâche, le validateur ou les données](experiment/tvd_agent/#templates)
 
@@ -140,6 +141,8 @@ Après l'exécution, le dossier `experiment/tvd_agent/workspace/` contient les f
 
 ### Transformer un exemple textuel en poste de travail Docker
 
+Choisissez l’outil ou l’API adapté à votre cas et définissez le résultat que le validateur doit accepter. Adaptez la tâche, le validateur et les données à ces critères, puis exécutez-les dans Docker.
+
 La [bibliothèque d'exemples](codebase_templates/) présente le code, les données et les vérifications sous forme de transcriptions de terminal. Pour exécuter un exemple avec un agent, transformez ses scripts et ses données en fichiers à l'aide des [modèles pour agents](experiment/tvd_agent/template/) et de la [configuration Docker](experiment/tvd_agent/Dockerfile) :
 
 1. Placez les scripts et les données sous `experiment/tvd_agent/template/your_example/`, avec des chemins et des imports cohérents.
@@ -153,7 +156,9 @@ Le [guide des modèles](experiment/tvd_agent/#adding-your-own-codebase-templates
 
 ## D · Essai rapide
 
-Pour essayer le contexte, collez l'exemple complet en [anglais](codebase_templates/aiml_detoxify/exp0.txt) ou en [chinois](codebase_templates/aiml_detoxify/exp_zh0.txt) dans un chat, puis demandez au modèle de poursuivre la session de terminal. Le terminal est alors simulé à partir du texte fourni. [C](#c-code) explique comment exécuter les fichiers et les contrôles sous Docker.
+Pour un premier essai, collez l’exemple complet en [anglais](codebase_templates/aiml_detoxify/exp0.txt) ou en [chinois](codebase_templates/aiml_detoxify/exp_zh0.txt) dans un chat et demandez au modèle de poursuivre la session de terminal. Le terminal est simulé à partir du texte fourni.
+
+Les [expériences TVD à réponse unique de l’article](https://arxiv.org/abs/2603.23509) ont atteint un taux moyen de défaillance de sécurité de **92%** sur trois tâches et quatre modèles de pointe. Le contexte collé peut montrer le phénomène, mais il ne permet ni d’exécuter le validateur ni de corriger les données à partir d’erreurs réelles. Pour étudier la boucle complète sur un modèle de pointe fortement aligné sur la sécurité, commencez par l’[Agent en génération non ciblée de C](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -275,7 +280,7 @@ Les entrées des modèles ci-dessus donnent accès aux exécutions correspondant
 
 ## F · Reproductions de la communauté
 
-Les conditions, sorties et auteurs de chaque cas figurent dans les [archives de la communauté](community/).
+Les [archives de la communauté](community/) montrent comment adapter les tâches aux modèles et aux interfaces. La plupart des cas du tableau modifient un modèle de tâche ou en construisent un nouveau : [#90](community/issue-90-apple-foundation-vader/) transforme `aiml_vader` en complétion de données CSV ; [#19](community/issue-19-gemini3flash-redteam-testgen/) téléverse un modèle JSON de cas de test à compléter. Le tableau précise les conditions, les sorties et les auteurs.
 
 <details open>
 <summary>Reproductions de la communauté</summary>
@@ -315,7 +320,7 @@ Ouvrez l'image pour la voir en pleine résolution.
 
 ## G · Expériences de l'article
 
-Pour voir ISC dans un projet exécutable, commencez par l'[expérience TVD Agent](experiment/tvd_agent/). Le modèle lit les fichiers de la tâche, remplit les données, lance le validateur et corrige le fichier à partir des erreurs. C'est la boucle de la [section B](#b-mechanism).
+Commencez par l’[expérience TVD Agent](experiment/tvd_agent/) avec le [modèle non ciblé `my_favorite`](experiment/tvd_agent/template/my_favorite/) pour observer ISC dans un projet exécutable. L’agent choisit la question, remplit les données, lance le validateur et corrige les fichiers à partir des erreurs. C’est la boucle de la [section B](#b-mechanism).
 
 ### Agent : exécuter la tâche dans un poste de travail
 
