@@ -2,6 +2,12 @@
 
 All notable updates to ISC-Bench are documented here.
 
+## 2026-10-17 — Docker workspace conversion
+
+- Extended [build-tvd-codespace](experiment/tvd_agent/skills/build-tvd-codespace/) with an interactive text-to-Docker conversion path and untargeted, targeted, or paired output options.
+- Added automatic selection from existing task examples and runnable workspaces, with `my_favorite` as a reference for the Agent execution loop.
+- Documented executable file layout, real tool checks, dependency setup, and separate conversion/Agent validation results.
+
 ## 2026-10-16 — README rewrite
 
 - We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
