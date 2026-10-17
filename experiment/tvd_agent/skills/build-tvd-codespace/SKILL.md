@@ -3,8 +3,9 @@ name: build-tvd-codespace
 description: >
   Build a TVD (Task-Validator-Data) workspace or convert an existing text template
   into executable files for the Docker Agent runner. Use for new tasks, template
-  adaptation, or text-to-Docker conversion. Supports untargeted, targeted, and
-  paired variants; clarifies missing choices with the user before construction,
+  adaptation, or text-to-Docker conversion. Can select a matching existing example
+  from the repository when no source path is given. Supports untargeted, targeted,
+  and paired variants; clarifies missing choices with the user before construction,
   connects the task's tool/API and validator, and checks the resulting workspace.
 ---
 
@@ -19,12 +20,15 @@ terminal with actual files and execution.
 
 Locate the ISC checkout from this skill's location or the user's supplied repository path;
 resolve runner paths from that root rather than assuming the caller's current directory.
-Inspect the supplied template or workspace first. Reuse choices already stated by the user;
-ask one concise question for any missing decision that changes the output:
+Inspect a supplied template or workspace first. If the user gives a task or tool without a
+source path, use `source=auto` and select a reference as described below. Reuse choices already
+stated by the user; ask one concise question only for a missing requirement that changes the
+output and cannot be resolved from the task or repository:
 
 | Option | Choices |
 |---|---|
 | Operation | Build a new task, or convert an existing template/path |
+| `source` | A supplied path, or `auto` to select from existing repository examples |
 | Delivery | Docker Agent workspace, or a text-only example |
 | `generation` | `untargeted`, `targeted`, or `both` |
 | Anchor | For targeted generation, which field and which supplied value(s) to retain |
@@ -44,6 +48,31 @@ For **any text-to-Docker conversion or Docker Agent output**, read
 [Docker Agent conversion](references/docker-agent-conversion.md) before writing files. It
 defines code extraction, both generation modes, the runner's file contract, and executable
 checks. For a new task, also use the design references below.
+
+## Select existing examples when `source=auto`
+
+Use two references: one for the requested task and tool, and one for executable Agent layout.
+
+1. Browse [`codebase_templates/README.md`](../../../../codebase_templates/README.md) for the
+   closest task, tool/API, data schema, and acceptance check. Inspect the candidate's actual
+   `exp0.txt` and relevant variants before selecting; use the files present in this checkout.
+2. Inspect [`../../template/`](../../template/) for a runnable counterpart. Read
+   [`my_favorite`](../../template/my_favorite/) as the reference for an incomplete workspace
+   and the Agent's edit/run/check loop. Prefer a closer existing adapter when its tool or data
+   layout matches the requested task. Use `my_favorite`'s execution pattern without replacing
+   the user's chosen tool with its guard.
+3. Select the closest starting point and adapt it to the requested generation mode. Check the
+   code and data to establish the mode; legacy names and variant numbers alone are insufficient.
+   If no existing example fits, reuse the runner layout and implement the requested tool adapter.
+
+Tell the user which source and runnable reference you selected, why they fit, and what needs
+to change, then proceed. A supplied task/tool is enough to make this selection; the user need
+not choose a directory. When several examples fit a broad request, pick one and state the
+evaluator and data layout you chose. For example, generic guard evaluation can start from
+`my_favorite`'s Qwen3Guard paired-response task without asking the user to choose among guard
+variants. For a general demonstration with no tool preference, use `my_favorite` and explain
+its untargeted default, while honoring any mode the user specified. Ask when the task's
+acceptance objective cannot be established or a requested targeted anchor is missing.
 
 ## Read first (the repository already explains most of this)
 
@@ -248,7 +277,7 @@ the content subject from the tool's acceptance conditions.
 For conversion, follow [Docker Agent conversion](references/docker-agent-conversion.md).
 For a new task:
 
-1. **Pick the tool**, copy its API example verbatim, probe its real label space, decide the
+1. **Pick the tool**, start from its documented API example, probe its real label space, decide the
    mode-2 assertion.
 2. **Write `validator.py`:** schema (reject `???`, min length) → load tool → assert verdict.
 3. **Write the data file:** benign anchor(s) if targeted, response fields `???`, optional neutral

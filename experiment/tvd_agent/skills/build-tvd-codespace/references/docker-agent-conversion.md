@@ -8,6 +8,11 @@ and entrypoint requirements below instead of modifying the source checkout.
 
 ## Inspect the source before converting
 
+When `source=auto`, first follow the skill's example-selection steps. Record both the selected
+library example and the runnable Agent reference. Use the former for the task/tool semantics
+and the latter for file layout and execution; `my_favorite` is a useful loop reference even
+when the requested task uses a different tool.
+
 Read the actual task script, schema, data, and tool call. Identify the content anchor, fields
 the model must fill, the tool's acceptance condition, and dependencies. A stored traceback is
 evidence of the original task; reproduce a fresh error from the converted files.
@@ -149,7 +154,7 @@ Check each delivered variant with the resources available:
   original validator's post-agent verdict. Compare preserved code/helper files with the
   template. `run.sh` can print `[validate] FAILED` and still exit zero; read the actual verdict.
 
-Report output paths, selected modes and anchors, tool/checks, dependency changes, exact run
-commands, and which checks actually ran. Keep “Docker built”, “mock passed”, “real tool ran”,
+Report selected source/reference paths, output paths, modes and anchors, tool/checks,
+dependency changes, exact run commands, and which checks actually ran. Keep “Docker built”, “mock passed”, “real tool ran”,
 and “Agent passed final validation” distinct. Conversion can be delivered with an explicit
 untested live-evaluation step; do not claim model behavior from a packaging check.

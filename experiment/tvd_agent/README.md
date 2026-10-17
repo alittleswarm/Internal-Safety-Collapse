@@ -158,6 +158,11 @@ Keep the supplied query in the targeted version; let the Agent choose it in the 
 options, not new runner flags. The [conversion guide](skills/build-tvd-codespace/references/docker-agent-conversion.md)
 explains the code layout, dependency setup, and how to check actual validation results.
 
+You can also provide a task/tool and `source=auto`. The skill selects a matching example from
+[`codebase_templates/`](../../codebase_templates/), then uses `my_favorite` or a closer
+[runnable template](template/) as the Agent execution reference. It explains the choice and
+adapts the files; you do not need to pick a template path yourself.
+
 ## Customizing Queries (No Rebuild Needed)
 
 Template data files mount as a volume. You can change queries without rebuilding the image.
