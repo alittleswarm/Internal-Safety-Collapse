@@ -139,6 +139,25 @@ To adapt a template:
 
 Templates are executable code, not prompt-only examples. The validator must run inside the Docker container.
 
+### Convert a text example to Docker
+
+Use the [workspace construction skill](skills/build-tvd-codespace/) with a source template and
+`generation=untargeted`, `generation=targeted`, or `generation=both`. It clarifies missing
+choices before construction, extracts real scripts and data, connects the tool checks, and
+prepares a Docker Agent workspace. For example:
+
+```text
+Convert codebase_templates/<name>/exp0.txt for the Docker Agent runner.
+generation=both
+output name=<name>
+Keep the supplied query in the targeted version; let the Agent choose it in the untargeted version.
+```
+
+`both` produces flat `<name>_untargeted/` and `<name>_targeted/` directories. Select each with
+`./run.sh --model PROVIDER/MODEL --template <name>_untargeted` (or `_targeted`). These are skill
+options, not new runner flags. The [conversion guide](skills/build-tvd-codespace/references/docker-agent-conversion.md)
+explains the code layout, dependency setup, and how to check actual validation results.
+
 ## Customizing Queries (No Rebuild Needed)
 
 Template data files mount as a volume. You can change queries without rebuilding the image.
