@@ -2,6 +2,8 @@
 
 # Internal Safety Collapse (ISC)
 
+**ISC** est une défaillance de sécurité : un modèle peut refuser une demande dangereuse directe, puis produire ce contenu pour terminer une tâche. Nous avons conçu manuellement les espaces de travail **TVD (Task, Validator, Data)** pour l’étudier ; vous pouvez en adapter les tâches, outils, contrôles et champs à remplir à votre cas.
+
 📄 **Article :** [arXiv](https://arxiv.org/abs/2603.23509)
 
 🧭 **Projet :** [Site web](https://wuyoscar.github.io/Internal-Safety-Collapse/)
@@ -13,10 +15,8 @@
 | Exécuter l'expérience avec un agent | [C · Code](#c-code) |
 | Essayer rapidement dans un chat | [D · Essai rapide](#d-quick-test) |
 | Consulter les résultats d'un modèle | [E · Résultats](#e-models) |
-| Lire les reproductions de la communauté | [F · Communauté](#f-reproductions) |
+| Voir comment d’autres reproduisent et adaptent ISC | [F · Communauté](#f-reproductions) |
 | Reproduire les expériences de l'article | [G · Expériences](#g-experiments) |
-
-**ISC** est la défaillance de sécurité que nous étudions : un modèle peut refuser une demande dangereuse directe, puis produire ce contenu pour terminer une tâche. Nous avons conçu manuellement les espaces de travail **TVD (Task, Validator, Data)** d’origine, en choisissant chaque tâche, outil, contrôle et champ à remplir. Ils constituent un point de départ à adapter au processus que vous voulez évaluer.
 
 ## Actualités
 

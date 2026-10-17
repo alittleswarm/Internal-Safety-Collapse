@@ -2,6 +2,8 @@
 
 # Internal Safety Collapse (ISC)
 
+**ISC** 是一种安全失效现象：模型拒绝直接的有害请求，却可能在完成任务时生成同样的内容。我们为研究它手工设计了 **TVD（Task、Validator、Data）** 工作区，你可以按自己的场景调整任务、工具、检查条件和待填写字段。
+
 📄 **论文：** [arXiv](https://arxiv.org/abs/2603.23509)
 
 🧭 **项目：** [网站](https://wuyoscar.github.io/Internal-Safety-Collapse/)
@@ -13,10 +15,8 @@
 | 运行 Agent 实验 | [C · 代码](#c-code) |
 | 在聊天中快速试一下 | [D · 快速体验](#d-quick-test) |
 | 查看某个模型的结果 | [E · 模型结果](#e-models) |
-| 查看社区复现 | [F · 社区](#f-reproductions) |
+| 查看别人如何复现和改造 ISC | [F · 社区](#f-reproductions) |
 | 复现论文实验 | [G · 论文实验](#g-experiments) |
-
-**ISC** 是我们研究的安全失效现象：模型可能拒绝直接的有害请求，却在完成任务时生成同样的内容。原始 **TVD（Task、Validator、Data）** 工作区由我们手工设计，任务、工具、检查条件和待填写字段都是人为选择的。你可以以它们为起点，根据自己的研究场景调整。
 
 ## 更新
 

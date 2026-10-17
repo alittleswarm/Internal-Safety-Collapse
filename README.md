@@ -2,6 +2,8 @@
 
 # Internal Safety Collapse (ISC)
 
+**ISC** is the safety failure we study: a model may refuse a direct harmful request yet produce the same material while completing a task. We designed the original **TVD (Task, Validator, Data)** workspaces by hand; adapt their tasks, tools, checks, and missing data to the workflow you want to evaluate.
+
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509)
 
 🧭 **Project:** [Website](https://wuyoscar.github.io/Internal-Safety-Collapse/)
@@ -13,10 +15,8 @@
 | Run the agent experiment | [C · Code](#c-code) |
 | Try the context in a chat | [D · Quick test](#d-quick-test) |
 | Find results for a model | [E · Model results](#e-models) |
-| See what others have reproduced | [F · Community](#f-reproductions) |
+| See how others reproduced and adapted ISC | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
-
-**ISC** is the safety failure we study: a model that refuses a direct harmful request may still produce the material while completing a task. We built the original **TVD (Task, Validator, Data)** workspaces by hand, choosing each task, tool, check, and missing field. They are starting points to adapt for the workflow you want to evaluate.
 
 ## Updates
 
