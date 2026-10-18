@@ -24,7 +24,7 @@
 - **2026-09** 🎉 Paper bei **NeurIPS 2026** angenommen.
 - **2026-06-26** ⭐ **900 Sterne.**
 - **2026-06-09** 🧪 ISC auf **Fable 5** ausgelöst.
-- **2026-04** 📝 Bei **ICML 2026** eingereicht. Abgelehnt.
+- **2026-04** 📝 Bei **ICML 2026** eingereicht. Abgelehnt. Ein Gutachten behauptete, ISC existiere nicht, und tat die Arbeit als überzogene Behauptung über Dual Use ab. Ich hatte den Eindruck, dass das Paper nicht fair gelesen worden war. Die Erfahrung hat mich tief enttäuscht darüber, wie Sicherheitsforschung auf KI-Konferenzen behandelt wird.
 - **2026-03-27** ⭐ **500 Sterne.**
 - **2026-03-20** 🚀 **Quellcode veröffentlicht.**
 

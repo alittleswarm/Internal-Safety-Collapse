@@ -24,7 +24,7 @@
 - **2026-09** 🎉 Article accepté à **NeurIPS 2026**.
 - **2026-06-26** ⭐ **900 étoiles.**
 - **2026-06-09** 🧪 ISC déclenché sur **Fable 5**.
-- **2026-04** 📝 Soumis à **ICML 2026**. Refusé.
+- **2026-04** 📝 Soumis à **ICML 2026**. Refusé. Un rapport affirmait qu’ISC n’existait pas et rejetait le travail comme une affirmation excessive sur le double usage. J’ai eu le sentiment que l’article n’avait pas été lu équitablement. Cette expérience m’a profondément déçu quant à la manière dont la recherche en sécurité est traitée dans les conférences d’IA.
 - **2026-03-27** ⭐ **500 étoiles.**
 - **2026-03-20** 🚀 **Code source publié.**
 

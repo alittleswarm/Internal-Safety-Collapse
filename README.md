@@ -24,7 +24,7 @@
 - **2026-09** 🎉 Accepted at **NeurIPS 2026**.
 - **2026-06-26** ⭐ **900 stars.**
 - **2026-06-09** 🧪 ISC triggered on **Fable 5**.
-- **2026-04** 📝 Submitted to **ICML 2026**. Rejected.
+- **2026-04** 📝 Submitted to **ICML 2026**. Rejected. One review claimed that ISC did not exist and dismissed the work as an overclaim about dual use. I felt the paper had not received a fair reading. The experience left me deeply disappointed with how safety research is treated at AI conferences.
 - **2026-03-27** ⭐ **500 stars.**
 - **2026-03-20** 🚀 **Open-sourced.**
 
