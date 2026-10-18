@@ -24,7 +24,6 @@
 - **2026-09** 🎉 Accepted at **NeurIPS 2026**.
 - **2026-06-26** ⭐ **900 stars.**
 - **2026-06-09** 🧪 ISC triggered on **Fable 5**.
-- **2026-04** ❌ Submitted to **ICML 2026**. Rejected. One of the reviews I received called ISC an exaggerated phenomenon. Honestly, submitting adversarial-attack research to ML conferences has often left me feeling that this kind of work isn't welcome. If the experiments get too close to real-world harm, the work gets flagged as dual use. If we use a toy setup, it's dismissed as unrealistic or lacking novelty.
 - **2026-03-27** ⭐ **500 stars.**
 - **2026-03-20** 🚀 **Open-sourced.**
 
