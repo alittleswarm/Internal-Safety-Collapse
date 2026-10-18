@@ -22,6 +22,7 @@
 
 - **2026-10-17** ✨ README rewritten and polished. **1.6k stars.**
 - **2026-09** 🎉 Accepted at **NeurIPS 2026**.
+- **ICML 2026** 📝 Submitted. Rejected.
 - **2026-06-26** ⭐ **900 stars.**
 - **2026-06-09** 🧪 ISC triggered on **Fable 5**.
 - **2026-03-27** ⭐ **500 stars.**

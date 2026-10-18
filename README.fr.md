@@ -22,6 +22,7 @@
 
 - **2026-10-17** ✨ README réécrit et peaufiné. **1.6k étoiles.**
 - **2026-09** 🎉 Article accepté à **NeurIPS 2026**.
+- **ICML 2026** 📝 Soumis. Refusé.
 - **2026-06-26** ⭐ **900 étoiles.**
 - **2026-06-09** 🧪 ISC déclenché sur **Fable 5**.
 - **2026-03-27** ⭐ **500 étoiles.**
