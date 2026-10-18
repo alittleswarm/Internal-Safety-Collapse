@@ -20,24 +20,12 @@
 
 ## Neuigkeiten
 
-- **2026-10-17** ISC und TVD, gezielte und ungezielte Generierung, Anpassungen sowie Agenten- und Texteinstellungen erläutert.
-- **2026-10-16** Vollständige README-Versionen auf Chinesisch, Japanisch, Spanisch, Französisch und Deutsch ergänzt.
-- **2026-10-16** Wir haben das README mit einem Wegweiser, Beispielen aus dem Arbeitsbereich und klareren Anweisungen für das Agentenexperiment neu geschrieben.
-- **2026-08-20** Der [Skill zum Aufbau eines Arbeitsbereichs](experiment/tvd_agent/skills/build-tvd-codespace/) wurde veröffentlicht.
-- **2026-08-07** Die Experimentabläufe wurden in TVD umbenannt und die Erklärung des Mechanismus überarbeitet.
-- **2026-07-03** Vorlagenvarianten und Agenten-Arbeitsbereiche wurden neu geordnet.
-- **2026-06-26** Das Repository erreichte 900 GitHub-Sterne.
-- **2026-06-25** Eine Reproduktion mit Opus 4.8 wurde ergänzt.
-- **2026-06-09** Eine Reproduktion mit Fable 5 wurde ergänzt.
-- **2026-04-17** Version v0.0.5 erschien mit der Reproduktion von Opus 4.7.
-- **2026-04-12** Eine TVD-Anleitung und Beispiele zur Anpassung wurden ergänzt.
-- **2026-04-10** Modellberichte und Beispiele für Prüfungen mit Moderationswerkzeugen wurden ergänzt.
-- **2026-04-01** Die Vorlagenbibliothek und das Archiv der Community-Belege wurden erweitert.
-- **2026-03-29** Agenten-Arbeitsbereiche mit der OpenAI Moderation API wurden ergänzt.
-- **2026-03-27** Das Repository erreichte 500 GitHub-Sterne; README und Projektseite wurden aktualisiert.
-- **2026-03-26** Projektseite und arXiv-Paper wurden veröffentlicht; Beispiele mit Dateiupload und das Community-Archiv kamen hinzu.
-- **2026-03-25** Notebooks wurden aktualisiert, der Benchmark-Wechsel ergänzt und der erste Community-Beitrag festgehalten.
-- **2026-03-22** **Erste Veröffentlichung:** 56 TVD-Vorlagen in acht Bereichen sowie Experimente mit Chatbot, Beispielen im Kontext und Agenten. [Hinweise zur ersten Version](CHANGELOG.md#v1--2026-03-22).
+- **2026-10-17** ✨ README neu geschrieben und überarbeitet. **1.6k Sterne.**
+- **2026-09** 🎉 Paper bei **NeurIPS 2026** angenommen.
+- **2026-06-26** ⭐ **900 Sterne.**
+- **2026-06-09** 🧪 ISC auf **Fable 5** ausgelöst.
+- **2026-03-27** ⭐ **500 Sterne.**
+- **2026-03-20** 🚀 **Quellcode veröffentlicht.**
 
 [Vollständiges Änderungsprotokoll](CHANGELOG.md)
 

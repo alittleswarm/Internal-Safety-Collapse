@@ -20,24 +20,12 @@
 
 ## Actualizaciones
 
-- **2026-10-17** Aclaramos la diferencia entre ISC y TVD, la generación dirigida y no dirigida, las adaptaciones y los modos Agent y texto.
-- **2026-10-16** Añadimos versiones completas del README en chino, japonés, español, francés y alemán.
-- **2026-10-16** Reescribimos el README con un índice, ejemplos de espacios de trabajo e instrucciones más claras para ejecutar el agente.
-- **2026-08-20** Publicamos la [herramienta para construir espacios de trabajo](experiment/tvd_agent/skills/build-tvd-codespace/).
-- **2026-08-07** Cambiamos el nombre de los flujos experimentales a TVD y revisamos la explicación del mecanismo.
-- **2026-07-03** Reorganizamos las variantes de las plantillas y los espacios de trabajo de los agentes.
-- **2026-06-26** El repositorio alcanzó 900 estrellas en GitHub.
-- **2026-06-25** Añadimos la reproducción con Opus 4.8.
-- **2026-06-09** Añadimos la reproducción con Fable 5.
-- **2026-04-17** Publicamos v0.0.5 con la reproducción de Opus 4.7.
-- **2026-04-12** Añadimos una guía de TVD y ejemplos de personalización.
-- **2026-04-10** Añadimos informes de modelos y ejemplos de validación con una API de moderación.
-- **2026-04-01** Ampliamos la biblioteca de plantillas y el archivo de evidencias de la comunidad.
-- **2026-03-29** Añadimos espacios de trabajo de agentes con la API de moderación de OpenAI.
-- **2026-03-27** Alcanzamos 500 estrellas en GitHub y actualizamos el README y el sitio.
-- **2026-03-26** Publicamos el sitio y el artículo en arXiv; añadimos ejemplos de archivos adjuntos y el archivo de la comunidad.
-- **2026-03-25** Actualizamos los notebooks, añadimos el cambio de benchmark y registramos la primera contribución de la comunidad.
-- **2026-03-22** **Primera publicación:** 56 plantillas TVD en ocho áreas, con experimentos de chatbot, aprendizaje en contexto y agentes. [Notas de la primera versión](CHANGELOG.md#v1--2026-03-22).
+- **2026-10-17** ✨ README reescrito y pulido. **1.6k estrellas.**
+- **2026-09** 🎉 Artículo aceptado en **NeurIPS 2026**.
+- **2026-06-26** ⭐ **900 estrellas.**
+- **2026-06-09** 🧪 ISC activado en **Fable 5**.
+- **2026-03-27** ⭐ **500 estrellas.**
+- **2026-03-20** 🚀 **Código abierto.**
 
 [Historial completo de cambios](CHANGELOG.md)
 

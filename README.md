@@ -20,24 +20,12 @@
 
 ## Updates
 
-- **2026-10-17** Clarified untargeted and targeted generation, agent setup, and how to adapt the templates.
-- **2026-10-16** Added full README translations in Chinese, Japanese, Spanish, French, and German.
-- **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
-- **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
-- **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
-- **2026-07-03** Reorganized template variants and agent workspaces.
-- **2026-06-26** Reached 900 GitHub stars.
-- **2026-06-25** Added the Opus 4.8 reproduction.
-- **2026-06-09** Added the Fable 5 reproduction.
-- **2026-04-17** Released v0.0.5 with the Opus 4.7 reproduction.
-- **2026-04-12** Added the TVD walkthrough and customization examples.
-- **2026-04-10** Added model reports and moderation-based validation examples.
-- **2026-04-01** Expanded the template library and community evidence archive.
-- **2026-03-29** Added agent workspaces using the OpenAI Moderation API.
-- **2026-03-27** Reached 500 GitHub stars and updated the README and project site.
-- **2026-03-26** Released the project website and arXiv paper; added file-upload examples and the community archive.
-- **2026-03-25** Updated notebooks, added benchmark switching, and recorded the first community contribution.
-- **2026-03-22** **First public release:** 56 TVD templates across eight domains, with chatbot, in-context, and agent experiment modes. [Initial release notes](CHANGELOG.md#v1--2026-03-22).
+- **2026-10-17** ✨ README rewritten and polished. **1.6k stars.**
+- **2026-09** 🎉 Accepted at **NeurIPS 2026**.
+- **2026-06-26** ⭐ **900 stars.**
+- **2026-06-09** 🧪 ISC triggered on **Fable 5**.
+- **2026-03-27** ⭐ **500 stars.**
+- **2026-03-20** 🚀 **Open-sourced.**
 
 [Detailed changelog](CHANGELOG.md)
 
