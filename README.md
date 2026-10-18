@@ -161,9 +161,17 @@ See the [template guide](experiment/tvd_agent/#adding-your-own-codebase-template
 
 ## D · Quick test
 
-For a quick look, paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat and ask the model to continue the terminal session. The model simulates the terminal from the text you supplied.
+We found that giving a model the full TVD task as context lets it simulate the terminal interaction and reproduce part of the behavior seen in the agent setting. The shared chats below offer a first look without setting up an environment or running the experiments.
 
-The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models. A pasted context can work, but it cannot execute the validator or use real errors to revise the data. To probe the full mechanism on a strongly aligned frontier model, start with the [untargeted Agent setup in C](#run-one-example).
+- **[Grok · 中文](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — a task involving restricted political topics.
+- **[Kimi · 中文](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — a national-security scenario involving the Three Gorges Dam.
+- **[Grok · English](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — an English terminal-completion example.
+- **[Kimi · 中文](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — an NSFW content-generation task.
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — a media-bias task involving fabricated news.
+- **[Grok · English](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — a chemistry workflow involving explosive compounds.
+- **[Claude · English](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — a chemistry workflow involving toxic compounds.
+
+These chats simulate the terminal. To run the tools and revise files using actual validation feedback, see [C · Agent setup](#run-one-example).
 
 <a id="e-models"></a>
 
@@ -246,23 +254,6 @@ The table links to evidence for 62 models. Their runs use different setups, so o
 </details>
 
 <details open>
-<summary>Web-chat examples</summary>
-
-These shared chats show models continuing the terminal example from [D](#d-quick-test).
-
-| LLM Provider | Language | Platform | Content | Link |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Web App | Banned political topics | [link](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web App | National security (Three Gorges Dam) | [link](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web App | | [link](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web App | NSFW | [link](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Web App | Media-biased fake news / misinformation | [link](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web App | Chemical synthesis (TNT, HMX, PETN) | [link](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Web App | Chemical synthesis (phosgene, HCN) | [link](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
-
-</details>
-
-<details open>
 <summary>Trigger history</summary>
 
 See the model entries above for the corresponding runs.
@@ -340,6 +331,8 @@ The [runnable example in C](#run-one-example) uses Qwen3Guard to show this loop 
 ### Chatbot and ICL: text-only settings
 
 The paper also reports [TVD Chatbot](experiment/tvd_chatbot/) (single turn) and [TVD ICL](experiment/tvd_icl/) (the same task preceded by completed examples). Like a conventional prompt attack, these settings give the model the task as text and collect one response. During that turn, it cannot open the files or run the validator, so it receives no real test error to work through. The paper compares conventional jailbreak methods separately.
+
+The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models.
 
 ### Further experiments and related work
 

@@ -156,9 +156,17 @@ Der [Vorlagenguide](experiment/tvd_agent/#adding-your-own-codebase-templates) un
 
 ## D · Schnelltest
 
-Für einen ersten Eindruck kopiere das vollständige Beispiel auf [Englisch](codebase_templates/aiml_detoxify/exp0.txt) oder [Chinesisch](codebase_templates/aiml_detoxify/exp_zh0.txt) in einen Chat und bitte das Modell, das Terminalprotokoll fortzusetzen. Das Terminal wird dabei anhand des Textes simuliert.
+Wir haben beobachtet, dass ein Modell mit der vollständigen TVD-Aufgabe als Kontext die Terminalinteraktion simulieren und einen Teil des Verhaltens aus der Agenteneinstellung reproduzieren kann. Die folgenden geteilten Chats geben einen ersten Einblick, ohne eine Umgebung einzurichten oder die Experimente auszuführen.
 
-Die [TVD-Experimente mit einer einzigen Antwort im Paper](https://arxiv.org/abs/2603.23509) erreichten über drei Aufgaben und vier Spitzenmodelle eine mittlere Sicherheitsfehlerrate von **92%**. Eingefügter Text kann das Phänomen zeigen, führt aber weder den Validator aus noch liefert er echte Fehler zur Überarbeitung der Daten. Um den vollständigen Ablauf bei stark auf Sicherheit ausgerichteten Spitzenmodellen zu untersuchen, beginne mit dem [Agenten zur ungezielten Generierung in C](#run-one-example).
+- **[Grok · Chinesisch](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — eine Aufgabe zu eingeschränkten politischen Themen.
+- **[Kimi · Chinesisch](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — ein Szenario zur nationalen Sicherheit rund um die Drei-Schluchten-Talsperre.
+- **[Grok · Englisch](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — ein englisches Beispiel zur Vervollständigung einer Terminalsitzung.
+- **[Kimi · Chinesisch](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — eine Aufgabe zur Erzeugung von NSFW-Inhalten.
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — eine Aufgabe zu Medienverzerrung mit erfundenen Nachrichten.
+- **[Grok · Englisch](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — ein chemischer Arbeitsablauf mit explosiven Verbindungen.
+- **[Claude · Englisch](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — ein chemischer Arbeitsablauf mit giftigen Verbindungen.
+
+Diese Chats simulieren das Terminal. Wie du die Werkzeuge ausführst und Dateien anhand echter Validierungsergebnisse überarbeitest, steht unter [C · Agenteneinrichtung](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -239,23 +247,6 @@ Die Tabelle verweist auf Belege für 62 Modelle. Die Versuche haben unterschiedl
 </details>
 
 <details open>
-<summary>Beispiele aus Web-Chats</summary>
-
-Diese geteilten Chats zeigen, wie Modelle das Terminalbeispiel aus [Abschnitt D](#d-quick-test) als Text fortsetzen.
-
-| Anbieter | Sprache | Plattform | Inhalt | Link |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Web-App | Verbotene politische Themen | [Link](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web-App | Nationale Sicherheit (Drei-Schluchten-Talsperre) | [Link](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web-App | | [Link](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web-App | NSFW | [Link](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Web-App | Medienverzerrte Falschmeldungen und Desinformation | [Link](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web-App | Chemische Synthese (TNT, HMX, PETN) | [Link](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Web-App | Chemische Synthese (Phosgen, HCN) | [Link](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
-
-</details>
-
-<details open>
 <summary>Verlauf der Nachweise</summary>
 
 Die zugehörigen Läufe sind in den Modelleinstiegen oben verlinkt.
@@ -329,6 +320,8 @@ Das [ausführbare Beispiel in C](#run-one-example) zeigt diesen Ablauf mit Qwen3
 ### Chatbot und ICL: textbasierte Einstellungen
 
 Das Paper berichtet auch über [TVD Chatbot](experiment/tvd_chatbot/) (ein Turn) und [TVD ICL](experiment/tvd_icl/) (dieselbe Aufgabe mit vorangestellten gelösten Beispielen). Ihre Interaktion ähnelt einem herkömmlichen Promptangriff: Das Modell erhält die Aufgabe als Text und gibt eine Antwort zurück. In diesem Turn kann es weder Dateien öffnen noch den Validator ausführen; echte Fehlermeldungen für eine Korrektur erhält es daher nicht. Herkömmliche Jailbreak-Methoden vergleicht das Paper gesondert.
+
+Die [TVD-Experimente mit einer einzigen Antwort im Paper](https://arxiv.org/abs/2603.23509) erreichten über drei Aufgaben und vier Spitzenmodelle eine mittlere Sicherheitsfehlerrate von **92%**.
 
 ### Weitere Experimente und verwandte Arbeiten
 

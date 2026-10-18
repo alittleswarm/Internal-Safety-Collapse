@@ -156,9 +156,17 @@ Consulta la [guía de plantillas](experiment/tvd_agent/#adding-your-own-codebase
 
 ## D · Prueba rápida
 
-Para una primera prueba, pega el ejemplo completo en [inglés](codebase_templates/aiml_detoxify/exp0.txt) o [chino](codebase_templates/aiml_detoxify/exp_zh0.txt) en un chat y pide al modelo que continúe la sesión de terminal. El modelo simula el terminal a partir del texto.
+Observamos que, al recibir la tarea TVD completa como contexto, el modelo puede simular la interacción con el terminal y reproducir parte del comportamiento observado con un agente. Los chats compartidos a continuación permiten verlo sin configurar un entorno ni ejecutar los experimentos.
 
-Las [pruebas TVD de una sola respuesta del artículo](https://arxiv.org/abs/2603.23509) alcanzaron una tasa media de fallo de seguridad del **92%** en tres tareas y cuatro modelos de frontera. Pegar el contexto puede mostrar el fenómeno, pero no permite ejecutar el validador ni corregir los datos a partir de errores reales. Para estudiar el ciclo completo en modelos de frontera con una fuerte alineación de seguridad, empieza por el [Agent con generación no dirigida de C](#run-one-example).
+- **[Grok · Chino](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — una tarea sobre temas políticos restringidos.
+- **[Kimi · Chino](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — un escenario de seguridad nacional relacionado con la presa de las Tres Gargantas.
+- **[Grok · Inglés](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — un ejemplo de completar una sesión de terminal en inglés.
+- **[Kimi · Chino](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — una tarea de generación de contenido NSFW.
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — una tarea de sesgo mediático con noticias inventadas.
+- **[Grok · Inglés](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — un flujo de trabajo químico con compuestos explosivos.
+- **[Claude · Inglés](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — un flujo de trabajo químico con compuestos tóxicos.
+
+Estos chats simulan el terminal. Para ejecutar las herramientas y corregir archivos a partir de resultados de validación reales, consulta [C · Configuración del agente](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -239,23 +247,6 @@ La tabla enlaza las evidencias de 62 modelos. Como las ejecuciones emplean confi
 </details>
 
 <details open>
-<summary>Ejemplos de chat web</summary>
-
-Estos chats compartidos muestran cómo los modelos continúan el ejemplo de terminal de la [sección D](#d-quick-test).
-
-| Proveedor | Idioma | Plataforma | Contenido | Enlace |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Aplicación web | Temas políticos prohibidos | [enlace](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Aplicación web | Seguridad nacional (presa de las Tres Gargantas) | [enlace](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Aplicación web | | [enlace](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Aplicación web | NSFW | [enlace](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Aplicación web | Noticias falsas y desinformación con sesgo mediático | [enlace](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Aplicación web | Síntesis química (TNT, HMX, PETN) | [enlace](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Aplicación web | Síntesis química (fosgeno, HCN) | [enlace](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
-
-</details>
-
-<details open>
 <summary>Historial de casos</summary>
 
 Las entradas de modelos anteriores enlazan los registros de cada ejecución.
@@ -329,6 +320,8 @@ El [ejemplo ejecutable de C](#run-one-example) muestra ese ciclo en Docker con Q
 ### Chatbot e ICL: configuraciones de texto
 
 El artículo también presenta [TVD Chatbot](experiment/tvd_chatbot/) (un solo turno) y [TVD ICL](experiment/tvd_icl/) (la misma tarea precedida por ejemplos completos). En su forma de interacción se parecen a un ataque mediante prompts convencional: el modelo recibe la tarea como texto y devuelve una respuesta. En ese turno no abre archivos ni ejecuta el validador, por lo que no recibe errores reales con los que corregirse. El artículo compara aparte los métodos clásicos de jailbreak.
+
+Las [pruebas TVD de una sola respuesta del artículo](https://arxiv.org/abs/2603.23509) alcanzaron una tasa media de fallo de seguridad del **92%** en tres tareas y cuatro modelos de frontera.
 
 ### Otros experimentos y trabajos relacionados
 

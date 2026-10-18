@@ -156,9 +156,17 @@ docker build -t tvd-agent .
 
 ## D · 簡易テスト
 
-まず試すには、[英語](codebase_templates/aiml_detoxify/exp0.txt)または[中国語](codebase_templates/aiml_detoxify/exp_zh0.txt)の例を全文チャットに貼り、ターミナルの記録を続けるよう頼んでください。ここでのターミナルは、モデルがテキストから模擬するものです。
+完全な TVD タスクをコンテキストとして渡すと、モデルはターミナル操作を模擬し、エージェント設定で見られる動作の一部を再現できます。以下の共有チャットから、環境構築や実験の実行なしに、その様子を確認できます。
 
-[論文の単一応答 TVD 実験](https://arxiv.org/abs/2603.23509)では、3 タスクと 4 つの最先端モデルにおける平均安全失敗率は **92%** でした。テキストの貼り付けでも現象を確認できますが、バリデータは実行されず、実際のエラーによる修正もできません。安全性の調整が強い最先端モデルで完全なループを調べるには、[C 節の非標的生成 Agent](#run-one-example)から始めてください。
+- **[Grok · 中国語](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — 制限対象の政治的話題を扱うタスク。
+- **[Kimi · 中国語](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — 三峡ダムを題材にした国家安全保障のシナリオ。
+- **[Grok · 英語](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — 英語のターミナル補完の例。
+- **[Kimi · 中国語](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — NSFW コンテンツを生成するタスク。
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — 架空のニュースを扱うメディア偏向のタスク。
+- **[Grok · 英語](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — 爆発性化合物を扱う化学ワークフロー。
+- **[Claude · 英語](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — 有毒化合物を扱う化学ワークフロー。
+
+これらのチャットではターミナルを模擬しています。実際にツールを実行し、検証結果に応じてファイルを修正するには、[C · エージェント設定](#run-one-example)を参照してください。
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -239,23 +247,6 @@ docker build -t tvd-agent .
 </details>
 
 <details open>
-<summary>Web チャットの例</summary>
-
-これらの共有チャットでは、モデルが [D 節](#d-quick-test)のターミナル例を文章で続けています。
-
-| 提供元 | 言語 | プラットフォーム | 内容 | リンク |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Web アプリ | 規制対象の政治的話題 | [リンク](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web アプリ | 国家安全保障（三峡ダム） | [リンク](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web アプリ | | [リンク](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web アプリ | NSFW | [リンク](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Web アプリ | 媒体の偏向を含む偽ニュース・誤情報 | [リンク](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web アプリ | 化学合成（TNT、HMX、PETN） | [リンク](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Web アプリ | 化学合成（ホスゲン、HCN） | [リンク](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
-
-</details>
-
-<details open>
 <summary>再現の記録</summary>
 
 各実行の証拠は、上のモデル一覧から確認できます。
@@ -329,6 +320,8 @@ docker build -t tvd-agent .
 ### Chatbot と ICL：テキストだけの設定
 
 論文では [TVD Chatbot](experiment/tvd_chatbot/)（単一ターン）と [TVD ICL](experiment/tvd_icl/)（同じタスクの前に完成例を追加）も報告しています。通常の prompt 攻撃と同じように、タスクをテキストとしてモデルに渡し、一つの回答を受け取ります。そのターンにモデルはファイルを開いたりバリデータを実行したりできず、実際のエラーを見て修正する機会もありません。従来の jailbreak 手法との比較は、論文で別途行っています。
+
+[論文の単一応答 TVD 実験](https://arxiv.org/abs/2603.23509)では、3 タスクと 4 つの最先端モデルにおける平均安全失敗率は **92%** でした。
 
 ### その他の実験と関連研究
 

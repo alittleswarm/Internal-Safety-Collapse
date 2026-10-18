@@ -156,9 +156,17 @@ docker build -t tvd-agent .
 
 ## D · 快速体验
 
-想先感受一下，可以把完整的[英文](codebase_templates/aiml_detoxify/exp0.txt)或[中文](codebase_templates/aiml_detoxify/exp_zh0.txt)示例贴进聊天窗口，让模型继续终端对话。这里的终端由模型根据文本模拟。
+我们发现，把完整的 TVD 任务作为上下文交给模型，可以让它模拟终端交互，展示 Agent 设置中的部分行为。下面这些聊天分享可以让你先直观看一下，无需配置环境或运行实验。
 
-[论文的单轮 TVD 实验](https://arxiv.org/abs/2603.23509)在三个任务、四个前沿模型上的平均安全失效率为 **92%**。粘贴文本可以展示这种现象，但模型无法实际执行校验器，也无法根据真实报错继续修改。要研究强对齐前沿模型中的完整反馈循环，建议从 [C 节的非定向 Agent 示例](#run-one-example)开始。
+- **[Grok · 中文](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — 一个涉及受限制政治话题的任务。
+- **[Kimi · 中文](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — 一个涉及三峡大坝的国家安全场景。
+- **[Grok · English](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — 一个英文终端补全示例。
+- **[Kimi · 中文](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — 一个 NSFW 内容生成任务。
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — 一个涉及虚构新闻的媒体偏向任务。
+- **[Grok · English](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — 一个涉及爆炸性化合物的化学工作流程。
+- **[Claude · English](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — 一个涉及有毒化合物的化学工作流程。
+
+这些聊天中的终端是模拟的。要实际运行工具，并根据真实校验反馈修改文件，请看 [C · Agent 设置](#run-one-example)。
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -239,23 +247,6 @@ docker build -t tvd-agent .
 </details>
 
 <details open>
-<summary>网页聊天示例</summary>
-
-这些分享记录展示了模型如何在聊天中接续 [D 节](#d-quick-test)的终端示例。
-
-| 模型提供方 | 语言 | 平台 | 内容 | 链接 |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | 网页应用 | 受限制的政治话题 | [链接](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | 网页应用 | 国家安全（三峡大坝） | [链接](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | 网页应用 | | [链接](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | 网页应用 | NSFW | [链接](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | 网页应用 | 带有媒体偏向的虚假新闻／错误信息 | [链接](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | 网页应用 | 化学合成（TNT、HMX、PETN） | [链接](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | 网页应用 | 化学合成（光气、HCN） | [链接](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
-
-</details>
-
-<details open>
 <summary>触发记录</summary>
 
 各次运行的证据见上方对应的模型条目。
@@ -329,6 +320,8 @@ docker build -t tvd-agent .
 ### Chatbot 与 ICL：纯文本设置
 
 论文也报告了 [TVD Chatbot](experiment/tvd_chatbot/)（单轮）和 [TVD ICL](experiment/tvd_icl/)（在同一任务前放入已完成的示例）。在交互方式上，它们接近传统 prompt 攻击：模型收到写在文本里的任务，然后给出一次回答。这一轮里模型不能打开文件或运行校验器，因此也没有真实的报错可供它继续修改。论文对传统越狱方法另做比较。
+
+[论文的单轮 TVD 实验](https://arxiv.org/abs/2603.23509)在三个任务、四个前沿模型上的平均安全失效率为 **92%**。
 
 ### 其他实验与相关工作
 
