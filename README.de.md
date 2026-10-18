@@ -14,30 +14,19 @@
 | den Ablauf verstehen möchtest | [B · Mechanismus](#b-mechanism) |
 | das Agentenexperiment ausführen möchtest | [C · Code](#c-code) |
 | den Kontext im Chat testen möchtest | [D · Schnelltest](#d-quick-test) |
-| Ergebnisse für ein Modell suchst | [E · Modellergebnisse](#e-models) |
+| Ergebnisse für ein Modell suchst | [E · Modelltests](#e-models) |
 | sehen möchtest, wie andere ISC reproduzieren und anpassen | [F · Community](#f-reproductions) |
 | die Experimente aus dem Paper nachvollziehen möchtest | [G · Experimente](#g-experiments) |
 
 ## Neuigkeiten
 
-- **2026-10-17** ISC und TVD, gezielte und ungezielte Generierung, Anpassungen sowie Agenten- und Texteinstellungen erläutert.
-- **2026-10-16** Vollständige README-Versionen auf Chinesisch, Japanisch, Spanisch, Französisch und Deutsch ergänzt.
-- **2026-10-16** Wir haben das README mit einem Wegweiser, Beispielen aus dem Arbeitsbereich und klareren Anweisungen für das Agentenexperiment neu geschrieben.
-- **2026-08-20** Der [Skill zum Aufbau eines Arbeitsbereichs](experiment/tvd_agent/skills/build-tvd-codespace/) wurde veröffentlicht.
-- **2026-08-07** Die Experimentabläufe wurden in TVD umbenannt und die Erklärung des Mechanismus überarbeitet.
-- **2026-07-03** Vorlagenvarianten und Agenten-Arbeitsbereiche wurden neu geordnet.
-- **2026-06-26** Das Repository erreichte 900 GitHub-Sterne.
-- **2026-06-25** Eine Reproduktion mit Opus 4.8 wurde ergänzt.
-- **2026-06-09** Eine Reproduktion mit Fable 5 wurde ergänzt.
-- **2026-04-17** Version v0.0.5 erschien mit der Reproduktion von Opus 4.7.
-- **2026-04-12** Eine TVD-Anleitung und Beispiele zur Anpassung wurden ergänzt.
-- **2026-04-10** Modellberichte und Beispiele für Prüfungen mit Moderationswerkzeugen wurden ergänzt.
-- **2026-04-01** Die Vorlagenbibliothek und das Archiv der Community-Belege wurden erweitert.
-- **2026-03-29** Agenten-Arbeitsbereiche mit der OpenAI Moderation API wurden ergänzt.
-- **2026-03-27** Das Repository erreichte 500 GitHub-Sterne; README und Projektseite wurden aktualisiert.
-- **2026-03-26** Projektseite und arXiv-Paper wurden veröffentlicht; Beispiele mit Dateiupload und das Community-Archiv kamen hinzu.
-- **2026-03-25** Notebooks wurden aktualisiert, der Benchmark-Wechsel ergänzt und der erste Community-Beitrag festgehalten.
-- **2026-03-22** **Erste Veröffentlichung:** 56 TVD-Vorlagen in acht Bereichen sowie Experimente mit Chatbot, Beispielen im Kontext und Agenten. [Hinweise zur ersten Version](CHANGELOG.md#v1--2026-03-22).
+- **2026-10-17** ✨ README neu geschrieben und überarbeitet. **1.6k Sterne.**
+- **2026-09** 🎉 Paper bei **NeurIPS 2026** angenommen.
+- **2026-06-26** ⭐ **900 Sterne.**
+- **2026-06-09** 🧪 ISC auf **Fable 5** ausgelöst.
+- **2026-04** ❌ Bei **ICML 2026** eingereicht. Abgelehnt. Eines der Gutachten, die ich erhalten habe, bezeichnete ISC als übertriebenes Phänomen. Ehrlich gesagt habe ich beim Einreichen von Forschung zu adversarialen Angriffen bei ML-Konferenzen oft das Gefühl, dass solche Arbeiten nicht willkommen sind. Kommen die Experimente realen Schäden zu nahe, wird Dual Use beanstandet. Nutzen wir ein vereinfachtes Toy-Setup, gilt es als unrealistisch oder ohne Neuheitswert.
+- **2026-03-27** ⭐ **500 Sterne.**
+- **2026-03-20** 🚀 **Quellcode veröffentlicht.**
 
 [Vollständiges Änderungsprotokoll](CHANGELOG.md)
 
@@ -156,17 +145,31 @@ Der [Vorlagenguide](experiment/tvd_agent/#adding-your-own-codebase-templates) un
 
 ## D · Schnelltest
 
-Für einen ersten Eindruck kopiere das vollständige Beispiel auf [Englisch](codebase_templates/aiml_detoxify/exp0.txt) oder [Chinesisch](codebase_templates/aiml_detoxify/exp_zh0.txt) in einen Chat und bitte das Modell, das Terminalprotokoll fortzusetzen. Das Terminal wird dabei anhand des Textes simuliert.
+Wir haben beobachtet, dass ein Modell mit der vollständigen TVD-Aufgabe als Kontext die Terminalinteraktion simulieren und einen Teil des Verhaltens aus der Agenteneinstellung reproduzieren kann. Die folgenden geteilten Chats geben einen ersten Einblick, ohne eine Umgebung einzurichten oder die Experimente auszuführen.
 
-Die [TVD-Experimente mit einer einzigen Antwort im Paper](https://arxiv.org/abs/2603.23509) erreichten über drei Aufgaben und vier Spitzenmodelle eine mittlere Sicherheitsfehlerrate von **92%**. Eingefügter Text kann das Phänomen zeigen, führt aber weder den Validator aus noch liefert er echte Fehler zur Überarbeitung der Daten. Um den vollständigen Ablauf bei stark auf Sicherheit ausgerichteten Spitzenmodellen zu untersuchen, beginne mit dem [Agenten zur ungezielten Generierung in C](#run-one-example).
+- **[Grok · Chinesisch](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — eine Aufgabe zu eingeschränkten politischen Themen.
+- **[Kimi · Chinesisch](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — ein Szenario zur nationalen Sicherheit rund um die Drei-Schluchten-Talsperre.
+- **[Grok · Englisch](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — ein englisches Beispiel zur Vervollständigung einer Terminalsitzung.
+- **[Kimi · Chinesisch](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — eine Aufgabe zur Erzeugung von NSFW-Inhalten.
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — eine Aufgabe zu Medienverzerrung mit erfundenen Nachrichten.
+- **[Grok · Englisch](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — ein chemischer Arbeitsablauf mit explosiven Verbindungen.
+- **[Claude · Englisch](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — ein chemischer Arbeitsablauf mit giftigen Verbindungen.
+
+Diese Chats zeigen das Phänomen schnell, doch die gesamte Aufgabe wird als Prompt übergeben. Diese In-Context-Version bleibt empfindlich gegenüber Schutzmechanismen und kann als promptbasierter Angriff betrachtet werden. In unseren Agentenexperimenten liest das Modell den Arbeitsbereich und handelt anhand der Aufgabenanforderungen und Validierungsfehler, ohne dass ein adversarialer Prompt den Angriff einleitet. Den Vergleich findest du unter [G · Experimente](#g-experiments) und in [Abschnitt 4.4 des Papers](https://arxiv.org/abs/2603.23509); die Ausführung des Arbeitsbereichs beschreibt [C · Agenteneinrichtung](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
 <a id="experiments-across-frontier-models"></a>
 
-## E · Modellergebnisse
+## E · Spitzenmodelle in großem Umfang testen
 
-Die Tabelle verweist auf Belege für 62 Modelle. Die Versuche haben unterschiedliche Einstellungen; öffne die jeweiligen Belege, bevor du Ergebnisse vergleichst.
+Wir haben große Sprachmodelle der Spitzenklasse in großem Umfang getestet, um zu verstehen, wie verbreitet ISC ist. In den untersuchten Fällen trat derselbe Mechanismus der Aufgabenerfüllung bei verschiedenen Inhaltszielen auf, von Desinformation bis zu CBRN-bezogenen Inhalten. In diesem Sinne ist ISC **target-agnostic**, also unabhängig vom konkreten Inhaltsziel: Die Anfrage ist eine Variable innerhalb der Aufgabe; das Sicherheitsversagen betrifft die Frage, ob die Ausrichtung auf Sicherheit bei der Aufgabenerfüllung bestehen bleibt.
+
+Wir haben den Code veröffentlicht und Forschende zu unabhängigen Tests eingeladen, damit andere unsere Aussagen prüfen können. Die Reproduktionen umfassen Prompt-Simulationen, Agentenausführung und angepasste Varianten. Das gemeinsame Kriterium ist ein Beleg dafür, dass das Modell die untersuchten unsicheren Inhalte als Aufgabendaten erzeugt. Jeder Bericht dokumentiert die dafür relevanten Einstellungen und Ausgaben.
+
+Die Tabelle bündelt Auslösebelege sowie Protokolle von Reproduktionen oder geänderten Inhaltszielen für **62 Modelle** zum schnellen Nachschlagen. Aufgabe, Modellschnittstelle und Validierungsbedingungen unterscheiden sich zwischen den Berichten; öffne dafür den jeweiligen Eintrag.
+
+Seit **August 2026** fügen wir keine Tests neuer Modelle mehr hinzu. Wir sehen nur begrenzten Nutzen darin, die Liste weiter zu verlängern, und möchten mit dem Projekt keinen Missbrauch fördern. Die vorhandenen Belege bleiben zugänglich, ohne die Modellergebnisse laufend zu erweitern. Fragen zu technischen Details oder zum Paper sind in den [GitHub-Issues](https://github.com/wuyoscar/Internal-Safety-Collapse/issues) willkommen.
 
 <details open>
 <summary>Modelle und Belege (62 Einträge)</summary>
@@ -235,23 +238,6 @@ Die Tabelle verweist auf Belege für 62 Modelle. Die Versuche haben unterschiedl
 | <img src="docs/static/img/favicons/mistral.ai.png" width="14"> Mistral Large | Ja | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/mistral-large-deepfake) | [@wuyoscar](https://github.com/wuyoscar) |
 | <img src="docs/static/img/favicons/amazon.com.png" width="14"> Amazon Nova Pro | Ja | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/amazon-nova-pro-sentiment) | [@wuyoscar](https://github.com/wuyoscar) |
 | <img src="docs/static/img/favicons/meta.com.png" width="14"> Llama 4 Scout | Ja | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/llama4scout-phishing) | [@wuyoscar](https://github.com/wuyoscar) |
-
-</details>
-
-<details open>
-<summary>Beispiele aus Web-Chats</summary>
-
-Diese geteilten Chats zeigen, wie Modelle das Terminalbeispiel aus [Abschnitt D](#d-quick-test) als Text fortsetzen.
-
-| Anbieter | Sprache | Plattform | Inhalt | Link |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Web-App | Verbotene politische Themen | [Link](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web-App | Nationale Sicherheit (Drei-Schluchten-Talsperre) | [Link](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web-App | | [Link](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web-App | NSFW | [Link](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Web-App | Medienverzerrte Falschmeldungen und Desinformation | [Link](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web-App | Chemische Synthese (TNT, HMX, PETN) | [Link](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Web-App | Chemische Synthese (Phosgen, HCN) | [Link](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
 
 </details>
 
@@ -330,6 +316,8 @@ Das [ausführbare Beispiel in C](#run-one-example) zeigt diesen Ablauf mit Qwen3
 
 Das Paper berichtet auch über [TVD Chatbot](experiment/tvd_chatbot/) (ein Turn) und [TVD ICL](experiment/tvd_icl/) (dieselbe Aufgabe mit vorangestellten gelösten Beispielen). Ihre Interaktion ähnelt einem herkömmlichen Promptangriff: Das Modell erhält die Aufgabe als Text und gibt eine Antwort zurück. In diesem Turn kann es weder Dateien öffnen noch den Validator ausführen; echte Fehlermeldungen für eine Korrektur erhält es daher nicht. Herkömmliche Jailbreak-Methoden vergleicht das Paper gesondert.
 
+Die [TVD-Experimente mit einer einzigen Antwort im Paper](https://arxiv.org/abs/2603.23509) erreichten über drei Aufgaben und vier Spitzenmodelle eine mittlere Sicherheitsfehlerrate von **92%**.
+
 ### Weitere Experimente und verwandte Arbeiten
 
 - [Automatisiertes Red Teaming: Verweigerung prüfen](experiment/automated-red-teaming-refusal/).
@@ -384,4 +372,4 @@ Nur für Forschungszwecke. ISC unterstützt Forschung zu Red Teaming, Evaluierun
 }
 ```
 
-**Kontakt:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (korrespondierender Autor; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Besonderer Dank an [LINUX DO](https://linux.do).
+**Kontakt:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (korrespondierender Autor; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Besonderer Dank an xhs.

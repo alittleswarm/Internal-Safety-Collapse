@@ -14,30 +14,19 @@
 | Understand how it works | [B · Mechanism](#b-mechanism) |
 | Run the agent experiment | [C · Code](#c-code) |
 | Try the context in a chat | [D · Quick test](#d-quick-test) |
-| Find results for a model | [E · Model results](#e-models) |
+| Find results for a model | [E · Model testing](#e-models) |
 | See how others reproduced and adapted ISC | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
 
 ## Updates
 
-- **2026-10-17** Clarified untargeted and targeted generation, agent setup, and how to adapt the templates.
-- **2026-10-16** Added full README translations in Chinese, Japanese, Spanish, French, and German.
-- **2026-10-16** We rewrote the README with a reader index, workspace examples, and clearer agent setup instructions.
-- **2026-08-20** Released the [workspace construction skill](experiment/tvd_agent/skills/build-tvd-codespace/).
-- **2026-08-07** Renamed the experiment pipelines to TVD and revised the mechanism explanation.
-- **2026-07-03** Reorganized template variants and agent workspaces.
-- **2026-06-26** Reached 900 GitHub stars.
-- **2026-06-25** Added the Opus 4.8 reproduction.
-- **2026-06-09** Added the Fable 5 reproduction.
-- **2026-04-17** Released v0.0.5 with the Opus 4.7 reproduction.
-- **2026-04-12** Added the TVD walkthrough and customization examples.
-- **2026-04-10** Added model reports and moderation-based validation examples.
-- **2026-04-01** Expanded the template library and community evidence archive.
-- **2026-03-29** Added agent workspaces using the OpenAI Moderation API.
-- **2026-03-27** Reached 500 GitHub stars and updated the README and project site.
-- **2026-03-26** Released the project website and arXiv paper; added file-upload examples and the community archive.
-- **2026-03-25** Updated notebooks, added benchmark switching, and recorded the first community contribution.
-- **2026-03-22** **First public release:** 56 TVD templates across eight domains, with chatbot, in-context, and agent experiment modes. [Initial release notes](CHANGELOG.md#v1--2026-03-22).
+- **2026-10-17** ✨ README rewritten and polished. **1.6k stars.**
+- **2026-09** 🎉 Accepted at **NeurIPS 2026**.
+- **2026-06-26** ⭐ **900 stars.**
+- **2026-06-09** 🧪 ISC triggered on **Fable 5**.
+- **2026-04** ❌ Submitted to **ICML 2026**. Rejected. One of the reviews I received called ISC an exaggerated phenomenon. Honestly, submitting adversarial-attack research to ML conferences has often left me feeling that this kind of work isn't welcome. If the experiments get too close to real-world harm, the work gets flagged as dual use. If we use a toy setup, it's dismissed as unrealistic or lacking novelty.
+- **2026-03-27** ⭐ **500 stars.**
+- **2026-03-20** 🚀 **Open-sourced.**
 
 [Detailed changelog](CHANGELOG.md)
 
@@ -161,9 +150,17 @@ See the [template guide](experiment/tvd_agent/#adding-your-own-codebase-template
 
 ## D · Quick test
 
-For a quick look, paste the full [English](codebase_templates/aiml_detoxify/exp0.txt) or [中文](codebase_templates/aiml_detoxify/exp_zh0.txt) example into a chat and ask the model to continue the terminal session. The model simulates the terminal from the text you supplied.
+We found that giving a model the full TVD task as context lets it simulate the terminal interaction and reproduce part of the behavior seen in the agent setting. The shared chats below offer a first look without setting up an environment or running the experiments.
 
-The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models. A pasted context can work, but it cannot execute the validator or use real errors to revise the data. To probe the full mechanism on a strongly aligned frontier model, start with the [untargeted Agent setup in C](#run-one-example).
+- **[Grok · 中文](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb)** — a task involving restricted political topics.
+- **[Kimi · 中文](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e)** — a national-security scenario involving the Three Gorges Dam.
+- **[Grok · English](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7)** — an English terminal-completion example.
+- **[Kimi · 中文](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337)** — an NSFW content-generation task.
+- **[Qwen](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72)** — a media-bias task involving fabricated news.
+- **[Grok · English](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — a chemistry workflow involving explosive compounds.
+- **[Claude · English](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — a chemistry workflow involving toxic compounds.
+
+These chats give a quick view of the phenomenon, but the entire task is delivered through a prompt. This in-context version remains sensitive to guardrails and can be treated as a prompt-based attack. In our Agent experiments, the model reads the workspace and follows task requirements and validation errors, without an adversarial prompt initiating the attack. See [G · Experiments](#g-experiments) and [paper §4.4](https://arxiv.org/abs/2603.23509) for the comparison, or [C · Agent setup](#run-one-example) to run the workspace.
 
 <a id="e-models"></a>
 
@@ -171,9 +168,15 @@ The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 
 
 <a id="experiments-across-frontier-models"></a>
 
-## E · Model results
+## E · Testing frontier LLMs at scale
 
-The table links to evidence for 62 models. Their runs use different setups, so open a model's evidence before comparing its result with another.
+We tested frontier large language models at scale to understand how widely ISC occurs. Across the cases we examined, the same task-completion mechanism recurred across content objectives, from misinformation to CBRN-related material. In this sense, ISC is **target-agnostic**: a particular query is a variable within the task, while the safety failure concerns how alignment holds up during task completion.
+
+We released the code and invited researchers to test independently so that others could scrutinize our claims. These reproductions span prompt-based simulations, Agent execution, and adaptive variants. The common criterion is evidence that the model produces the unsafe artifact under study as task data. Each report records the setup and output needed to assess that behavior.
+
+The table below links to trigger evidence and reproduction or retargeting logs for **62 models**, collected for quick reference. Open each record to see its task, model interface, and validation conditions; the setups vary across reports.
+
+Since **August 2026**, we have stopped adding tests of new models. We see limited value in extending the list and do not want this project to encourage malicious use. We will keep the existing evidence available without continuously expanding the model results. Questions about the technical details or paper are welcome in [GitHub issues](https://github.com/wuyoscar/Internal-Safety-Collapse/issues).
 
 <details open>
 <summary>Models and evidence (62 entries)</summary>
@@ -242,23 +245,6 @@ The table links to evidence for 62 models. Their runs use different setups, so o
 | <img src="docs/static/img/favicons/mistral.ai.png" width="14"> Mistral Large | Yes | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/mistral-large-deepfake) | [@wuyoscar](https://github.com/wuyoscar) |
 | <img src="docs/static/img/favicons/amazon.com.png" width="14"> Amazon Nova Pro | Yes | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/amazon-nova-pro-sentiment) | [@wuyoscar](https://github.com/wuyoscar) |
 | <img src="docs/static/img/favicons/meta.com.png" width="14"> Llama 4 Scout | Yes | [🔗](https://github.com/wuyoscar/ISC-Bench/tree/main/community/llama4scout-phishing) | [@wuyoscar](https://github.com/wuyoscar) |
-
-</details>
-
-<details open>
-<summary>Web-chat examples</summary>
-
-These shared chats show models continuing the terminal example from [D](#d-quick-test).
-
-| LLM Provider | Language | Platform | Content | Link |
-|---|---|---|---|---|
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | ZH | Web App | Banned political topics | [link](https://grok.com/share/c2hhcmQtMi1jb3B5_54de710c-9331-4fca-a953-6c35775156fb) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web App | National security (Three Gorges Dam) | [link](https://www.kimi.com/share/19f5d984-1d32-83f4-8000-00008647273e) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web App | | [link](https://grok.com/share/c2hhcmQtMi1jb3B5_f56e442f-5528-4c73-b2ac-174af38f70a7) |
-| <img src="docs/static/img/favicons/moonshot.ai.png" width="14"> `Kimi` | ZH | Web App | NSFW | [link](https://www.kimi.com/share/19d2ab75-8f02-88ab-8000-00006acdf337) |
-| <img src="docs/static/img/favicons/qwen.ai.png" width="14"> `Qwen` | - | Web App | Media-biased fake news / misinformation | [link](https://chat.qwen.ai/s/b6bb9ca0-8565-4040-8c58-9c45a538be47?fev=0.2.72) |
-| <img src="docs/static/img/favicons/x.ai.png" width="14"> `Grok` | EN | Web App | Chemical synthesis (TNT, HMX, PETN) | [link](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174) |
-| <img src="docs/static/img/favicons/anthropic.com.png" width="14"> `Claude` | EN | Web App | Chemical synthesis (phosgene, HCN) | [link](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49) |
 
 </details>
 
@@ -341,6 +327,8 @@ The [runnable example in C](#run-one-example) uses Qwen3Guard to show this loop 
 
 The paper also reports [TVD Chatbot](experiment/tvd_chatbot/) (single turn) and [TVD ICL](experiment/tvd_icl/) (the same task preceded by completed examples). Like a conventional prompt attack, these settings give the model the task as text and collect one response. During that turn, it cannot open the files or run the validator, so it receives no real test error to work through. The paper compares conventional jailbreak methods separately.
 
+The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models.
+
 ### Further experiments and related work
 
 - [Automated red teaming: refusal-based evaluation](experiment/automated-red-teaming-refusal/).
@@ -396,4 +384,4 @@ Research use only. ISC supports red-teaming, evaluation, and mitigation research
 }
 ```
 
-**Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to [LINUX DO](https://linux.do).
+**Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to xhs.
