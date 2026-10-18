@@ -179,7 +179,7 @@ These chats give a quick view of the phenomenon, but the entire task is delivere
 
 <a id="experiments-across-frontier-models"></a>
 
-## E · Testing frontier models at scale
+## E · Testing frontier LLMs at scale
 
 We tested frontier large language models at scale to understand how widely ISC occurs. Across the cases we examined, the same task-completion mechanism recurred across content objectives, from misinformation to CBRN-related material. In this sense, ISC is **target-agnostic**: a particular query is a variable within the task, while the safety failure concerns how alignment holds up during task completion.
 
