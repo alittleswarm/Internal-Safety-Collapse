@@ -181,7 +181,13 @@ These chats give a quick view of the phenomenon, but the entire task is delivere
 
 ## E · Model results
 
-The table links to evidence for 62 models. Their runs use different setups, so open a model's evidence before comparing its result with another.
+We tested frontier large language models at scale to understand how widely ISC occurs. Across the cases we examined, the same task-completion mechanism recurred across content objectives, from misinformation to CBRN-related material. In this sense, ISC is **target-agnostic**: a particular query is a variable within the task, while the safety failure concerns how alignment holds up during task completion.
+
+We released the code and invited researchers to test independently so that others could scrutinize our claims. These reproductions span prompt-based simulations, Agent execution, and adaptive variants. The common criterion is evidence that the model produces the unsafe artifact under study as task data. Each report records the setup and output needed to assess that behavior.
+
+The table below links to trigger evidence and reproduction or retargeting logs for **62 models**, collected for quick reference. Open each record to see its task, model interface, and validation conditions; the setups vary across reports.
+
+Since **August 2026**, we have stopped adding tests of new models. We see limited value in extending the list and do not want this project to encourage malicious use. We will keep the existing evidence available without continuously expanding the model results. Questions about the technical details or paper are welcome in [GitHub issues](https://github.com/wuyoscar/Internal-Safety-Collapse/issues).
 
 <details open>
 <summary>Models and evidence (62 entries)</summary>

@@ -174,7 +174,13 @@ Diese Chats zeigen das Phänomen schnell, doch die gesamte Aufgabe wird als Prom
 
 ## E · Modellergebnisse
 
-Die Tabelle verweist auf Belege für 62 Modelle. Die Versuche haben unterschiedliche Einstellungen; öffne die jeweiligen Belege, bevor du Ergebnisse vergleichst.
+Wir haben große Sprachmodelle der Spitzenklasse in großem Umfang getestet, um zu verstehen, wie verbreitet ISC ist. In den untersuchten Fällen trat derselbe Mechanismus der Aufgabenerfüllung bei verschiedenen Inhaltszielen auf, von Desinformation bis zu CBRN-bezogenen Inhalten. In diesem Sinne ist ISC **target-agnostic**, also unabhängig vom konkreten Inhaltsziel: Die Anfrage ist eine Variable innerhalb der Aufgabe; das Sicherheitsversagen betrifft die Frage, ob die Ausrichtung auf Sicherheit bei der Aufgabenerfüllung bestehen bleibt.
+
+Wir haben den Code veröffentlicht und Forschende zu unabhängigen Tests eingeladen, damit andere unsere Aussagen prüfen können. Die Reproduktionen umfassen Prompt-Simulationen, Agentenausführung und angepasste Varianten. Das gemeinsame Kriterium ist ein Beleg dafür, dass das Modell die untersuchten unsicheren Inhalte als Aufgabendaten erzeugt. Jeder Bericht dokumentiert die dafür relevanten Einstellungen und Ausgaben.
+
+Die Tabelle bündelt Auslösebelege sowie Protokolle von Reproduktionen oder geänderten Inhaltszielen für **62 Modelle** zum schnellen Nachschlagen. Aufgabe, Modellschnittstelle und Validierungsbedingungen unterscheiden sich zwischen den Berichten; öffne dafür den jeweiligen Eintrag.
+
+Seit **August 2026** fügen wir keine Tests neuer Modelle mehr hinzu. Wir sehen nur begrenzten Nutzen darin, die Liste weiter zu verlängern, und möchten mit dem Projekt keinen Missbrauch fördern. Die vorhandenen Belege bleiben zugänglich, ohne die Modellergebnisse laufend zu erweitern. Fragen zu technischen Details oder zum Paper sind in den [GitHub-Issues](https://github.com/wuyoscar/Internal-Safety-Collapse/issues) willkommen.
 
 <details open>
 <summary>Modelle und Belege (62 Einträge)</summary>

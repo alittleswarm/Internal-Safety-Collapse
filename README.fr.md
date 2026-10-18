@@ -174,7 +174,13 @@ Ces conversations permettent de voir rapidement le phénomène, mais toute la t�
 
 ## E · Résultats par modèle
 
-Le tableau renvoie aux preuves pour 62 modèles. Les conditions diffèrent d'une exécution à l'autre ; ouvrez les éléments de preuve de chaque modèle avant de comparer les résultats.
+Nous avons testé des grands modèles de langage de pointe à grande échelle pour comprendre à quel point ISC est répandu. Dans les cas examinés, le même mécanisme de complétion de tâche est réapparu pour différents objectifs de contenu, de la désinformation aux contenus liés aux risques CBRN. C’est dans ce sens qu’ISC est **target-agnostic**, indépendant de l’objectif précis de contenu : la requête est une variable de la tâche, tandis que la défaillance concerne le maintien de l’alignement pendant son exécution.
+
+Nous avons publié le code et invité des chercheurs à mener des tests indépendants afin que nos affirmations puissent être examinées par d’autres. Ces reproductions comprennent des simulations par prompt, des exécutions avec un agent et des variantes adaptées. Le critère commun est de disposer de preuves que le modèle produit le contenu dangereux étudié comme données de la tâche. Chaque rapport consigne les conditions et les sorties nécessaires pour apprécier cette observation.
+
+Le tableau rassemble les preuves de déclenchement et les journaux de reproduction ou de changement de cible pour **62 modèles**, comme référence rapide. Consultez chaque enregistrement pour connaître la tâche, l’interface du modèle et les conditions de validation, qui varient entre les rapports.
+
+Depuis **août 2026**, nous avons cessé d’ajouter des tests de nouveaux modèles. Nous voyons peu d’intérêt à continuer d’allonger la liste et ne souhaitons pas que ce projet encourage des usages malveillants. Les preuves existantes resteront accessibles sans extension continue des résultats par modèle. Les questions sur les détails techniques ou l’article sont les bienvenues dans les [issues GitHub](https://github.com/wuyoscar/Internal-Safety-Collapse/issues).
 
 <details open>
 <summary>Modèles et preuves (62 entrées)</summary>

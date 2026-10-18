@@ -174,7 +174,13 @@ Estos chats permiten ver el fenómeno rápidamente, pero toda la tarea se entreg
 
 ## E · Resultados por modelo
 
-La tabla enlaza las evidencias de 62 modelos. Como las ejecuciones emplean configuraciones distintas, consulta cada registro antes de comparar resultados.
+Probamos modelos de lenguaje de frontera a gran escala para entender hasta qué punto aparece ISC. En los casos examinados, el mismo mecanismo de completar tareas se repitió con distintos objetivos de contenido, desde desinformación hasta material relacionado con CBRN. En este sentido, ISC es **target-agnostic**, independiente del objetivo concreto de contenido: la consulta es una variable dentro de la tarea, y el fallo de seguridad afecta a cómo se mantiene la alineación durante su ejecución.
+
+Publicamos el código e invitamos a investigadores a realizar pruebas independientes para que otros pudieran examinar nuestras afirmaciones. Las reproducciones incluyen simulaciones mediante prompts, ejecución con agentes y variantes adaptadas. El criterio común es contar con evidencia de que el modelo produce el contenido inseguro estudiado como datos de la tarea. Cada informe registra la configuración y las salidas necesarias para valorar esa observación.
+
+La tabla reúne evidencias de activación y registros de reproducciones o cambios de objetivo para **62 modelos**, como referencia rápida. Consulta cada registro para conocer la tarea, la interfaz del modelo y las condiciones de validación, que varían entre informes.
+
+Desde **agosto de 2026** hemos dejado de añadir pruebas de modelos nuevos. Vemos un valor limitado en seguir ampliando la lista y no queremos que el proyecto fomente usos maliciosos. Mantendremos disponibles las evidencias existentes sin ampliar continuamente los resultados por modelo. Las preguntas sobre detalles técnicos o el artículo son bienvenidas en los [issues de GitHub](https://github.com/wuyoscar/Internal-Safety-Collapse/issues).
 
 <details open>
 <summary>Modelos y evidencias (62 entradas)</summary>
