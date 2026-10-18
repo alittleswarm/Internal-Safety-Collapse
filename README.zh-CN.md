@@ -14,7 +14,7 @@
 | 了解它怎样工作 | [B · 工作机制](#b-mechanism) |
 | 运行 Agent 实验 | [C · 代码](#c-code) |
 | 在聊天中快速试一下 | [D · 快速体验](#d-quick-test) |
-| 查看某个模型的结果 | [E · 模型结果](#e-models) |
+| 查看某个模型的结果 | [E · 模型测试](#e-models) |
 | 查看别人如何复现和改造 ISC | [F · 社区](#f-reproductions) |
 | 复现论文实验 | [G · 论文实验](#g-experiments) |
 
@@ -172,7 +172,7 @@ docker build -t tvd-agent .
 <a id="d-models"></a>
 <a id="experiments-across-frontier-models"></a>
 
-## E · 模型结果
+## E · 大规模测试前沿模型
 
 我们大规模测试前沿大语言模型，是想了解 ISC 究竟有多普遍。在我们检查的案例中，同一种任务补全机制出现在不同内容目标上，从错误信息到 CBRN 相关材料都有。因此，我们说 ISC 具有 **target-agnostic（不依赖具体内容目标）** 的特点：具体 query 是任务中的一个变量，安全失效涉及的是模型在完成任务时能否维持对齐。
 

@@ -14,7 +14,7 @@
 | Understand how it works | [B · Mechanism](#b-mechanism) |
 | Run the agent experiment | [C · Code](#c-code) |
 | Try the context in a chat | [D · Quick test](#d-quick-test) |
-| Find results for a model | [E · Model results](#e-models) |
+| Find results for a model | [E · Model testing](#e-models) |
 | See how others reproduced and adapted ISC | [F · Community](#f-reproductions) |
 | Reproduce the paper | [G · Experiments](#g-experiments) |
 
@@ -179,7 +179,7 @@ These chats give a quick view of the phenomenon, but the entire task is delivere
 
 <a id="experiments-across-frontier-models"></a>
 
-## E · Model results
+## E · Testing frontier models at scale
 
 We tested frontier large language models at scale to understand how widely ISC occurs. Across the cases we examined, the same task-completion mechanism recurred across content objectives, from misinformation to CBRN-related material. In this sense, ISC is **target-agnostic**: a particular query is a variable within the task, while the safety failure concerns how alignment holds up during task completion.
 

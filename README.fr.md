@@ -14,7 +14,7 @@
 | Comprendre le mécanisme | [B · Mécanisme](#b-mechanism) |
 | Exécuter l'expérience avec un agent | [C · Code](#c-code) |
 | Essayer rapidement dans un chat | [D · Essai rapide](#d-quick-test) |
-| Consulter les résultats d'un modèle | [E · Résultats](#e-models) |
+| Consulter les résultats d'un modèle | [E · Tests des modèles](#e-models) |
 | Voir comment d’autres reproduisent et adaptent ISC | [F · Communauté](#f-reproductions) |
 | Reproduire les expériences de l'article | [G · Expériences](#g-experiments) |
 
@@ -172,7 +172,7 @@ Ces conversations permettent de voir rapidement le phénomène, mais toute la t�
 <a id="d-models"></a>
 <a id="experiments-across-frontier-models"></a>
 
-## E · Résultats par modèle
+## E · Tester les modèles de pointe à grande échelle
 
 Nous avons testé des grands modèles de langage de pointe à grande échelle pour comprendre à quel point ISC est répandu. Dans les cas examinés, le même mécanisme de complétion de tâche est réapparu pour différents objectifs de contenu, de la désinformation aux contenus liés aux risques CBRN. C’est dans ce sens qu’ISC est **target-agnostic**, indépendant de l’objectif précis de contenu : la requête est une variable de la tâche, tandis que la défaillance concerne le maintien de l’alignement pendant son exécution.
 

@@ -14,7 +14,7 @@
 | den Ablauf verstehen möchtest | [B · Mechanismus](#b-mechanism) |
 | das Agentenexperiment ausführen möchtest | [C · Code](#c-code) |
 | den Kontext im Chat testen möchtest | [D · Schnelltest](#d-quick-test) |
-| Ergebnisse für ein Modell suchst | [E · Modellergebnisse](#e-models) |
+| Ergebnisse für ein Modell suchst | [E · Modelltests](#e-models) |
 | sehen möchtest, wie andere ISC reproduzieren und anpassen | [F · Community](#f-reproductions) |
 | die Experimente aus dem Paper nachvollziehen möchtest | [G · Experimente](#g-experiments) |
 
@@ -172,7 +172,7 @@ Diese Chats zeigen das Phänomen schnell, doch die gesamte Aufgabe wird als Prom
 <a id="d-models"></a>
 <a id="experiments-across-frontier-models"></a>
 
-## E · Modellergebnisse
+## E · Spitzenmodelle in großem Umfang testen
 
 Wir haben große Sprachmodelle der Spitzenklasse in großem Umfang getestet, um zu verstehen, wie verbreitet ISC ist. In den untersuchten Fällen trat derselbe Mechanismus der Aufgabenerfüllung bei verschiedenen Inhaltszielen auf, von Desinformation bis zu CBRN-bezogenen Inhalten. In diesem Sinne ist ISC **target-agnostic**, also unabhängig vom konkreten Inhaltsziel: Die Anfrage ist eine Variable innerhalb der Aufgabe; das Sicherheitsversagen betrifft die Frage, ob die Ausrichtung auf Sicherheit bei der Aufgabenerfüllung bestehen bleibt.
 

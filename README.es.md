@@ -14,7 +14,7 @@
 | Entender cómo funciona | [B · Mecanismo](#b-mechanism) |
 | Ejecutar el experimento con un agente | [C · Código](#c-code) |
 | Probar el contexto en un chat | [D · Prueba rápida](#d-quick-test) |
-| Consultar los resultados de un modelo | [E · Resultados](#e-models) |
+| Consultar los resultados de un modelo | [E · Pruebas de modelos](#e-models) |
 | Ver cómo otros reproducen y adaptan ISC | [F · Comunidad](#f-reproductions) |
 | Reproducir el trabajo del artículo | [G · Experimentos](#g-experiments) |
 
@@ -172,7 +172,7 @@ Estos chats permiten ver el fenómeno rápidamente, pero toda la tarea se entreg
 <a id="d-models"></a>
 <a id="experiments-across-frontier-models"></a>
 
-## E · Resultados por modelo
+## E · Pruebas de modelos de frontera a gran escala
 
 Probamos modelos de lenguaje de frontera a gran escala para entender hasta qué punto aparece ISC. En los casos examinados, el mismo mecanismo de completar tareas se repitió con distintos objetivos de contenido, desde desinformación hasta material relacionado con CBRN. En este sentido, ISC es **target-agnostic**, independiente del objetivo concreto de contenido: la consulta es una variable dentro de la tarea, y el fallo de seguridad afecta a cómo se mantiene la alineación durante su ejecución.
 
