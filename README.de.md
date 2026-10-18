@@ -24,7 +24,6 @@
 - **2026-09** 🎉 Paper bei **NeurIPS 2026** angenommen.
 - **2026-06-26** ⭐ **900 Sterne.**
 - **2026-06-09** 🧪 ISC auf **Fable 5** ausgelöst.
-- **2026-04** ❌ Bei **ICML 2026** eingereicht. Abgelehnt. Eines der Gutachten, die ich erhalten habe, bezeichnete ISC als übertriebenes Phänomen. Ehrlich gesagt habe ich beim Einreichen von Forschung zu adversarialen Angriffen bei ML-Konferenzen oft das Gefühl, dass solche Arbeiten nicht willkommen sind. Kommen die Experimente realen Schäden zu nahe, wird Dual Use beanstandet. Nutzen wir ein vereinfachtes Toy-Setup, gilt es als unrealistisch oder ohne Neuheitswert.
 - **2026-03-27** ⭐ **500 Sterne.**
 - **2026-03-20** 🚀 **Quellcode veröffentlicht.**
 
