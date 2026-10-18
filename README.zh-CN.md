@@ -166,7 +166,7 @@ docker build -t tvd-agent .
 - **[Grok · English](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — 一个涉及爆炸性化合物的化学工作流程。
 - **[Claude · English](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — 一个涉及有毒化合物的化学工作流程。
 
-这些聊天中的终端是模拟的。要实际运行工具，并根据真实校验反馈修改文件，请看 [C · Agent 设置](#run-one-example)。
+这些聊天能让你很快看到这种现象，但整个任务都通过 prompt 传入。这种 in-context 版本仍然对 guardrail 敏感，可以把它看作一种基于 prompt 的攻击。我们的 Agent 实验由模型读取工作区，根据任务要求和校验报错行动，攻击的发起无需对抗性 prompt。具体对比见 [G · 实验](#g-experiments)和[论文 §4.4](https://arxiv.org/abs/2603.23509)；实际运行工作区的方法见 [C · Agent 设置](#run-one-example)。
 
 <a id="e-models"></a>
 <a id="d-models"></a>

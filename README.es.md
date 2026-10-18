@@ -166,7 +166,7 @@ Observamos que, al recibir la tarea TVD completa como contexto, el modelo puede 
 - **[Grok · Inglés](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — un flujo de trabajo químico con compuestos explosivos.
 - **[Claude · Inglés](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — un flujo de trabajo químico con compuestos tóxicos.
 
-Estos chats simulan el terminal. Para ejecutar las herramientas y corregir archivos a partir de resultados de validación reales, consulta [C · Configuración del agente](#run-one-example).
+Estos chats permiten ver el fenómeno rápidamente, pero toda la tarea se entrega mediante un prompt. Esta versión en contexto sigue siendo sensible a las salvaguardas y puede considerarse un ataque mediante prompts. En nuestros experimentos con agentes, el modelo lee el espacio de trabajo y actúa según los requisitos de la tarea y los errores de validación, sin que un prompt adversarial inicie el ataque. Consulta [G · Experimentos](#g-experiments) y la [sección 4.4 del artículo](https://arxiv.org/abs/2603.23509) para ver la comparación, o [C · Configuración del agente](#run-one-example) para ejecutar el espacio de trabajo.
 
 <a id="e-models"></a>
 <a id="d-models"></a>

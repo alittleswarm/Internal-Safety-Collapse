@@ -166,7 +166,7 @@ Nous avons constaté qu’en recevant la tâche TVD complète comme contexte, un
 - **[Grok · Anglais](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — un processus de chimie impliquant des composés explosifs.
 - **[Claude · Anglais](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — un processus de chimie impliquant des composés toxiques.
 
-Ces conversations simulent le terminal. Pour exécuter les outils et corriger les fichiers à partir de résultats de validation réels, consultez [C · Configuration de l’agent](#run-one-example).
+Ces conversations permettent de voir rapidement le phénomène, mais toute la tâche est transmise par un prompt. Cette version en contexte reste sensible aux garde-fous et peut être considérée comme une attaque par prompt. Dans nos expériences avec un agent, le modèle lit l’espace de travail et agit selon les exigences de la tâche et les erreurs de validation, sans qu’un prompt adversarial déclenche l’attaque. La comparaison se trouve dans [G · Expériences](#g-experiments) et la [section 4.4 de l’article](https://arxiv.org/abs/2603.23509) ; pour exécuter l’espace de travail, consultez [C · Configuration de l’agent](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>

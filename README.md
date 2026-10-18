@@ -171,7 +171,7 @@ We found that giving a model the full TVD task as context lets it simulate the t
 - **[Grok · English](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — a chemistry workflow involving explosive compounds.
 - **[Claude · English](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — a chemistry workflow involving toxic compounds.
 
-These chats simulate the terminal. To run the tools and revise files using actual validation feedback, see [C · Agent setup](#run-one-example).
+These chats give a quick view of the phenomenon, but the entire task is delivered through a prompt. This in-context version remains sensitive to guardrails and can be treated as a prompt-based attack. In our Agent experiments, the model reads the workspace and follows task requirements and validation errors, without an adversarial prompt initiating the attack. See [G · Experiments](#g-experiments) and [paper §4.4](https://arxiv.org/abs/2603.23509) for the comparison, or [C · Agent setup](#run-one-example) to run the workspace.
 
 <a id="e-models"></a>
 

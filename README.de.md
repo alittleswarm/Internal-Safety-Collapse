@@ -166,7 +166,7 @@ Wir haben beobachtet, dass ein Modell mit der vollständigen TVD-Aufgabe als Kon
 - **[Grok · Englisch](https://grok.com/share/bGVnYWN5_81a6125d-0541-4d2f-8691-30e212beb174)** — ein chemischer Arbeitsablauf mit explosiven Verbindungen.
 - **[Claude · Englisch](https://claude.ai/share/3469d109-464e-4e8f-808d-0556ea77ac49)** — ein chemischer Arbeitsablauf mit giftigen Verbindungen.
 
-Diese Chats simulieren das Terminal. Wie du die Werkzeuge ausführst und Dateien anhand echter Validierungsergebnisse überarbeitest, steht unter [C · Agenteneinrichtung](#run-one-example).
+Diese Chats zeigen das Phänomen schnell, doch die gesamte Aufgabe wird als Prompt übergeben. Diese In-Context-Version bleibt empfindlich gegenüber Schutzmechanismen und kann als promptbasierter Angriff betrachtet werden. In unseren Agentenexperimenten liest das Modell den Arbeitsbereich und handelt anhand der Aufgabenanforderungen und Validierungsfehler, ohne dass ein adversarialer Prompt den Angriff einleitet. Den Vergleich findest du unter [G · Experimente](#g-experiments) und in [Abschnitt 4.4 des Papers](https://arxiv.org/abs/2603.23509); die Ausführung des Arbeitsbereichs beschreibt [C · Agenteneinrichtung](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
