@@ -24,7 +24,7 @@
 - **2026-09** 🎉 Article accepté à **NeurIPS 2026**.
 - **2026-06-26** ⭐ **900 étoiles.**
 - **2026-06-09** 🧪 ISC déclenché sur **Fable 5**.
-- **2026-04** 📝 Soumis à **ICML 2026**. Refusé. Un rapport affirmait qu’ISC n’existait pas et rejetait le travail comme une affirmation excessive sur le double usage. J’ai eu le sentiment que l’article n’avait pas été lu équitablement. Cette expérience m’a profondément déçu quant à la manière dont la recherche en sécurité est traitée dans les conférences d’IA.
+- **2026-04** 📝 Soumis à **ICML 2026**. Refusé. L’un des rapports que j’ai reçus décrivait ISC comme un phénomène exagéré. Honnêtement, soumettre des travaux sur les attaques adversariales aux conférences de ML m’a souvent donné le sentiment que ce type de recherche n’y était pas le bienvenu. Si les expériences se rapprochent trop des systèmes réels et de leurs garde-fous, on invoque le double usage. Si nous utilisons un cadre simplifié, on le rejette comme irréaliste ou sans nouveauté. Je retrouve sans cesse cette tension, et c’est profondément décevant.
 - **2026-03-27** ⭐ **500 étoiles.**
 - **2026-03-20** 🚀 **Code source publié.**
 
