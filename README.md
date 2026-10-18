@@ -384,4 +384,4 @@ Research use only. ISC supports red-teaming, evaluation, and mitigation research
 }
 ```
 
-**Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to [LINUX DO](https://linux.do).
+**Author contacts:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (corresponding author; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Special thanks to xhs.

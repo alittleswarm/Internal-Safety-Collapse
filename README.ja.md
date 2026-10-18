@@ -372,4 +372,4 @@ ISC に関する解説や議論。
 }
 ```
 
-**連絡先：**Yutao Wu（Deakin University、`wuy7117 ⓐ gmail dot com`）· Xingjun Ma（責任著者、Fudan University、Shanghai Innovation Institute、`xingjunma ⓐ fudan dot edu dot cn`）。[LINUX DO](https://linux.do) に感謝します。
+**連絡先：**Yutao Wu（Deakin University、`wuy7117 ⓐ gmail dot com`）· Xingjun Ma（責任著者、Fudan University、Shanghai Innovation Institute、`xingjunma ⓐ fudan dot edu dot cn`）。xhs に感謝します。

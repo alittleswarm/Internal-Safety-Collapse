@@ -372,4 +372,4 @@ Réservé à la recherche. ISC soutient les travaux de red teaming, d'évaluatio
 }
 ```
 
-**Contacts :** Yutao Wu (Deakin University ; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (auteur correspondant ; Fudan University ; Shanghai Innovation Institute ; `xingjunma ⓐ fudan dot edu dot cn`). Merci à [LINUX DO](https://linux.do).
+**Contacts :** Yutao Wu (Deakin University ; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (auteur correspondant ; Fudan University ; Shanghai Innovation Institute ; `xingjunma ⓐ fudan dot edu dot cn`). Merci à xhs.

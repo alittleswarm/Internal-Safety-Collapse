@@ -372,4 +372,4 @@ Nur für Forschungszwecke. ISC unterstützt Forschung zu Red Teaming, Evaluierun
 }
 ```
 
-**Kontakt:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (korrespondierender Autor; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Besonderer Dank an [LINUX DO](https://linux.do).
+**Kontakt:** Yutao Wu (Deakin University; `wuy7117 ⓐ gmail dot com`) · Xingjun Ma (korrespondierender Autor; Fudan University; Shanghai Innovation Institute; `xingjunma ⓐ fudan dot edu dot cn`). Besonderer Dank an xhs.
