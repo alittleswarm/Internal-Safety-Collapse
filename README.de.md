@@ -22,9 +22,9 @@
 
 - **2026-10-17** ✨ README neu geschrieben und überarbeitet. **1.6k Sterne.**
 - **2026-09** 🎉 Paper bei **NeurIPS 2026** angenommen.
-- **ICML 2026** 📝 Eingereicht. Abgelehnt.
 - **2026-06-26** ⭐ **900 Sterne.**
 - **2026-06-09** 🧪 ISC auf **Fable 5** ausgelöst.
+- **2026-04** 📝 Bei **ICML 2026** eingereicht. Abgelehnt.
 - **2026-03-27** ⭐ **500 Sterne.**
 - **2026-03-20** 🚀 **Quellcode veröffentlicht.**
 
