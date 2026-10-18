@@ -24,7 +24,7 @@
 - **2026-09** 🎉 Artículo aceptado en **NeurIPS 2026**.
 - **2026-06-26** ⭐ **900 estrellas.**
 - **2026-06-09** 🧪 ISC activado en **Fable 5**.
-- **2026-04** ❌ Enviado a **ICML 2026**. Rechazado. Una de las revisiones que recibí describía ISC como un fenómeno exagerado. Sinceramente, enviar investigación sobre ataques adversariales a conferencias de ML me ha hecho sentir muchas veces que este trabajo no es bienvenido. Si los experimentos se acercan demasiado a sistemas reales y sus salvaguardas, se señala el uso dual. Si usamos un entorno de juguete, se descarta por poco realista o falto de novedad. Me encuentro una y otra vez con esta tensión, y ha sido profundamente decepcionante.
+- **2026-04** ❌ Enviado a **ICML 2026**. Rechazado. Una de las revisiones que recibí describía ISC como un fenómeno exagerado. Sinceramente, enviar investigación sobre ataques adversariales a conferencias de ML me ha hecho sentir muchas veces que este trabajo no es bienvenido. Si los experimentos se acercan demasiado a daños del mundo real, se señala el uso dual. Si usamos un entorno de juguete, se descarta por poco realista o falto de novedad.
 - **2026-03-27** ⭐ **500 estrellas.**
 - **2026-03-20** 🚀 **Código abierto.**
 
