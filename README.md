@@ -350,7 +350,15 @@ The [paper](https://arxiv.org/abs/2603.23509) evaluated 53 scenarios across eigh
 
 <a id="tvd-framework"></a>
 
-The paper's original [benchmark overview](assets/fig1_bench_overview.png) and [TVD framework](assets/fig2_tvd_framework.png) figures are available here.
+The paper's original figures:
+
+**Benchmark overview**
+
+[![Benchmark overview](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
+
+**TVD framework**
+
+[![TVD framework](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
 
 ### Media and other resources
 

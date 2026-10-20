@@ -338,7 +338,15 @@ docker build -t tvd-agent .
 
 <a id="tvd-framework"></a>
 
-论文中的原图：[基准概览](assets/fig1_bench_overview.png) · [TVD 框架](assets/fig2_tvd_framework.png)。
+论文中的原图：
+
+**基准概览**
+
+[![基准概览](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
+
+**TVD 框架**
+
+[![TVD 框架](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
 
 ### 媒体与其他资源
 

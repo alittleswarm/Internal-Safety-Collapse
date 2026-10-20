@@ -338,7 +338,15 @@ L'[article](https://arxiv.org/abs/2603.23509) a évalué 53 scénarios dans huit
 
 <a id="tvd-framework"></a>
 
-Figures originales de l'article : [vue d'ensemble du benchmark](assets/fig1_bench_overview.png) · [cadre TVD](assets/fig2_tvd_framework.png).
+Figures originales de l’article :
+
+**Vue d’ensemble du benchmark**
+
+[![Vue d’ensemble du benchmark](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
+
+**Cadre TVD**
+
+[![Cadre TVD](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
 
 ### Médias et autres ressources
 

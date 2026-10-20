@@ -338,7 +338,15 @@ Das [Paper](https://arxiv.org/abs/2603.23509) untersucht 53 Szenarien aus acht D
 
 <a id="tvd-framework"></a>
 
-Originalabbildungen des Papers: [Benchmark-Überblick](assets/fig1_bench_overview.png) · [TVD-Framework](assets/fig2_tvd_framework.png).
+Originalabbildungen des Papers:
+
+**Benchmark-Überblick**
+
+[![Benchmark-Überblick](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
+
+**TVD-Framework**
+
+[![TVD-Framework](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
 
 ### Medien und weitere Quellen
 

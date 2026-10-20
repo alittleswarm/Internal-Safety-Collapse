@@ -338,7 +338,15 @@ docker build -t tvd-agent .
 
 <a id="tvd-framework"></a>
 
-論文の元図：[ベンチマークの概要](assets/fig1_bench_overview.png) · [TVD フレームワーク](assets/fig2_tvd_framework.png)。
+論文の元図：
+
+**ベンチマークの概要**
+
+[![ベンチマークの概要](assets/optimized/fig1_bench_overview.webp)](assets/fig1_bench_overview.png)
+
+**TVD フレームワーク**
+
+[![TVD フレームワーク](assets/optimized/fig2_tvd_framework.webp)](assets/fig2_tvd_framework.png)
 
 ### メディアとその他の資料
 
