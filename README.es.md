@@ -1,8 +1,10 @@
 🌐 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · **Español** · [Français](README.fr.md) · [Deutsch](README.de.md)
 
-# Internal Safety Collapse (ISC)
+# Internal Safety Collapse (ISC) in Coding Agents and Frontier LLMs
 
-**ISC** es un fallo de seguridad: un modelo puede rechazar una petición dañina directa y producir ese contenido al completar una tarea. Diseñamos manualmente los espacios de trabajo **TVD (Task, Validator, Data)** para estudiarlo; puedes adaptar sus tareas, herramientas, comprobaciones y campos pendientes a tu caso.
+Un agente de programación lee un proyecto, ejecuta sus comprobaciones y completa los datos que faltan. **Internal Safety Collapse (ISC)** ocurre cuando, al completar ese flujo de trabajo, genera contenido que rechazaría si se le pidiera directamente.
+
+Ofrecemos espacios de trabajo **TVD (Task, Validator, Data)** diseñados manualmente para estudiar este comportamiento en agentes de IA y modelos de lenguaje de frontera. Ejecútalos en Docker o adáptalos a tus herramientas y tareas.
 
 📄 **Artículo:** [arXiv](https://arxiv.org/abs/2603.23509)
 
