@@ -440,4 +440,4 @@ docker build -t tvd-agent .
 }
 ```
 
-**作者联系方式：**Yutao Wu（Deakin University；`wuy7117 ⓐ gmail dot com`）· Xingjun Ma（通讯作者；Fudan University；Shanghai Innovation Institute；`xingjunma ⓐ fudan dot edu dot cn`）。特别感谢 xhs。
+**作者联系方式：**Yutao Wu（Deakin University；`wuy7117 ⓐ gmail dot com`）· Xingjun Ma（通讯作者；Fudan University；Shanghai Innovation Institute；`xingjunma ⓐ fudan dot edu dot cn`）。
