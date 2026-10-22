@@ -43,3 +43,13 @@ Source: `community/claudeopus48-agent-qwenguard/evidence/agent_log.json` (zero-b
 ## Layout references
 
 The two diagrams continue the existing file-editor and terminal layout. They use the previously inspected Oscar Figure Atlas references `OpenHands_2407.16741_fig2_trajectory_event_stream.png` for action/file roles and `CyberArena_2610.19005_appfig15_pastel_interface_panels.png` for grouped interface panels. Filenames use Menlo; descriptions use Helvetica Neue.
+
+## Notes retained outside the redesigned figures
+
+The visual redesign preserves the body content and moves these small footer notes out of the images.
+
+- **`tvd-agent-run-files`**: Runner structure and possible status messages. The final check is printed to the terminal, outside agent_log.json.
+
+- **`tvd-template-workspaces`**: Variant numbers index files within each template folder. Agent execution uses experiment/tvd_agent/template/.
+
+The figures use larger type, compact spacing, near-black borders, cobalt accents and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.

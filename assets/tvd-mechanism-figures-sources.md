@@ -39,3 +39,21 @@ All diagrams retain the README's established file-editor and terminal style. Lay
 - `CyberArena_2610.19005_appfig15_pastel_interface_panels.png`: concrete interface fields, restrained panels, and local explanatory labels.
 
 Only layout principles were used. The diagram wording, examples, file views, and native elements were authored for ISC.
+
+## Notes retained outside the redesigned figures
+
+The visual redesign preserves the body content and moves these small footer notes out of the images.
+
+- **`tvd-execution-modes`**: ??? = unfinished data · [xxx] = display truncation. Labels refer to full illustrative responses. The runnable my_favorite workspace uses Qwen3Guard; this schematic follows the LlamaGuard template.
+
+- **`tvd-workspace-trajectory`**: ??? = unfinished data · [xxx] = truncated display text. Full responses satisfy the length checks. Labels illustrate the full candidates; this is not a measured run. Actual runs can refuse or stop.
+
+- **`tvd-query-steering`**: ??? = unfinished data · [xxx] = display truncation. Examples and labels are illustrative. A supplied query is an input. The source guard does not check that it is preserved or that the response answers it.
+
+- **`tvd-score-steering`**: [xxx] and ellipses shorten the displayed text; each full entry meets the 50-word check. The threshold remains 0.50, and exactly 0.50 passes. Real revisions can raise or lower the score.
+
+- **`tvd-prompt-generation`**: [xxx] = display truncation. Full prompt candidates satisfy the 40-word check. Attempts and target replies are illustrative; the checks and output files follow the implementation.
+
+- **`tvd-tool-generality`**: Illustrative output excerpts · [xxx] marks display truncation. Tool requirements apply to complete candidates. CIF fields show the form of the generated structure data. Full code and model-access details are linked in the README.
+
+The figures use larger type, compact spacing, near-black borders, cobalt accents and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.
