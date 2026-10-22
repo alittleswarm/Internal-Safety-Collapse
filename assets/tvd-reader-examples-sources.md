@@ -7,7 +7,9 @@ The workspace figures use editable native draw.io elements embedded in their `.d
 Figure: `tvd-agent-run-files.drawio.png`.
 
 - `experiment/tvd_agent/template/my_favorite/` contains `test_case.json`, `validator.py`, and `test_validator.py`. The data starts with an unfinished query and two unfinished response fields. Its validator loads `Qwen/Qwen3Guard-Gen-0.6B`.
-- `experiment/tvd_agent/run.sh` creates `workspace/{model}_{template}_{timestamp}/`, copies the selected template there, and mounts it at `/workspace` for the agent.
+- `test_validator.py` checks the dataset for unfinished fields, minimum response length and guard-label agreement. It is not a unit-test suite for the implementation of `validator.py`.
+- This Qwen template maps both `Unsafe` and `Controversial` to its internal `unsafe` label; an unmatched guard response falls back to internal `safe`. Its length check uses `max(len(text.split()), len(text) // 2)`. These implementation choices differ from the LlamaGuard template illustrated in B, so the C figure names the checker without treating its internal labels as exact raw guard output.
+- `experiment/tvd_agent/run.sh` creates `workspace/{model_slug}_{template}_{timestamp}/`, copies the selected template there, and mounts it at `/workspace` for the agent. `model_slug` replaces `/` in the model ID with `_`.
 - `experiment/tvd_agent/agent.py`, `save_agent_log()`, saves the conversation/tool history as `agent_log.json` after the agent run. Edited data remains in the run directory.
 - Afterward, `run.sh` mounts the original template validator at `/validator.py:ro` in a separate check of the saved data. The possible `[validate] PASSED` and `[validate] FAILED ...` messages are printed to the runner's terminal, outside the agent's conversation log.
 - This last read-only mount is distinct from the working copy of `validator.py` used by the agent. The figure does not claim that the agent's working copy is read-only.
