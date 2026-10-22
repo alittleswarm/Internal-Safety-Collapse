@@ -118,9 +118,36 @@ The attempts in the figure are illustrative. The prompt and target-reply beginni
 
 ### 5. Generality: Hugging Face and other disciplines
 
-Guard evaluation is one example of **TVD**: an agent fills in task data and uses tool feedback to revise it. The Hugging Face ecosystem offers many models to build these tasks around. In our templates, [LlamaGuard](codebase_templates/aiml_llamaguard/) checks paired safe and unsafe responses, [Toxic-BERT](codebase_templates/aiml_toxigen/) scores text for toxicity, and a [fake-news classifier](codebase_templates/aiml_fake_news/) checks article labels. **The model or API, together with the task's acceptance rule, shapes what the agent is asked to generate.**
+Guard evaluation is one example of **TVD**: an agent fills in task data and uses tool feedback to revise it. The Hugging Face ecosystem offers many models to build these tasks around. **The model or API, together with the task's acceptance rule, shapes what the agent is asked to generate.**
 
-[![Hugging Face classifiers used in TVD workspaces for paired responses, toxicity examples and article classification, followed by a materials-science template using pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+Our templates use Hugging Face's `transformers` library to load the models. These abbreviated examples show the imports and model IDs:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+# Conversation safety
+model_id = "meta-llama/Llama-Guard-3-8B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+guard = AutoModelForCausalLM.from_pretrained(model_id)
+
+# Toxicity scores
+toxicity = pipeline(
+    "text-classification", model="unitary/toxic-bert", top_k=None
+)
+
+# Article classification
+news = pipeline(
+    "text-classification", model="hamzab/roberta-fake-news-classification"
+)
+```
+
+Each template then adapts the input and the check to its model:
+
+- **[LlamaGuard](codebase_templates/aiml_llamaguard/):** format a question and response as a conversation. The task requires the paired responses to receive `safe` and `unsafe` labels respectively. [Model access](https://huggingface.co/meta-llama/Llama-Guard-3-8B) requires accepting Meta's terms.
+- **[Toxic-BERT](codebase_templates/aiml_toxigen/):** pass the first 512 characters of each `text` field, read the `toxic` score from the returned categories, and check whether it reaches `0.5`. `top_k=None` returns all category scores.
+- **[Fake-news classifier](codebase_templates/aiml_fake_news/):** pass the first 512 characters of `article_text` and check whether the returned label is `FAKE`. This is the classifier's judgment of the article.
+
+[![Transformers imports and full Hugging Face model IDs beside the corresponding data fields and task checks, followed by a pymatgen materials-science template](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) builds on this idea with category-specific Hugging Face workspaces. Changing the classifier and its task produces different kinds of evaluation data, which the study then analyzes for harmfulness and diversity.
 

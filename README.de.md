@@ -116,9 +116,36 @@ Die Versuche in der Abbildung sind Beispiele. Vom Prompt und der Antwort des Zie
 
 ### 5. Übertragbarkeit: Hugging Face und andere Disziplinen
 
-Die Bewertung eines Guards ist ein Beispiel für **TVD**: Ein Agent ergänzt die Aufgabendaten und überarbeitet sie anhand der Rückmeldungen von Werkzeugen. Das Hugging-Face-Ökosystem bietet viele Modelle, um die sich solche Aufgaben aufbauen lassen. In unseren Vorlagen prüft [LlamaGuard](codebase_templates/aiml_llamaguard/) Paare aus sicheren und unsicheren Antworten, [Toxic-BERT](codebase_templates/aiml_toxigen/) bewertet die Toxizität von Texten, und ein [Fake-News-Klassifikator](codebase_templates/aiml_fake_news/) prüft die Labels von Artikeln. **Das Modell oder die API bestimmt zusammen mit der Annahmeregel der Aufgabe, was der Agent erzeugen soll.**
+Die Bewertung eines Guards ist ein Beispiel für **TVD**: Ein Agent ergänzt die Aufgabendaten und überarbeitet sie anhand der Rückmeldungen von Werkzeugen. Das Hugging-Face-Ökosystem bietet viele Modelle, um die sich solche Aufgaben aufbauen lassen. **Das Modell oder die API bestimmt zusammen mit der Annahmeregel der Aufgabe, was der Agent erzeugen soll.**
 
-[![Hugging-Face-Klassifikatoren in TVD-Arbeitsbereichen für Antwortpaare, toxische Textbeispiele und Artikelklassifikation, gefolgt von einer materialwissenschaftlichen Vorlage mit pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+Unsere Vorlagen laden die Modelle mit der Hugging-Face-Bibliothek `transformers`. Die folgenden gekürzten Beispiele zeigen die Imports und Modell-IDs:
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+# Conversation safety
+model_id = "meta-llama/Llama-Guard-3-8B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+guard = AutoModelForCausalLM.from_pretrained(model_id)
+
+# Toxicity scores
+toxicity = pipeline(
+    "text-classification", model="unitary/toxic-bert", top_k=None
+)
+
+# Article classification
+news = pipeline(
+    "text-classification", model="hamzab/roberta-fake-news-classification"
+)
+```
+
+Jede Vorlage passt anschließend Eingabe und Prüfung an das jeweilige Modell an:
+
+- **[LlamaGuard](codebase_templates/aiml_llamaguard/):** formatiert eine Frage und eine Antwort als Gespräch. Die Aufgabe verlangt, dass die gepaarten Antworten die Labels `safe` beziehungsweise `unsafe` erhalten. Für den [Modellzugriff](https://huggingface.co/meta-llama/Llama-Guard-3-8B) müssen die Bedingungen von Meta akzeptiert werden.
+- **[Toxic-BERT](codebase_templates/aiml_toxigen/):** erhält die ersten 512 Zeichen jedes `text`-Felds. Aus den zurückgegebenen Kategorien wird der `toxic`-Wert ausgelesen und darauf geprüft, ob er `0.5` erreicht. `top_k=None` liefert die Werte für alle Kategorien.
+- **[Fake-News-Klassifikator](codebase_templates/aiml_fake_news/):** erhält die ersten 512 Zeichen von `article_text`. Die Aufgabe prüft, ob das zurückgegebene Label `FAKE` ist. Dies ist das Urteil des Klassifikators über den Artikel.
+
+[![Transformers-Imports und vollständige Hugging-Face-Modell-IDs neben den zugehörigen Datenfeldern und Aufgabenprüfungen, gefolgt von einer materialwissenschaftlichen Vorlage mit pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) baut auf dieser Idee mit kategoriespezifischen Hugging-Face-Arbeitsbereichen auf. Durch den Wechsel des Klassifikators und seiner Aufgabe entstehen unterschiedliche Arten von Evaluationsdaten, die die Studie anschließend auf Schädlichkeit und Vielfalt untersucht.
 

@@ -116,9 +116,36 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 ### 5. 汎用性：Hugging Face と他の分野
 
-Guard の評価は **TVD** の一例です。エージェントがタスクのデータを埋め、ツールのフィードバックを使って修正します。Hugging Face のエコシステムには、このようなタスクの中心に据えられるモデルが多数あります。私たちのテンプレートでは、[LlamaGuard](codebase_templates/aiml_llamaguard/) が安全な回答と安全でない回答のペアを検証し、[Toxic-BERT](codebase_templates/aiml_toxigen/) がテキストの毒性を採点し、[フェイクニュース分類器](codebase_templates/aiml_fake_news/) が記事のラベルを検証します。**モデルや API とタスクの合格条件が、エージェントに何を生成させるかを形づくります。**
+Guard の評価は **TVD** の一例です。エージェントがタスクのデータを埋め、ツールのフィードバックを使って修正します。Hugging Face のエコシステムには、このようなタスクの中心に据えられるモデルが多数あります。**モデルや API とタスクの合格条件が、エージェントに何を生成させるかを形づくります。**
 
-[![回答のペア、毒性のある例文、記事分類に Hugging Face 分類器を使う TVD ワークスペースと、その下に示した pymatgen を使う材料科学のテンプレート](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+私たちのテンプレートは、Hugging Face の `transformers` ライブラリでモデルを読み込みます。以下の簡略化した例は、インポートとモデル ID を示しています。
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+# Conversation safety
+model_id = "meta-llama/Llama-Guard-3-8B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+guard = AutoModelForCausalLM.from_pretrained(model_id)
+
+# Toxicity scores
+toxicity = pipeline(
+    "text-classification", model="unitary/toxic-bert", top_k=None
+)
+
+# Article classification
+news = pipeline(
+    "text-classification", model="hamzab/roberta-fake-news-classification"
+)
+```
+
+各テンプレートでは、モデルに合わせて入力と検証方法を変えます。
+
+- **[LlamaGuard](codebase_templates/aiml_llamaguard/):** 質問と回答を会話形式にします。タスクでは、ペアの回答にそれぞれ `safe` と `unsafe` のラベルが付くことを求めます。[モデルへのアクセス](https://huggingface.co/meta-llama/Llama-Guard-3-8B)には Meta の利用条件への同意が必要です。
+- **[Toxic-BERT](codebase_templates/aiml_toxigen/):** 各 `text` フィールドの先頭 512 文字を渡し、返されたカテゴリから `toxic` スコアを読み取り、`0.5` に達しているかを検証します。`top_k=None` は全カテゴリのスコアを返します。
+- **[フェイクニュース分類器](codebase_templates/aiml_fake_news/):** `article_text` の先頭 512 文字を渡し、返されたラベルが `FAKE` かどうかを検証します。これは記事に対する分類器の判定です。
+
+[![Transformers のインポートと Hugging Face モデルの完全な ID を、対応するデータ欄とタスクの検証条件の横に示し、その下に pymatgen の材料科学テンプレートを配置した図](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) は、この考え方をもとにカテゴリ別の Hugging Face ワークスペースを構築しています。分類器とそのタスクを変えることで異なる種類の評価データを生成し、その有害性と多様性を分析しています。
 
