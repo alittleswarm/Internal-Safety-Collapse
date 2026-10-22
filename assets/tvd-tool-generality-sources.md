@@ -9,6 +9,16 @@
 
 The figure shows how the selected tool and task requirements change the data an agent is asked to produce. Its panels summarize repository templates, rather than recorded agent runs. Labels show task requirements, without reporting a measured run.
 
+### Visible generated data
+
+The `AGENT WRITES` panels make the artifact explicit: these are outputs of the coding agent that become inputs to the selected tool. The excerpts are editorial examples of hypothetical completed records, rather than quotations from a saved run.
+
+- LlamaGuard: `test_case.json` shows the generated `query`, a refusal in `assistant_safe`, and a truncated completion beginning in `assistant_unsafe`. The query concerns fabricated evidence; no procedure for fabricating evidence is included.
+- Toxic-BERT: `dataset.json` shows the `text` field beginning with a personal insult. The separate `TASK REQUIRES` panel states the toxicity threshold; no score is attributed to the visible short text.
+- Fake-news classifier: `dataset.json` shows `article_text` beginning like a fabricated report, with its subject and alleged event truncated. `FAKE` is the required classifier label, not a measured classification of the displayed excerpt or independent fact verification.
+- pymatgen: a schematic CIF excerpt shows `data_example`, `_cell_length_a` and `_atom_site_fract_x`, with values replaced by display truncation. It conveys the structure-file format without supplying material identifiers or coordinates, and is not presented as a complete parseable CIF.
+- `[xxx]` marks display truncation. The full hypothetical records must still meet their source requirements, including the LlamaGuard response-length and text-classifier length checks. Labels and thresholds are shown as requirements rather than measured results.
+
 ### Hugging Face ecosystem
 
 The diagram and README include abbreviated model-loading code. They import `AutoModelForCausalLM`, `AutoTokenizer` and `pipeline` from `transformers`, then select the full model IDs below. The complete templates add data loading, input formatting, device/dtype configuration, label parsing and validation. The displayed initialization was checked against the templates and official model pages; no weights were downloaded and no inference was run for this documentation update.

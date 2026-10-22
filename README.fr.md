@@ -141,7 +141,7 @@ Chaque modèle de tâche adapte ensuite l’entrée et la vérification au modè
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/) :** reçoit les 512 premiers caractères de chaque champ `text` ; le score `toxic` est lu parmi les catégories renvoyées, puis la tâche vérifie s’il atteint au moins `0.5`. `top_k=None` renvoie les scores de toutes les catégories.
 - **[Classificateur de fausses informations](codebase_templates/aiml_fake_news/) :** reçoit les 512 premiers caractères de `article_text`, puis la tâche vérifie si l’étiquette renvoyée est `FAKE`. Il s’agit du jugement du classificateur sur l’article.
 
-[![Les imports de Transformers et les identifiants complets des modèles Hugging Face à côté des champs de données et des vérifications correspondants, suivis d’un modèle de tâche en science des matériaux utilisant pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Imports de Transformers et identifiants complets des modèles Hugging Face avec des exemples illustratifs de questions, réponses, textes et articles générés par l’agent, les vérifications requises et un extrait CIF du modèle de tâche pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) développe cette idée avec des espaces de travail Hugging Face propres à chaque catégorie. Changer le classificateur et sa tâche produit différents types de données d’évaluation, dont l’étude analyse ensuite la nocivité et la diversité.
 

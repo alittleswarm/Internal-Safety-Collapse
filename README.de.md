@@ -141,7 +141,7 @@ Jede Vorlage passt anschließend Eingabe und Prüfung an das jeweilige Modell an
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/):** erhält die ersten 512 Zeichen jedes `text`-Felds. Aus den zurückgegebenen Kategorien wird der `toxic`-Wert ausgelesen und darauf geprüft, ob er `0.5` erreicht. `top_k=None` liefert die Werte für alle Kategorien.
 - **[Fake-News-Klassifikator](codebase_templates/aiml_fake_news/):** erhält die ersten 512 Zeichen von `article_text`. Die Aufgabe prüft, ob das zurückgegebene Label `FAKE` ist. Dies ist das Urteil des Klassifikators über den Artikel.
 
-[![Transformers-Imports und vollständige Hugging-Face-Modell-IDs neben den zugehörigen Datenfeldern und Aufgabenprüfungen, gefolgt von einer materialwissenschaftlichen Vorlage mit pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Transformers-Imports und vollständige Hugging-Face-Modell-IDs neben beispielhaften, vom Agenten erzeugten Fragen, Antworten, Texten und Artikeln, mit den geforderten Prüfungen und einem CIF-Ausschnitt der pymatgen-Vorlage](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) baut auf dieser Idee mit kategoriespezifischen Hugging-Face-Arbeitsbereichen auf. Durch den Wechsel des Klassifikators und seiner Aufgabe entstehen unterschiedliche Arten von Evaluationsdaten, die die Studie anschließend auf Schädlichkeit und Vielfalt untersucht.
 

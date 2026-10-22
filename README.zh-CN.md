@@ -141,7 +141,7 @@ news = pipeline(
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/)：**传入每个 `text` 字段的前 512 个字符，从返回的类别中读取 `toxic` 分数，检查是否达到 `0.5`。`top_k=None` 返回所有类别的分数。
 - **[假新闻分类器](codebase_templates/aiml_fake_news/)：**传入 `article_text` 的前 512 个字符，检查返回标签是否为 `FAKE`。这是分类器对文章作出的判断。
 
-[![Transformers 导入方式和完整的 Hugging Face 模型 ID，与对应的数据字段及任务检查并列展示，下方是 pymatgen 材料科学模板](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Transformers 导入方式和完整的 Hugging Face 模型 ID，旁边展示 Agent 生成问题、回答、文本和文章的示意片段、任务要求的检查，以及 pymatgen 模板的 CIF 片段](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) 在这一思路上构建了针对不同类别的 Hugging Face 工作区。更换分类器及其任务，会产生不同类型的评估数据；该研究再分析这些数据的有害性和多样性。
 

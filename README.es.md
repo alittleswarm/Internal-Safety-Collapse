@@ -141,7 +141,7 @@ Cada plantilla adapta después la entrada y la comprobación a su modelo:
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/):** recibe los primeros 512 caracteres de cada campo `text`; se lee la puntuación `toxic` entre las categorías devueltas y se comprueba si alcanza `0.5`. `top_k=None` devuelve las puntuaciones de todas las categorías.
 - **[Clasificador de noticias falsas](codebase_templates/aiml_fake_news/):** recibe los primeros 512 caracteres de `article_text` y se comprueba si la etiqueta devuelta es `FAKE`. Esta es la valoración del clasificador sobre el artículo.
 
-[![Importaciones de Transformers e identificadores completos de modelos de Hugging Face junto a los campos de datos y las comprobaciones correspondientes, seguidos de una plantilla de ciencia de materiales con pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Importaciones de Transformers e identificadores completos de modelos de Hugging Face junto a ejemplos ilustrativos de consultas, respuestas, textos y artículos generados por el agente, con las comprobaciones requeridas y un fragmento CIF de la plantilla pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) desarrolla esta idea mediante entornos de Hugging Face específicos por categoría. Al cambiar el clasificador y su tarea, se generan distintos tipos de datos de evaluación, que el estudio analiza después en cuanto a su carácter dañino y su diversidad.
 

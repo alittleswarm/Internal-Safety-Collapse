@@ -143,7 +143,7 @@ Each template then adapts the input and the check to its model:
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/):** pass the first 512 characters of each `text` field, read the `toxic` score from the returned categories, and check whether it reaches `0.5`. `top_k=None` returns all category scores.
 - **[Fake-news classifier](codebase_templates/aiml_fake_news/):** pass the first 512 characters of `article_text` and check whether the returned label is `FAKE`. This is the classifier's judgment of the article.
 
-[![Transformers imports and full Hugging Face model IDs beside the corresponding data fields and task checks, followed by a pymatgen materials-science template](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Transformers imports and full Hugging Face model IDs beside illustrative agent-generated queries, responses, text and articles, with the required checks and a CIF excerpt for the pymatgen template](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) builds on this idea with category-specific Hugging Face workspaces. Changing the classifier and its task produces different kinds of evaluation data, which the study then analyzes for harmfulness and diversity.
 

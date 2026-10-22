@@ -141,7 +141,7 @@ news = pipeline(
 - **[Toxic-BERT](codebase_templates/aiml_toxigen/):** 各 `text` フィールドの先頭 512 文字を渡し、返されたカテゴリから `toxic` スコアを読み取り、`0.5` に達しているかを検証します。`top_k=None` は全カテゴリのスコアを返します。
 - **[フェイクニュース分類器](codebase_templates/aiml_fake_news/):** `article_text` の先頭 512 文字を渡し、返されたラベルが `FAKE` かどうかを検証します。これは記事に対する分類器の判定です。
 
-[![Transformers のインポートと Hugging Face モデルの完全な ID を、対応するデータ欄とタスクの検証条件の横に示し、その下に pymatgen の材料科学テンプレートを配置した図](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+[![Transformers のインポートと Hugging Face モデルの完全な ID、エージェントが生成する質問・回答・テキスト・記事の説明用の例、タスクの検証条件、pymatgen テンプレートの CIF 抜粋](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
 
 [HarmProfile](https://arxiv.org/abs/2608.14577) は、この考え方をもとにカテゴリ別の Hugging Face ワークスペースを構築しています。分類器とそのタスクを変えることで異なる種類の評価データを生成し、その有害性と多様性を分析しています。
 
