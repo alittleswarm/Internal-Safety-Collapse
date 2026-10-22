@@ -19,6 +19,8 @@ The six workspace diagrams use native draw.io elements embedded in their `.drawi
 - Text remains explicit, with labels and status symbols alongside colors. Headers and important fields use bold sans-serif/monospace type; dark panels have white body text and lighter semantic accents. Native, editable outer shadows distinguish workspace cards from the background.
 - The tool-family panels in the generality figure use neutral backgrounds; their headings and file labels remain charcoal.
 - Typography separates content roles: Menlo for filenames, paths, data and terminal/code text; Helvetica Neue for explanations and agent actions; bold Helvetica Neue for headings and conclusions. Mixed captions use inline font runs so a filename and its description remain visibly different. Permissions and prose about saved files use sans-serif text.
+- Python keywords use muted berry, calls and classes use teal, and strings (including complete model IDs) use copper. JSON keys remain charcoal and values use string coloring. These syntax colors are separate from the safe/unsafe classifications and task acceptance colors.
+- Folder outlines, document icons, file tabs and child indentation distinguish workspace structure from file contents. Code and data use light editor panels; tool output retains a charcoal terminal background.
 
 ## Diagram sources
 
@@ -37,6 +39,8 @@ All diagrams retain the README's established file-editor and terminal style. Lay
 
 - `OpenHands_2407.16741_fig2_trajectory_event_stream.png`: compact action/observation records with runtime context.
 - `CyberArena_2610.19005_appfig15_pastel_interface_panels.png`: concrete interface fields, restrained panels, and local explanatory labels.
+- `AppWorld_2407.18901_fig1_trajectory_chat_code.png`: code syntax colors separated from surrounding explanation and tool output.
+- `MagenticOne_2411.04468_fig1_agent_trajectory_numbered_steps.png`: recognizable file, coder and terminal roles within numbered workspace panels.
 
 Only layout principles were used. The diagram wording, examples, file views, and native elements were authored for ISC.
 

@@ -42,7 +42,7 @@ Source: `community/claudeopus48-agent-qwenguard/evidence/agent_log.json` (zero-b
 
 ## Layout references
 
-The two diagrams continue the existing file-editor and terminal layout. They use the previously inspected Oscar Figure Atlas references `OpenHands_2407.16741_fig2_trajectory_event_stream.png` for action/file roles and `CyberArena_2610.19005_appfig15_pastel_interface_panels.png` for grouped interface panels. Filenames use Menlo; descriptions use Helvetica Neue.
+The two diagrams continue the existing file-editor and terminal layout. They use the previously inspected Oscar Figure Atlas references `OpenHands_2407.16741_fig2_trajectory_event_stream.png` for action/file roles and `CyberArena_2610.19005_appfig15_pastel_interface_panels.png` for grouped interface panels. Filenames use Menlo; descriptions use Helvetica Neue. Folder outlines and indented document icons show parent/child relationships. Saved paths use a light background; only final-check messages use the dark terminal panel. Python calls and JSON excerpts share the mechanism figures’ syntax colors.
 
 ## Notes retained outside the redesigned figures
 
