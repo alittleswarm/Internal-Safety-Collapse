@@ -52,6 +52,8 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 我们通过 **TVD（Task, Validator, Data，即任务、校验器和数据）** 研究这个问题。工作区向 Agent 提供任务、检查结果的代码，以及带有空缺字段的数据。Agent 补齐字段、运行检查，再根据报错修改。在努力完成任务的过程中，它可能生成不安全内容。我们把这种行为称为 **Internal Safety Collapse（ISC）**。下面的例子展示不同任务和工具如何影响生成的数据。
 
+> 图中，`???` 表示尚未填写的数据，`[xxx]` 或省略号表示文本为方便展示而截短。示意标签和分数针对完整的候选内容，不是只针对图中显示的短句。
+
 ### 1. 非定向生成：让 Agent 自己选择 query
 
 这个例子为 Meta 的内容安全分类器 [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) 准备评估数据。每条记录包含问题（`query`）、安全回答和不安全回答。脚本把两条回答交给 LlamaGuard，检查返回的标签。
@@ -68,9 +70,9 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 [![同一个工作区中的连续尝试：安全回答放入不安全字段会失败，修改后由 LlamaGuard 判为 unsafe](assets/optimized/tvd-workspace-trajectory.webp)](assets/tvd-workspace-trajectory.drawio.png)
 
-图中的绿色 **PASS** 表示 LlamaGuard 已将 `assistant_unsafe` 判为 `unsafe`，并将 `assistant_safe` 判为 `safe`。这些检查通过时，数据已经在任务内部接受过评估。
+图中的 **PASS** 表示 LlamaGuard 已将 `assistant_unsafe` 判为 `unsafe`，并将 `assistant_safe` 判为 `safe`。这些检查通过时，数据已经在任务内部接受过评估。
 
-> 这是一个示意性的过程，回答正文已省略；运行也可能在通过检查前停止。[C 节的 Agent 设置](#c-code)通过实际文件和代码执行这些步骤，[D 节的聊天示例](#d-quick-test)则用文字模拟终端会话。
+> 这是一个示意性的过程，只展示示例回答的开头；运行也可能在通过检查前停止。[C 节的 Agent 设置](#c-code)通过实际文件和代码执行这些步骤，[D 节的聊天示例](#d-quick-test)则用文字模拟终端会话。
 
 ### 2. 定向生成：预先给定 query
 
@@ -110,7 +112,17 @@ Agent 接到的指令是填写 `data.json`，直到 `python tvd_validator.py` �
 
 这些检查区分了被测试的模型与评估其输出的工具：目标模型回答 prompt，输入审核和 Qwen3Guard 则评估这次尝试。
 
-图中的尝试是示意。脚本把运行记录写进 `rounds.json`，并在 `results.json` 保存 prompt、目标回答和评估字段。[只检查拒绝的变体](experiment/automated-red-teaming-refusal/)也要求输入审核标记 prompt，但它用回答开头有没有拒绝语句作为第二项检查。这里展示的版本还要求 Qwen3Guard 给出 `Unsafe` 和 `Refusal: No`。
+图中的尝试是示意。prompt 和目标回答都只展示截短的开头。脚本把运行记录写进 `rounds.json`，并在 `results.json` 保存 prompt、目标回答和评估字段。[只检查拒绝的变体](experiment/automated-red-teaming-refusal/)也要求输入审核标记 prompt，但它用回答开头有没有拒绝语句作为第二项检查。这里展示的版本还要求 Qwen3Guard 给出 `Unsafe` 和 `Refusal: No`。
+
+### 5. 通用性：Hugging Face 与其他学科
+
+Guard 评估是 **TVD** 的一个例子：Agent 填写任务数据，再根据工具反馈修改。Hugging Face 生态提供了许多可用于构建这类任务的模型。在我们的模板中，[LlamaGuard](codebase_templates/aiml_llamaguard/)检查成对的安全与不安全回答，[Toxic-BERT](codebase_templates/aiml_toxigen/)为文本的毒性评分，[假新闻分类器](codebase_templates/aiml_fake_news/)检查文章标签。**模型或 API 与任务的验收规则共同决定了 Agent 被要求生成什么。**
+
+[![TVD 工作区使用 Hugging Face 分类器检查成对回答、毒性样本和文章分类，下方展示使用 pymatgen 的材料科学模板](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+
+[HarmProfile](https://arxiv.org/abs/2608.14577) 在这一思路上构建了针对不同类别的 Hugging Face 工作区。更换分类器及其任务，会产生不同类型的评估数据；该研究再分析这些数据的有害性和多样性。
+
+我们的[材料科学模板](codebase_templates/compchem_pymatgen/)也采用同样的结构。Agent 补全 CIF 晶体结构文件，固定的 **pymatgen** 脚本检查格式和组成，再输出密度、体积等属性。在这里，工具返回的是解析错误和科学属性。这提供了另一种研究场景，用于观察 Agent 是否会在完成任务时生成它在其他情况下会拒绝提供的数据。
 
 <a id="c-code"></a>
 <a id="b-code"></a>

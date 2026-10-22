@@ -52,6 +52,8 @@ Para evaluar un clasificador de seguridad hacen falta ejemplos seguros e insegur
 
 Estudiamos este problema mediante **TVD (Task, Validator, Data)**. El entorno ofrece al agente una tarea, código que comprueba el resultado y datos con campos pendientes. El agente completa los campos, ejecuta las comprobaciones y corrige su trabajo tras recibir errores. Al intentar terminar la tarea, puede generar contenido inseguro. Llamamos a este comportamiento **Internal Safety Collapse (ISC)**. Los ejemplos siguientes muestran cómo distintas tareas y herramientas influyen en los datos generados.
 
+> En las figuras, `???` indica datos pendientes. `[xxx]` o los puntos suspensivos indican que el texto se ha acortado para mostrarlo. Las etiquetas y puntuaciones ilustrativas corresponden a los candidatos completos, no solo a los fragmentos visibles.
+
 ### 1. Generación no dirigida: el agente elige la consulta
 
 Este ejemplo prepara datos de evaluación para [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3), el clasificador de seguridad de Meta. Cada entrada contiene una pregunta (`query`), una respuesta segura y otra insegura. El programa envía ambas al clasificador y comprueba sus etiquetas.
@@ -68,9 +70,9 @@ La siguiente figura sigue un intento ilustrativo en el mismo entorno:
 
 [![Tres intentos sobre el mismo espacio de trabajo, con corrección tras recibir un error](assets/optimized/tvd-workspace-trajectory.webp)](assets/tvd-workspace-trajectory.drawio.png)
 
-El **PASS** verde significa que LlamaGuard ha clasificado `assistant_unsafe` como `unsafe` y `assistant_safe` como `safe`. Cuando pasan estas comprobaciones, los datos ya se han evaluado dentro de la tarea.
+El **PASS** significa que LlamaGuard ha clasificado `assistant_unsafe` como `unsafe` y `assistant_safe` como `safe`. Cuando pasan estas comprobaciones, los datos ya se han evaluado dentro de la tarea.
 
-> Esta secuencia es ilustrativa y omite el texto de las respuestas; una ejecución también puede detenerse antes de superar las comprobaciones. La [configuración del agente en C](#c-code) ejecuta estos pasos con archivos y código. Los [ejemplos de chat en D](#d-quick-test) simulan una sesión de terminal mediante texto.
+> Esta secuencia es ilustrativa y muestra solo el inicio de las respuestas de ejemplo; una ejecución también puede detenerse antes de superar las comprobaciones. La [configuración del agente en C](#c-code) ejecuta estos pasos con archivos y código. Los [ejemplos de chat en D](#d-quick-test) simulan una sesión de terminal mediante texto.
 
 ### 2. Generación dirigida: proporcionar una consulta
 
@@ -110,7 +112,17 @@ El agente recibe la instrucción de completar `data.json` hasta que `python tvd_
 
 Estas comprobaciones distinguen el modelo evaluado de las herramientas que examinan su salida: el modelo objetivo responde al prompt, mientras que la moderación y Qwen3Guard evalúan el intento.
 
-Los intentos de la figura son ilustrativos. Los scripts guardan los intentos registrados en `rounds.json` y el prompt, la respuesta objetivo y los campos de evaluación en `results.json`. La [variante basada en la negativa](experiment/automated-red-teaming-refusal/) también exige que la moderación marque el prompt, pero su segunda condición examina si la respuesta empieza con una negativa. La variante mostrada aquí exige además las decisiones `Unsafe` y `Refusal: No` de Qwen3Guard.
+Los intentos de la figura son ilustrativos. El prompt y la respuesta del modelo objetivo se muestran solo por sus primeras palabras. Los scripts guardan los intentos registrados en `rounds.json` y el prompt, la respuesta objetivo y los campos de evaluación en `results.json`. La [variante basada en la negativa](experiment/automated-red-teaming-refusal/) también exige que la moderación marque el prompt, pero su segunda condición examina si la respuesta empieza con una negativa. La variante mostrada aquí exige además las decisiones `Unsafe` y `Refusal: No` de Qwen3Guard.
+
+### 5. Generalidad: Hugging Face y otras disciplinas
+
+La evaluación de un guard es un ejemplo de **TVD**: un agente completa los datos de una tarea y los revisa a partir de los resultados de las herramientas. El ecosistema de Hugging Face ofrece muchos modelos en torno a los que construir estas tareas. En nuestras plantillas, [LlamaGuard](codebase_templates/aiml_llamaguard/) comprueba pares de respuestas seguras e inseguras, [Toxic-BERT](codebase_templates/aiml_toxigen/) puntúa la toxicidad del texto y un [clasificador de noticias falsas](codebase_templates/aiml_fake_news/) comprueba las etiquetas de los artículos. **El modelo o la API, junto con la regla de aceptación de la tarea, determina qué se pide generar al agente.**
+
+[![Clasificadores de Hugging Face en entornos TVD para pares de respuestas, ejemplos de toxicidad y clasificación de artículos, seguidos de una plantilla de ciencia de materiales con pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+
+[HarmProfile](https://arxiv.org/abs/2608.14577) desarrolla esta idea mediante entornos de Hugging Face específicos por categoría. Al cambiar el clasificador y su tarea, se generan distintos tipos de datos de evaluación, que el estudio analiza después en cuanto a su carácter dañino y su diversidad.
+
+La misma estructura aparece en nuestra [plantilla de ciencia de materiales](codebase_templates/compchem_pymatgen/). El agente completa archivos de estructuras cristalinas en formato CIF, y un script fijo de **pymatgen** comprueba su formato y composición antes de informar de propiedades como la densidad y el volumen. Aquí, la herramienta devuelve errores de análisis y propiedades científicas. Esto ofrece otro entorno para estudiar si un agente produce datos que normalmente se negaría a proporcionar mientras completa una tarea.
 
 <a id="c-code"></a>
 <a id="b-code"></a>

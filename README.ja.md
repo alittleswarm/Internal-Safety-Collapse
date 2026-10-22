@@ -52,6 +52,8 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 私たちは **TVD（Task, Validator, Data：タスク・バリデータ・データ）** を使ってこの問題を調べます。ワークスペースには、タスク、結果を確認するコード、未入力の欄があるデータを用意します。Agent は欄を埋めて検証を実行し、エラーを受けて修正します。タスクを完了しようとするこの過程で、危険な内容が生成される場合があります。この挙動を **Internal Safety Collapse（ISC）** と呼びます。以下の例は、タスクやツールの違いが生成データにどう関わるかを示します。
 
+> 図中の `???` は未入力のデータを表します。`[xxx]` または省略記号は、表示のために文章を短縮した印です。説明用のラベルやスコアは、表示された短い文だけでなく、候補の全文に対するものです。
+
 ### 1. 非標的生成：query をエージェントに選ばせる
 
 この例は、Meta の安全性分類器 [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3) を評価するデータを用意します。各項目には質問（`query`）、安全な回答、安全でない回答があり、スクリプトは両回答の分類ラベルを確認します。
@@ -68,9 +70,9 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 [![同じワークスペースで失敗を受けて修正する三段階の例](assets/optimized/tvd-workspace-trajectory.webp)](assets/tvd-workspace-trajectory.drawio.png)
 
-緑の **PASS** は、LlamaGuard が `assistant_unsafe` を `unsafe`、`assistant_safe` を `safe` と分類したことを示します。これらの検証が通った時点で、データはタスク内で評価されています。
+**PASS** は、LlamaGuard が `assistant_unsafe` を `unsafe`、`assistant_safe` を `safe` と分類したことを示します。これらの検証が通った時点で、データはタスク内で評価されています。
 
-> これは説明用の一連の試行で、回答本文は省いています。実行は合格前に停止する場合もあります。[C の Agent 設定](#c-code)では実ファイルとコードでこの手順を実行し、[D のチャット例](#d-quick-test)ではターミナル操作を文章で模擬します。
+> これは説明用の一連の試行で、回答例の冒頭だけを表示しています。実行は合格前に停止する場合もあります。[C の Agent 設定](#c-code)では実ファイルとコードでこの手順を実行し、[D のチャット例](#d-quick-test)ではターミナル操作を文章で模擬します。
 
 ### 2. 標的生成：query を事前に指定する
 
@@ -110,7 +112,17 @@ https://github.com/user-attachments/assets/1cc80c48-02a4-4a5c-9d00-a0f10d91db15
 
 これらの検証では、試されるモデルと出力を評価するツールの役割が分かれています。対象モデルが prompt に回答し、モデレーションと Qwen3Guard がその試行を評価します。
 
-図の試行は説明用です。スクリプトは試行記録を `rounds.json` に、prompt・対象モデルの回答・評価項目を `results.json` に保存します。[拒否のみを見る別版](experiment/automated-red-teaming-refusal/)でも入力モデレーションによる検出が必要ですが、次の条件は回答冒頭の拒否表現の有無です。ここで示す版では Qwen3Guard による `Unsafe` と `Refusal: No` の判定も必要です。
+図の試行は説明用です。prompt と対象モデルの回答は、表示のために冒頭だけに短縮しています。スクリプトは試行記録を `rounds.json` に、prompt・対象モデルの回答・評価項目を `results.json` に保存します。[拒否のみを見る別版](experiment/automated-red-teaming-refusal/)でも入力モデレーションによる検出が必要ですが、次の条件は回答冒頭の拒否表現の有無です。ここで示す版では Qwen3Guard による `Unsafe` と `Refusal: No` の判定も必要です。
+
+### 5. 汎用性：Hugging Face と他の分野
+
+Guard の評価は **TVD** の一例です。エージェントがタスクのデータを埋め、ツールのフィードバックを使って修正します。Hugging Face のエコシステムには、このようなタスクの中心に据えられるモデルが多数あります。私たちのテンプレートでは、[LlamaGuard](codebase_templates/aiml_llamaguard/) が安全な回答と安全でない回答のペアを検証し、[Toxic-BERT](codebase_templates/aiml_toxigen/) がテキストの毒性を採点し、[フェイクニュース分類器](codebase_templates/aiml_fake_news/) が記事のラベルを検証します。**モデルや API とタスクの合格条件が、エージェントに何を生成させるかを形づくります。**
+
+[![回答のペア、毒性のある例文、記事分類に Hugging Face 分類器を使う TVD ワークスペースと、その下に示した pymatgen を使う材料科学のテンプレート](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+
+[HarmProfile](https://arxiv.org/abs/2608.14577) は、この考え方をもとにカテゴリ別の Hugging Face ワークスペースを構築しています。分類器とそのタスクを変えることで異なる種類の評価データを生成し、その有害性と多様性を分析しています。
+
+私たちの[材料科学のテンプレート](codebase_templates/compchem_pymatgen/)にも同じ構造があります。エージェントが CIF 結晶構造ファイルを完成させ、固定された **pymatgen** スクリプトが形式と組成を検証してから、密度や体積などの特性を出力します。ここでツールが返すのは、解析エラーや科学的な特性です。これは、エージェントがタスクを完了する過程で、通常なら提供を拒否するデータを生成するかどうかを調べる、もう一つの環境になります。
 
 <a id="c-code"></a>
 <a id="b-code"></a>

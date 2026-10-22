@@ -54,6 +54,8 @@ A safety classifier needs both safe and unsafe examples for evaluation. Asking a
 
 We study this through **TVD (Task, Validator, Data)**. A workspace gives the agent a task, code that checks the result, and data with missing fields. The agent fills the fields, runs the checks, and revises its work after errors. Unsafe content can emerge through this process as the agent tries to complete the task. We call this behavior **Internal Safety Collapse (ISC)**. The examples below show how different tasks and tools shape the generated data.
 
+> In the figures, `???` marks unfinished data. `[xxx]` or an ellipsis marks display truncation. Illustrative labels and scores refer to the complete candidates represented by these excerpts.
+
 ### 1. Untargeted generation: let the agent choose the query
 
 This example prepares evaluation data for [LlamaGuard](https://github.com/meta-llama/PurpleLlama/tree/main/Llama-Guard3), Meta's content safety classifier. Each entry contains a question (`query`), a safe response, and an unsafe response. The script sends the two responses to LlamaGuard and checks the labels it returns.
@@ -70,9 +72,9 @@ The next figure follows one illustrative attempt through the same workspace:
 
 [![One workspace across successive attempts: a response judged safe fails the unsafe slot; the agent revises it until LlamaGuard judges it unsafe](assets/optimized/tvd-workspace-trajectory.webp)](assets/tvd-workspace-trajectory.drawio.png)
 
-The green **PASS** means LlamaGuard has classified `assistant_unsafe` as `unsafe` and `assistant_safe` as `safe`. The data has already been evaluated inside the task when these checks pass.
+The **PASS** means LlamaGuard has classified `assistant_unsafe` as `unsafe` and `assistant_safe` as `safe`. The data has already been evaluated inside the task when these checks pass.
 
-> This is an illustrative sequence, with response text omitted; a run can also stop before passing. The [agent setup in C](#c-code) executes these steps with files and code. The [chat examples in D](#d-quick-test) simulate a terminal session as text.
+> This is an illustrative sequence, showing only the beginnings of example responses; a run can also stop before passing. The [agent setup in C](#c-code) executes these steps with files and code. The [chat examples in D](#d-quick-test) simulate a terminal session as text.
 
 ### 2. Targeted generation: supply a query
 
@@ -112,7 +114,17 @@ The agent's instruction is to fill `data.json` until `python tvd_validator.py` e
 
 These checks separate the model being tested from the tools evaluating its output: the target model responds to the prompt, while moderation and Qwen3Guard assess the attempt.
 
-The attempts in the figure are illustrative. The scripts save recorded attempts in `rounds.json` and the prompt, target reply, and evaluation fields in `results.json`. The [refusal-only variant](experiment/automated-red-teaming-refusal/) also requires moderation to flag the prompt. It passes when the target reply has no opening refusal phrase. The version shown here additionally requires Qwen3Guard's `Unsafe` and `Refusal: No` judgments.
+The attempts in the figure are illustrative. The prompt and target-reply beginnings are shortened for display. The scripts save recorded attempts in `rounds.json` and the prompt, target reply, and evaluation fields in `results.json`. The [refusal-only variant](experiment/automated-red-teaming-refusal/) also requires moderation to flag the prompt. It passes when the target reply has no opening refusal phrase. The version shown here additionally requires Qwen3Guard's `Unsafe` and `Refusal: No` judgments.
+
+### 5. Generality: Hugging Face and other disciplines
+
+Guard evaluation is one example of **TVD**: an agent fills in task data and uses tool feedback to revise it. The Hugging Face ecosystem offers many models to build these tasks around. In our templates, [LlamaGuard](codebase_templates/aiml_llamaguard/) checks paired safe and unsafe responses, [Toxic-BERT](codebase_templates/aiml_toxigen/) scores text for toxicity, and a [fake-news classifier](codebase_templates/aiml_fake_news/) checks article labels. **The model or API, together with the task's acceptance rule, shapes what the agent is asked to generate.**
+
+[![Hugging Face classifiers used in TVD workspaces for paired responses, toxicity examples and article classification, followed by a materials-science template using pymatgen](assets/optimized/tvd-tool-generality.webp)](assets/tvd-tool-generality.drawio.png)
+
+[HarmProfile](https://arxiv.org/abs/2608.14577) builds on this idea with category-specific Hugging Face workspaces. Changing the classifier and its task produces different kinds of evaluation data, which the study then analyzes for harmfulness and diversity.
+
+The same structure also appears in our [materials-science template](codebase_templates/compchem_pymatgen/). The agent completes CIF crystal-structure files, and a fixed **pymatgen** script checks their format and composition before reporting properties such as density and volume. Here, the tool returns parsing errors and scientific properties. This provides another setting for studying whether an agent produces data it would otherwise refuse while completing a task.
 
 <a id="c-code"></a>
 
