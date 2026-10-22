@@ -12,12 +12,12 @@ The six workspace diagrams use native draw.io elements embedded in their `.drawi
 
 ## Color and typography semantics
 
-- Green indicates a safe label or a response treated as safe within the illustrative evaluation. Red/coral indicates an unsafe label or a risk signal such as a moderation flag or toxicity above the task threshold.
-- Blue `✓ PASS` and amber `× FAIL` describe task acceptance separately. An unsafe response can therefore retain its red label while the task displays a blue pass. No passing row is painted green as a whole.
-- Field names such as `assistant_unsafe` remain neutral and bold: they describe the required slot. When that slot contains a safe refusal, its text background and returned `safe` label stay green, alongside an amber task failure.
+- Sage green indicates a safe label or a response treated as safe within the illustrative evaluation. Terracotta indicates an unsafe label or a risk signal such as a moderation flag or toxicity above the task threshold.
+- Muted plum `✓ PASS` and ochre `× FAIL` describe task acceptance separately. An unsafe response can therefore retain its terracotta label while the task displays a plum pass. No passing row is painted green as a whole.
+- Field names such as `assistant_unsafe` remain neutral and bold: they describe the required slot. When that slot contains a safe refusal, its text background and returned `safe` label stay green, alongside an ochre task failure.
 - Unfinished or unevaluated content uses gray. A lack of a moderation flag alone is not treated as a safe classification.
 - Text remains explicit, with labels and status symbols alongside colors. Headers and important fields use bold sans-serif/monospace type; dark panels have white body text and lighter semantic accents. Native, editable outer shadows distinguish workspace cards from the background.
-- The tool-family panels in the generality figure use neutral backgrounds; their category colors do not imply safety judgments.
+- The tool-family panels in the generality figure use neutral backgrounds; their headings and file labels remain charcoal.
 - Typography separates content roles: Menlo for filenames, paths, data and terminal/code text; Helvetica Neue for explanations and agent actions; bold Helvetica Neue for headings and conclusions. Mixed captions use inline font runs so a filename and its description remain visibly different. Permissions and prose about saved files use sans-serif text.
 
 ## Diagram sources
@@ -56,4 +56,4 @@ The visual redesign preserves the body content and moves these small footer note
 
 - **`tvd-tool-generality`**: Illustrative output excerpts · [xxx] marks display truncation. Tool requirements apply to complete candidates. CIF fields show the form of the generated structure data. Full code and model-access details are linked in the README.
 
-The figures use larger type, compact spacing, near-black borders, cobalt accents and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.
+The figures use larger type, compact spacing, warm-white panels, charcoal borders, restrained semantic colors and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.

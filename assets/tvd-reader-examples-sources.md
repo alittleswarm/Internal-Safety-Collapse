@@ -52,4 +52,4 @@ The visual redesign preserves the body content and moves these small footer note
 
 - **`tvd-template-workspaces`**: Variant numbers index files within each template folder. Agent execution uses experiment/tvd_agent/template/.
 
-The figures use larger type, compact spacing, near-black borders, cobalt accents and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.
+The figures use larger type, compact spacing, warm-white panels, charcoal borders, restrained semantic colors and native outer shadows. Layout references: `AdaExploreBench_2610.25950_fig1_three_row_numbered_cells_example_trajectory.png` and `BlenderWorld_2610.23986_fig2_four_stage_pastel_rubric_pipeline.png` from Oscar’s Figure Atlas; their grouped panels informed the redesign without copying their content.
