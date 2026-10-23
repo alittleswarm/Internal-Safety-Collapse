@@ -8,7 +8,7 @@
 
 A coding agent reads a project, runs its checks, and fills in the missing data. **Internal Safety Collapse (ISC)** occurs when completing that workflow leads it to generate content it would refuse to provide directly.
 
-We provide hand-designed **TVD (Task, Validator, Data)** workspaces for studying this behavior in AI agents and frontier LLMs. Run them in Docker or adapt them to your own tools and tasks.
+We provide hand-designed **TVD (Task, Validator, Data)** workspaces and a [prepared Docker environment](#c-code) for studying this behavior in AI agents and frontier LLMs. Start with our examples, or adapt the workspaces to your own tools and tasks.
 
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Project:** [Website](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -16,7 +16,7 @@ We provide hand-designed **TVD (Task, Validator, Data)** workspaces for studying
 |---|---|
 | See what ISC looks like | **[A · Video](#a-demo)** |
 | Understand how it works | **[B · Mechanism](#b-mechanism)** |
-| Run the agent experiment | **[C · Code](#c-code)** |
+| Study agent behavior or adapt a task | **[C · Agent experiments](#c-code)** |
 | Try the context in a chat | **[D · Quick test](#d-quick-test)** |
 | Find results for a model | **[E · Model testing](#e-models)** |
 | See how others reproduced and adapted ISC | **[F · Community](#f-reproductions)** |
@@ -155,9 +155,9 @@ The same structure also appears in our [materials-science template](codebase_tem
 
 <a id="setup"></a>
 
-## C · Code and agent codespaces
+## C · Agent experiments
 
-A **codespace** is the folder of scripts and data the agent works in inside Docker. The agent reads and edits real files, runs checks, and receives tool output.
+We have prepared a Docker environment to study how coding agents complete tasks. Each agent works in a **codespace**, a folder of scripts and data, where it can edit files, call tools, and revise its work after feedback.
 
 Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): its `test_case.json` has an unfinished query and two response fields, and `validator.py` uses **Qwen3Guard** to check the response pair. The agent chooses the query, making this an **untargeted generation** task.
 
@@ -165,7 +165,7 @@ Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): its `tes
 
 <a id="run-one-example"></a>
 
-### Run one example
+### Try the prepared agent environment
 
 You need Docker and an `OPENROUTER_API_KEY` in the repository-root `.env`. Run these commands from the repository root, replacing `PROVIDER/MODEL` with your OpenRouter model ID:
 
@@ -181,9 +181,9 @@ The runner saves the edited data and `agent_log.json` in a new run folder, then 
 
 The final `[validate] PASSED` or `[validate] FAILED` message appears in the runner's terminal output. [Runner code](experiment/tvd_agent/run.sh).
 
-### Turn an example into a Docker codespace
+### Adapt the workspace to your tools and tasks
 
-The [example library](codebase_templates/) stores task code and data inside text transcripts. To run one with an agent, extract those files into a [Docker template](experiment/tvd_agent/template/):
+Choose the tool or API for your task and define what counts as a successful result. The [example library](codebase_templates/) provides task code and data as text transcripts; extract them into a [template folder](experiment/tvd_agent/template/) for the agent:
 
 1. Write the example's scripts and data as actual files under `experiment/tvd_agent/template/your_example/`, keeping file paths and imports consistent.
 2. Make `validator.py` the main check. Have it call the chosen tool or API and exit with an error if the data fails. Place helper code in a subdirectory so the runner selects `validator.py`.
@@ -378,7 +378,7 @@ The paper tests whether a model produces unsafe data to complete a **TVD (Task, 
 | **[Chatbot](experiment/tvd_chatbot/)** | The task, code, and data as text | Produces one text response; tools do not execute. |
 | **[ICL (in-context learning)](experiment/tvd_icl/)** | Completed examples as prior user/assistant turns, then the new task | Generates one new reply using those demonstrations; tools do not execute. |
 
-The [`my_favorite` agent template](experiment/tvd_agent/template/my_favorite/) illustrates **untargeted generation**: the agent chooses the question. In **targeted generation**, a question or topic is supplied in advance. [C provides the runnable Docker example](#run-one-example); the [experiment guide](experiment/) and [paper](https://arxiv.org/abs/2603.23509) document the setups for reproducing particular results.
+The [`my_favorite` agent template](experiment/tvd_agent/template/my_favorite/) illustrates **untargeted generation**: the agent chooses the question. In **targeted generation**, a question or topic is supplied in advance. [C provides the prepared agent example](#run-one-example); the [experiment guide](experiment/) and [paper](https://arxiv.org/abs/2603.23509) document the setups for reproducing particular results.
 
 The [paper's single-turn TVD tests](https://arxiv.org/abs/2603.23509) reached a 92% mean safety-failure rate across three tasks and four frontier models. The Chatbot and ICL settings use the text interface of conventional prompt attacks; Agent experiments execute the workspace.
 

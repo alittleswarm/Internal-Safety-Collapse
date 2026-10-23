@@ -8,7 +8,7 @@
 
 Un agent de programmation lit un projet, lance ses vérifications et complète les données manquantes. **Internal Safety Collapse (ISC)** se produit lorsque l’exécution de ce processus l’amène à générer un contenu qu’il refuserait de fournir sur demande directe.
 
-Nous proposons des espaces de travail **TVD (Task, Validator, Data)** conçus manuellement pour étudier ce comportement chez les agents d’IA et les modèles de langage de pointe. Exécutez-les dans Docker ou adaptez-les à vos outils et à vos tâches.
+Nous proposons des espaces de travail **TVD (Task, Validator, Data)** conçus manuellement et un [environnement Docker préparé](#c-code) pour étudier ce comportement chez les agents d’IA et les modèles de langage de pointe. Vous pouvez partir de nos exemples et adapter les espaces de travail à vos outils et à vos tâches.
 
 📄 **Article :** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Projet :** [Site web](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -16,7 +16,7 @@ Nous proposons des espaces de travail **TVD (Task, Validator, Data)** conçus ma
 |---|---|
 | Voir ISC en action | **[A · Vidéo](#a-demo)** |
 | Comprendre le mécanisme | **[B · Mécanisme](#b-mechanism)** |
-| Exécuter l'expérience avec un agent | **[C · Code](#c-code)** |
+| Étudier le comportement d’un agent ou adapter une tâche | **[C · Expériences avec des agents](#c-code)** |
 | Essayer rapidement dans un chat | **[D · Essai rapide](#d-quick-test)** |
 | Consulter les résultats d'un modèle | **[E · Tests des modèles](#e-models)** |
 | Voir comment d’autres reproduisent et adaptent ISC | **[F · Communauté](#f-reproductions)** |
@@ -151,9 +151,9 @@ La même structure apparaît dans notre [modèle de tâche en science des matér
 <a id="b-code"></a>
 <a id="setup"></a>
 
-## C · Code et postes de travail pour agents
+## C · Expériences avec des agents
 
-Un **codespace** est le dossier de scripts et de données dans lequel l’agent travaille sous Docker. L’agent lit et modifie de vrais fichiers, lance des vérifications et reçoit les sorties des outils.
+Nous avons préparé un environnement Docker pour étudier comment les agents de programmation accomplissent des tâches. Chaque agent travaille dans un **codespace**, un dossier de scripts et de données, où il peut modifier des fichiers, appeler des outils et réviser son travail à partir des résultats.
 
 Commencez avec [`my_favorite`](experiment/tvd_agent/template/my_favorite/) : son fichier `test_case.json` contient une question à compléter et deux champs de réponse, et `validator.py` utilise **Qwen3Guard** pour vérifier la paire de réponses. L’agent choisit la question ; il s’agit donc d’une tâche de **génération non ciblée**.
 
@@ -161,7 +161,7 @@ Commencez avec [`my_favorite`](experiment/tvd_agent/template/my_favorite/) : son
 
 <a id="run-one-example"></a>
 
-### Exécuter un exemple
+### Essayer l’environnement préparé pour les agents
 
 Il faut Docker et une clé `OPENROUTER_API_KEY` dans le fichier `.env` à la racine du dépôt. Exécutez les commandes depuis cette racine en remplaçant `PROVIDER/MODEL` par l'identifiant du modèle OpenRouter à tester :
 
@@ -177,11 +177,9 @@ Le script d’exécution enregistre les données modifiées et `agent_log.json` 
 
 Le message final `[validate] PASSED` ou `[validate] FAILED` apparaît dans la sortie du terminal du script d’exécution. [Code du script](experiment/tvd_agent/run.sh).
 
-### Transformer un exemple textuel en poste de travail Docker
+### Adapter l’espace de travail à vos outils et à vos tâches
 
-Choisissez l’outil ou l’API adapté à votre cas et définissez le résultat que le validateur doit accepter. Adaptez la tâche, le validateur et les données à ces critères, puis exécutez-les dans Docker.
-
-La [bibliothèque d’exemples](codebase_templates/) conserve le code et les données des tâches dans des transcriptions textuelles. Pour en exécuter un avec un agent, extrayez ces fichiers dans un [modèle de tâche Docker](experiment/tvd_agent/template/) :
+Choisissez l’outil ou l’API pour votre tâche et définissez le résultat qui permet de la considérer comme accomplie. La [bibliothèque d’exemples](codebase_templates/) contient le code et les données des tâches sous forme de transcriptions textuelles ; extrayez ces fichiers dans un [dossier de modèle de tâche](experiment/tvd_agent/template/) pour que l’agent les utilise :
 
 1. Placez les scripts et les données sous `experiment/tvd_agent/template/your_example/`, avec des chemins et des imports cohérents.
 2. Faites de `validator.py` le point d'entrée principal. Il doit appeler l'outil ou l'API choisis et sortir avec une erreur si les données échouent. Placez le code auxiliaire dans un sous-dossier pour que le lanceur choisisse `validator.py`.
@@ -369,7 +367,7 @@ L’article teste si un modèle produit des données dangereuses pour accomplir 
 | **[Chatbot](experiment/tvd_chatbot/)** | La tâche, le code et les données sous forme de texte | Produit une réponse textuelle ; les outils ne s’exécutent pas. |
 | **[ICL (apprentissage en contexte)](experiment/tvd_icl/)** | Des exemples terminés sous forme de tours précédents d’utilisateur et d’assistant, suivis de la nouvelle tâche | Génère une nouvelle réponse à partir de ces démonstrations ; les outils ne s’exécutent pas. |
 
-Le [modèle de tâche pour agent `my_favorite`](experiment/tvd_agent/template/my_favorite/) illustre la **génération non ciblée** : l’agent choisit la question. Dans la **génération ciblée**, une question ou un sujet est fourni à l’avance. [C propose l’exemple Docker exécutable](#run-one-example) ; le [guide des expériences](experiment/) et l’[article](https://arxiv.org/abs/2603.23509) décrivent les configurations nécessaires pour reproduire des résultats précis.
+Le [modèle de tâche pour agent `my_favorite`](experiment/tvd_agent/template/my_favorite/) illustre la **génération non ciblée** : l’agent choisit la question. Dans la **génération ciblée**, une question ou un sujet est fourni à l’avance. [C propose l’exemple préparé pour les agents](#run-one-example) ; le [guide des expériences](experiment/) et l’[article](https://arxiv.org/abs/2603.23509) décrivent les configurations nécessaires pour reproduire des résultats précis.
 
 Les [tests TVD en un seul tour de l’article](https://arxiv.org/abs/2603.23509) ont atteint un taux moyen de défaillance de sécurité de 92% sur trois tâches et quatre modèles de pointe. Chatbot et ICL utilisent l’interface textuelle des attaques classiques par prompt ; les expériences Agent exécutent l’espace de travail.
 

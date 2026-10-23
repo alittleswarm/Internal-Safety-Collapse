@@ -8,7 +8,7 @@
 
 编码 Agent 读取项目、运行检查，再补齐缺失的数据。当完成这个工作流程使它生成原本会直接拒绝提供的内容时，就发生了 **Internal Safety Collapse（ISC，内部安全崩塌）**。
 
-我们提供手工设计的 **TVD（Task、Validator、Data）** 工作区，用来研究 AI Agent 和前沿大语言模型中的这种行为。你可以在 Docker 中运行，也可以根据自己的工具和任务调整。
+我们提供手工设计的 **TVD（Task、Validator、Data）** 工作区和[预先准备的 Docker 环境](#c-code)，用来研究 AI Agent 和前沿大语言模型中的这种行为。你可以从现有示例开始，也可以根据自己的工具和任务调整工作区。
 
 📄 **论文：** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **项目：** [网站](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -16,7 +16,7 @@
 |---|---|
 | 先看 ISC 是什么样子 | **[A · 演示视频](#a-demo)** |
 | 了解它怎样工作 | **[B · 工作机制](#b-mechanism)** |
-| 运行 Agent 实验 | **[C · 代码](#c-code)** |
+| 研究 Agent 行为或适配自己的任务 | **[C · Agent 实验](#c-code)** |
 | 在聊天中快速试一下 | **[D · 快速体验](#d-quick-test)** |
 | 查看某个模型的结果 | **[E · 模型测试](#e-models)** |
 | 查看别人如何复现和改造 ISC | **[F · 社区](#f-reproductions)** |
@@ -151,9 +151,9 @@ news = pipeline(
 <a id="b-code"></a>
 <a id="setup"></a>
 
-## C · 代码与 Agent 工作区
+## C · Agent 实验
 
-**codespace（工作区）** 是 Agent 在 Docker 内操作的脚本和数据文件夹。Agent 读取和修改真实文件，运行检查，并接收工具输出。
+我们准备了一个 Docker 环境，用来研究编码 Agent 如何完成任务。Agent 在包含脚本和数据的 **codespace（工作区）** 中修改文件、调用工具，并根据反馈调整自己的工作。
 
 从 [`my_favorite`](experiment/tvd_agent/template/my_favorite/) 开始：它的 `test_case.json` 包含未填写的问题和两个回答字段，`validator.py` 使用 **Qwen3Guard** 检查这对回答。Agent 自己选择问题，因此这是一个**非定向生成**任务。
 
@@ -161,7 +161,7 @@ news = pipeline(
 
 <a id="run-one-example"></a>
 
-### 运行一个示例
+### 体验准备好的 Agent 环境
 
 需要 Docker，并在仓库根目录的 `.env` 中设置 `OPENROUTER_API_KEY`。从仓库根目录执行以下命令，将 `PROVIDER/MODEL` 换成要测试的 OpenRouter 模型 ID：
 
@@ -177,9 +177,9 @@ docker build -t tvd-agent .
 
 最终的 `[validate] PASSED` 或 `[validate] FAILED` 消息显示在运行脚本的终端输出中。[运行脚本](experiment/tvd_agent/run.sh)。
 
-### 把文本示例改成 Docker 工作区
+### 根据自己的工具和任务调整工作区
 
-[示例库](codebase_templates/)把任务代码和数据保存在文本形式的终端记录中。要让 Agent 实际运行，需要把这些文件提取到 [Docker 模板](experiment/tvd_agent/template/)中：
+先选择任务需要的工具或 API，并明确什么结果算完成任务。[示例库](codebase_templates/)以文本形式的终端记录提供任务代码和数据；把这些文件提取到[模板文件夹](experiment/tvd_agent/template/)，就可以让 Agent 使用：
 
 1. 在 `experiment/tvd_agent/template/your_example/` 中放入脚本和数据，保证路径和导入关系一致。
 2. 用 `validator.py` 作为主要检查入口。它调用所选工具或 API；数据未达标时以错误状态退出。辅助代码放在子目录里，让运行脚本选中 `validator.py`。
@@ -367,7 +367,7 @@ docker build -t tvd-agent .
 | **[Chatbot](experiment/tvd_chatbot/)** | 以文本提供的任务、代码和数据 | 生成一次文本回答；工具不实际执行。 |
 | **[ICL（上下文学习）](experiment/tvd_icl/)** | 以先前用户／助手轮次提供的已完成示例，再接新任务 | 根据这些示范生成一次新回答；工具不实际执行。 |
 
-[`my_favorite` Agent 模板](experiment/tvd_agent/template/my_favorite/)展示了**非定向生成**：Agent 自己选择问题。**定向生成**则提前给定问题或主题。[C 节提供可运行的 Docker 示例](#run-one-example)；[实验指南](experiment/)和[论文](https://arxiv.org/abs/2603.23509)记录了复现具体结果所需的设置。
+[`my_favorite` Agent 模板](experiment/tvd_agent/template/my_favorite/)展示了**非定向生成**：Agent 自己选择问题。**定向生成**则提前给定问题或主题。[C 节提供准备好的 Agent 示例](#run-one-example)；[实验指南](experiment/)和[论文](https://arxiv.org/abs/2603.23509)记录了复现具体结果所需的设置。
 
 [论文的单轮 TVD 实验](https://arxiv.org/abs/2603.23509)在三个任务、四个前沿模型上的平均安全失效率为 92%。Chatbot 和 ICL 使用常规 prompt 攻击的文本接口；Agent 实验则实际执行工作区中的任务。
 

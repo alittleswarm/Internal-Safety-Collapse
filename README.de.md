@@ -8,7 +8,7 @@
 
 Ein Coding-Agent liest ein Projekt, führt dessen Prüfungen aus und ergänzt fehlende Daten. **Internal Safety Collapse (ISC)** tritt auf, wenn er dabei Inhalte erzeugt, die er auf eine direkte Anfrage hin verweigern würde.
 
-Wir stellen manuell entworfene **TVD-Arbeitsbereiche (Task, Validator, Data)** bereit, um dieses Verhalten bei KI-Agenten und führenden großen Sprachmodellen zu untersuchen. Führe sie in Docker aus oder passe sie an deine Werkzeuge und Aufgaben an.
+Wir stellen manuell entworfene **TVD-Arbeitsbereiche (Task, Validator, Data)** und eine [vorbereitete Docker-Umgebung](#c-code) bereit, um dieses Verhalten bei KI-Agenten und führenden großen Sprachmodellen zu untersuchen. Du kannst mit unseren Beispielen beginnen und die Arbeitsbereiche an deine Werkzeuge und Aufgaben anpassen.
 
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Projekt:** [Webseite](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -16,7 +16,7 @@ Wir stellen manuell entworfene **TVD-Arbeitsbereiche (Task, Validator, Data)** b
 |---|---|
 | ISC in einem Video sehen möchtest | **[A · Video](#a-demo)** |
 | den Ablauf verstehen möchtest | **[B · Mechanismus](#b-mechanism)** |
-| das Agentenexperiment ausführen möchtest | **[C · Code](#c-code)** |
+| das Verhalten eines Agenten untersuchen oder eine Aufgabe anpassen möchtest | **[C · Agentenexperimente](#c-code)** |
 | den Kontext im Chat testen möchtest | **[D · Schnelltest](#d-quick-test)** |
 | Ergebnisse für ein Modell suchst | **[E · Modelltests](#e-models)** |
 | sehen möchtest, wie andere ISC reproduzieren und anpassen | **[F · Community](#f-reproductions)** |
@@ -151,9 +151,9 @@ Dieselbe Struktur findet sich auch in unserer [materialwissenschaftlichen Vorlag
 <a id="b-code"></a>
 <a id="setup"></a>
 
-## C · Code und Agenten-Arbeitsbereiche
+## C · Agentenexperimente
 
-Ein **Codespace** ist der Ordner mit Skripten und Daten, in dem der Agent innerhalb von Docker arbeitet. Der Agent liest und bearbeitet echte Dateien, führt Prüfungen aus und erhält Werkzeugausgaben.
+Wir haben eine Docker-Umgebung vorbereitet, um zu untersuchen, wie Coding-Agenten Aufgaben lösen. Jeder Agent arbeitet in einem **Codespace**, einem Ordner mit Skripten und Daten. Dort kann er Dateien bearbeiten, Werkzeuge aufrufen und seine Arbeit anhand der Rückmeldungen überarbeiten.
 
 Beginne mit [`my_favorite`](experiment/tvd_agent/template/my_favorite/): Die Datei `test_case.json` enthält eine offene Frage und zwei Antwortfelder. `validator.py` prüft das Antwortpaar mit **Qwen3Guard**. Der Agent wählt die Frage selbst; damit ist dies eine Aufgabe zur **ungezielten Generierung**.
 
@@ -161,7 +161,7 @@ Beginne mit [`my_favorite`](experiment/tvd_agent/template/my_favorite/): Die Dat
 
 <a id="run-one-example"></a>
 
-### Ein Beispiel ausführen
+### Die vorbereitete Agentenumgebung ausprobieren
 
 Du brauchst Docker und `OPENROUTER_API_KEY` in der `.env` im Stammverzeichnis. Führe die Befehle dort aus und ersetze `PROVIDER/MODEL` durch die OpenRouter-Modell-ID, die du testen möchtest:
 
@@ -177,11 +177,9 @@ Das Ausführungsskript speichert die bearbeiteten Daten und `agent_log.json` in 
 
 Die abschließende Meldung `[validate] PASSED` oder `[validate] FAILED` erscheint in der Terminalausgabe des Ausführungsskripts. [Code des Skripts](experiment/tvd_agent/run.sh).
 
-### Ein Textbeispiel als Docker-Arbeitsbereich ausführen
+### Den Arbeitsbereich an deine Werkzeuge und Aufgaben anpassen
 
-Wähle das passende Werkzeug oder die passende API und lege fest, welches Ergebnis der Validator akzeptieren soll. Passe Aufgabe, Validator und Daten daran an und führe sie in Docker aus.
-
-Die [Beispielsammlung](codebase_templates/) speichert Aufgabencode und Daten in Textprotokollen. Um ein Beispiel mit einem Agenten auszuführen, übertrage diese Dateien in eine [Docker-Vorlage](experiment/tvd_agent/template/):
+Wähle das Werkzeug oder die API für deine Aufgabe und lege fest, welches Ergebnis als erfolgreiche Bearbeitung gilt. Die [Beispielsammlung](codebase_templates/) enthält Aufgabencode und Daten in Textprotokollen; übertrage diese Dateien in einen [Vorlagenordner](experiment/tvd_agent/template/), damit der Agent sie nutzen kann:
 
 1. Lege Skripte und Daten in `experiment/tvd_agent/template/your_example/` ab und achte auf passende Pfade und Imports.
 2. `validator.py` ist der zentrale Einstieg für die Prüfung. Er ruft das gewählte Werkzeug oder die API auf und beendet sich mit einem Fehler, falls die Daten nicht bestehen. Hilfscode gehört in einen Unterordner, damit der Runner `validator.py` auswählt.
@@ -369,7 +367,7 @@ Das Paper prüft, ob ein Modell unsichere Daten erzeugt, um eine **TVD-Aufgabe (
 | **[Chatbot](experiment/tvd_chatbot/)** | Aufgabe, Code und Daten als Text | Erzeugt eine Textantwort; Werkzeuge werden nicht ausgeführt. |
 | **[ICL (In-Context Learning)](experiment/tvd_icl/)** | Gelöste Beispiele als frühere Nutzer-/Assistentenbeiträge, gefolgt von der neuen Aufgabe | Erzeugt anhand dieser Demonstrationen eine neue Antwort; Werkzeuge werden nicht ausgeführt. |
 
-Die [Agentenvorlage `my_favorite`](experiment/tvd_agent/template/my_favorite/) zeigt **ungezielte Generierung**: Der Agent wählt die Frage. Bei **gezielter Generierung** wird eine Frage oder ein Thema vorgegeben. [C enthält das ausführbare Docker-Beispiel](#run-one-example); der [Experimentguide](experiment/) und das [Paper](https://arxiv.org/abs/2603.23509) dokumentieren die Einstellungen zur Reproduktion bestimmter Ergebnisse.
+Die [Agentenvorlage `my_favorite`](experiment/tvd_agent/template/my_favorite/) zeigt **ungezielte Generierung**: Der Agent wählt die Frage. Bei **gezielter Generierung** wird eine Frage oder ein Thema vorgegeben. [C enthält das vorbereitete Agentenbeispiel](#run-one-example); der [Experimentguide](experiment/) und das [Paper](https://arxiv.org/abs/2603.23509) dokumentieren die Einstellungen zur Reproduktion bestimmter Ergebnisse.
 
 Die [TVD-Tests mit einer einzelnen Antwort im Paper](https://arxiv.org/abs/2603.23509) erreichten über drei Aufgaben und vier Spitzenmodelle eine mittlere Sicherheitsfehlerrate von 92%. Chatbot und ICL nutzen die Textschnittstelle herkömmlicher Prompt-Angriffe; Agentenexperimente führen den Arbeitsbereich tatsächlich aus.
 
