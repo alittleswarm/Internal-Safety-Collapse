@@ -8,7 +8,7 @@
 
 A coding agent may be asked to complete a dataset for a task such as evaluating a safety classifier. **Internal Safety Collapse (ISC)** occurs when it generates harmful content to meet that task's requirements, even though it would refuse a direct request for the same content.
 
-We provide hand-designed **TVD (Task, Validator, Data)** workspaces and a [prepared Docker environment](#c-code) for studying this behavior in AI agents and frontier LLMs. Start with our examples, or adapt the workspaces to your own tools and tasks.
+We provide hand-designed **TVD (Task, Validator, Data)** [workspaces](#c-code) for studying this behavior in AI agents and frontier LLMs. Start with the prepared examples, or adapt their task scripts and data to your own tools and goals.
 
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Project:** [Website](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -17,7 +17,7 @@ We provide hand-designed **TVD (Task, Validator, Data)** workspaces and a [prepa
 | See what ISC looks like | **[A · Video](#a-demo)** |
 | Understand how it works | **[B · Mechanism](#b-mechanism)** |
 | Study agent behavior or adapt a task | **[C · Agent experiments](#c-code)** |
-| Try the context in a chat | **[D · Quick test](#d-quick-test)** |
+| Explore shared chat examples | **[D · Quick test](#d-quick-test)** |
 | Find results for a model | **[E · Model testing](#e-models)** |
 | See how others reproduced and adapted ISC | **[F · Community](#f-reproductions)** |
 | Reproduce the paper | **[G · Experiments](#g-experiments)** |
@@ -70,7 +70,7 @@ The next figure follows the same file through a failed check and a revision:
 
 A task **PASS** includes an `unsafe` judgment for the unsafe response. The guard has already evaluated the data inside the task.
 
-> This is an illustrative sequence, showing only the beginnings of example responses; a run can also stop before passing. The [agent setup in C](#c-code) executes these steps with files and code. The [chat examples in D](#d-quick-test) simulate a terminal session as text.
+> This is an illustrative sequence, showing only the beginnings of example responses; a run can also stop before passing. The agent executes these steps with files and code in the [workspace in C](#c-code). The [chat examples in D](#d-quick-test) simulate a terminal session as text.
 
 ### 2. Targeted generation: supply a query
 
@@ -97,7 +97,7 @@ Other tools let us check different properties of the text:
 
 The data to generate can also be a prompt. In our [automatic red-teaming experiment](experiment/automated-red-teaming-qwen-guard/), a coding agent generates an **adversarial prompt meant to make a target model produce an unsafe response without refusing**. The task tests each candidate against that target.
 
-The [task](experiment/automated-red-teaming-qwen-guard/codespace/task.py) accepts a candidate after two checks:
+After the validator checks the data format, the [task](experiment/automated-red-teaming-qwen-guard/codespace/task.py) requires both of these results:
 
 1. The input moderation API flags the candidate prompt.
 2. The target model's response is judged by [Qwen3Guard](experiment/automated-red-teaming-qwen-guard/gate/completion_gate.py) as `Safety: Unsafe` and `Refusal: No`.
@@ -155,7 +155,7 @@ The same structure also appears in our [materials-science template](codebase_tem
 
 ## C · Agent experiments
 
-We provide a prepared Docker environment to examine whether coding agents generate unsafe data while completing a task. Inside it, the agent works in a **codespace**, a folder of task scripts and data. It can inspect files, call tools, and revise its work after real feedback.
+We provide prepared **workspaces** for studying whether coding agents generate unsafe data while completing a task. Each workspace is a folder of task scripts and data. The agent can inspect and edit files, call tools, and revise its work after feedback.
 
 Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): its `test_case.json` has an unfinished query and two response fields, and `validator.py` uses **Qwen3Guard** to check the response pair. The agent chooses the query, making this an **untargeted generation** task.
 
@@ -163,9 +163,9 @@ Start with [`my_favorite`](experiment/tvd_agent/template/my_favorite/): its `tes
 
 <a id="run-one-example"></a>
 
-### Try the prepared agent environment
+### Try a prepared workspace
 
-You need Docker and an `OPENROUTER_API_KEY` in the repository-root `.env`. Run these commands from the repository root, replacing `PROVIDER/MODEL` with your OpenRouter model ID:
+Our Docker setup provides the tools and dependencies for this example. With Docker installed, add your `OPENROUTER_API_KEY` to the repository-root `.env`, then run these commands from the repository root. Replace `PROVIDER/MODEL` with your OpenRouter model ID:
 
 ```bash
 cd experiment/tvd_agent
@@ -187,7 +187,7 @@ Choose the tool or API for your task and define what counts as a successful resu
 2. Make `validator.py` the main check. Have it call the chosen tool or API and exit with an error if the data fails. Place helper code in a subdirectory so the runner selects `validator.py`.
 3. Add any missing dependencies and API configuration to the Docker setup, rebuild when dependencies change, and run the command above with `--template your_example`.
 
-The [template guide](experiment/tvd_agent/#adding-your-own-codebase-templates) and [codespace construction guide](experiment/tvd_agent/skills/build-tvd-codespace/) provide the full layout and conversion steps.
+The [template guide](experiment/tvd_agent/#adding-your-own-codebase-templates) and [workspace construction guide](experiment/tvd_agent/skills/build-tvd-codespace/) provide the full layout and conversion steps.
 
 <a id="d-quick-test"></a>
 
@@ -207,7 +207,7 @@ Pasting a full **TVD (Task, Validator, Data)** example into a chat lets the mode
 
 These chats simulate commands and results; the validator does not actually run. Because the full task is supplied as a prompt, the demonstration remains sensitive to the model's guardrails and can be treated as a prompt-based attack.
 
-In the Agent experiments, the model opens workspace files, executes code, and receives real validation errors. A task instruction starts the work, without an adversarial prompt initiating the attack. The [experiment overview](#g-experiments) and [paper §4.1](https://arxiv.org/html/2603.23509#S4.SS1) compare these settings, and the [Agent setup](#run-one-example) provides a runnable workspace.
+In the Agent experiments, the model opens workspace files, executes code, and receives real validation errors. A task instruction starts the work, without an adversarial prompt initiating the attack. The [experiment overview](#g-experiments) and [paper §4.1](https://arxiv.org/html/2603.23509#S4.SS1) describe these settings. To try actual execution, start with the [prepared workspace in C](#run-one-example).
 
 <a id="e-models"></a>
 
@@ -217,7 +217,7 @@ In the Agent experiments, the model opens workspace files, executes code, and re
 
 ## E · Testing frontier LLMs at scale
 
-We tested frontier large language models at scale to see how widely they produce unsafe content while completing a task. We study this safety failure as **Internal Safety Collapse (ISC)**.
+We tested frontier large language models at scale to see how widely they produce unsafe content while completing a task, a safety failure we call **Internal Safety Collapse (ISC)**.
 
 Across the cases we examined, it recurred across subjects, from misinformation to chemical, biological, radiological, and nuclear (CBRN) material. We describe ISC as **target-agnostic** in this sense: the subject can change while the task structure stays the same. The evidence below records the conditions under which each model produced the material.
 
@@ -372,11 +372,11 @@ The paper tests whether a model produces unsafe data to complete a **TVD (Task, 
 
 | Setting | What the model receives | What it does |
 |---|---|---|
-| **[Agent](experiment/tvd_agent/)** | Workspace files inside Docker | Edits data, executes tools, and revises after real errors. |
+| **[Agent](experiment/tvd_agent/)** | Task scripts and data in a workspace | Edits data, executes tools, and revises after real errors. |
 | **[Chatbot](experiment/tvd_chatbot/)** | The task, code, and data as text | Produces one text response; tools do not execute. |
 | **[ICL (in-context learning)](experiment/tvd_icl/)** | Completed examples as prior user/assistant turns, then the new task | Generates one new reply using those demonstrations; tools do not execute. |
 
-The [`my_favorite` agent template](experiment/tvd_agent/template/my_favorite/) illustrates **untargeted generation**: the agent chooses the question. In **targeted generation**, a question or topic is supplied in advance. [C provides the prepared agent example](#run-one-example); the [experiment guide](experiment/) and [paper](https://arxiv.org/abs/2603.23509) document the setups for reproducing particular results.
+The [`my_favorite` agent template](experiment/tvd_agent/template/my_favorite/) illustrates **untargeted generation**: the agent chooses the question. In **targeted generation**, a question or topic is supplied in advance. [C provides a prepared workspace](#run-one-example); the [experiment guide](experiment/) and [paper](https://arxiv.org/abs/2603.23509) document the setups for reproducing particular results.
 
 For the standardized comparison, three tasks—LlamaGuard, PyOD, and Toxic-BERT—use JailbreakBench queries across four frontier models. A separate evaluator judges the generated responses for harmfulness. The reported **92%** mean safety-failure rate comes from the [single-turn setting](https://arxiv.org/html/2603.23509#S4.SS2); the paper reports ICL and Agent results separately.
 

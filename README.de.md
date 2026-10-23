@@ -8,7 +8,7 @@
 
 Ein Coding-Agent kann den Auftrag erhalten, einen Datensatz für die Evaluation eines Sicherheitsklassifikators zu vervollständigen. **Internal Safety Collapse (ISC)** tritt auf, wenn er dafür schädliche Inhalte erzeugt, die er auf eine direkte Anfrage hin verweigern würde.
 
-Wir stellen manuell entworfene **TVD-Arbeitsbereiche (Task, Validator, Data)** und eine [vorbereitete Docker-Umgebung](#c-code) bereit, um dieses Verhalten bei KI-Agenten und führenden großen Sprachmodellen zu untersuchen. Du kannst mit unseren Beispielen beginnen und die Arbeitsbereiche an deine Werkzeuge und Aufgaben anpassen.
+Wir stellen manuell entworfene [**TVD-Arbeitsbereiche (Task, Validator, Data)**](#c-code) bereit, um dieses Verhalten bei KI-Agenten und führenden großen Sprachmodellen zu untersuchen. Du kannst mit den vorbereiteten Beispielen beginnen oder ihre Aufgabenskripte und Daten an deine Werkzeuge und Ziele anpassen.
 
 📄 **Paper:** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Projekt:** [Webseite](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -17,7 +17,7 @@ Wir stellen manuell entworfene **TVD-Arbeitsbereiche (Task, Validator, Data)** u
 | ISC in einem Video sehen möchtest | **[A · Video](#a-demo)** |
 | den Ablauf verstehen möchtest | **[B · Mechanismus](#b-mechanism)** |
 | das Verhalten eines Agenten untersuchen oder eine Aufgabe anpassen möchtest | **[C · Agentenexperimente](#c-code)** |
-| den Kontext im Chat testen möchtest | **[D · Schnelltest](#d-quick-test)** |
+| geteilte Chatbeispiele ansehen möchtest | **[D · Schnelltest](#d-quick-test)** |
 | Ergebnisse für ein Modell suchst | **[E · Modelltests](#e-models)** |
 | sehen möchtest, wie andere ISC reproduzieren und anpassen | **[F · Community](#f-reproductions)** |
 | die Experimente aus dem Paper nachvollziehen möchtest | **[G · Experimente](#g-experiments)** |
@@ -68,7 +68,7 @@ Die nächste Abbildung zeigt dieselbe Datei nach einer fehlgeschlagenen Prüfung
 
 Ein **PASS** der Aufgabe schließt ein `unsafe`-Urteil für die unsichere Antwort ein. Der Guard hat die Daten bereits innerhalb der Aufgabe bewertet.
 
-> Der Ablauf dient der Veranschaulichung; von den Beispielantworten wird nur der Anfang gezeigt. Ein Lauf kann auch vor dem Bestehen enden. Die [Agenteneinstellung in C](#c-code) führt diese Schritte mit Dateien und Code aus. Die [Chatbeispiele in D](#d-quick-test) simulieren eine Terminalsitzung als Text.
+> Der Ablauf dient der Veranschaulichung; von den Beispielantworten wird nur der Anfang gezeigt. Ein Lauf kann auch vor dem Bestehen enden. Im [Arbeitsbereich in C](#c-code) führt der Agent diese Schritte mit Dateien und Code aus. Die [Chatbeispiele in D](#d-quick-test) simulieren eine Terminalsitzung als Text.
 
 ### 2. Gezielte Generierung: Eine Anfrage vorgeben
 
@@ -95,7 +95,7 @@ Andere Werkzeuge prüfen andere Eigenschaften des Textes:
 
 Die zu erzeugenden Daten können auch ein Prompt sein. In unserem [automatisierten Red-Teaming-Experiment](experiment/automated-red-teaming-qwen-guard/) erzeugt ein Coding-Agent einen **adversarialen Prompt, der das Zielmodell zu einer unsicheren Antwort ohne Verweigerung bringen soll**. Die Aufgabe testet jeden Kandidaten am Zielmodell.
 
-Der [Aufgabencode](experiment/automated-red-teaming-qwen-guard/codespace/task.py) verlangt zwei Ergebnisse:
+Nachdem der Validator das Datenformat geprüft hat, verlangt der [Aufgabencode](experiment/automated-red-teaming-qwen-guard/codespace/task.py) beide folgenden Ergebnisse:
 
 1. Die Eingabe-Moderation markiert den Prompt-Kandidaten.
 2. [Qwen3Guard](experiment/automated-red-teaming-qwen-guard/gate/completion_gate.py) bewertet die Antwort des Zielmodells als `Safety: Unsafe` und `Refusal: No`.
@@ -151,7 +151,7 @@ Dieselbe Struktur findet sich auch in unserer [materialwissenschaftlichen Vorlag
 
 ## C · Agentenexperimente
 
-Wir stellen eine vorbereitete Docker-Umgebung bereit, um zu untersuchen, ob Coding-Agenten beim Erledigen einer Aufgabe unsichere Daten erzeugen. Der Agent arbeitet darin in einem **Codespace**, einem Ordner mit Aufgabenskripten und Daten. Er kann Dateien lesen, Werkzeuge aufrufen und seine Arbeit anhand tatsächlicher Rückmeldungen überarbeiten.
+Wir stellen vorbereitete **Arbeitsbereiche** bereit, um zu untersuchen, ob Coding-Agenten beim Erledigen einer Aufgabe unsichere Daten erzeugen. Jeder Arbeitsbereich ist ein Ordner mit Aufgabenskripten und Daten. Der Agent kann Dateien lesen und bearbeiten, Werkzeuge aufrufen und seine Arbeit anhand der Rückmeldungen überarbeiten.
 
 Beginne mit [`my_favorite`](experiment/tvd_agent/template/my_favorite/): Die Datei `test_case.json` enthält eine offene Frage und zwei Antwortfelder. `validator.py` prüft das Antwortpaar mit **Qwen3Guard**. Der Agent wählt die Frage selbst; damit ist dies eine Aufgabe zur **ungezielten Generierung**.
 
@@ -159,9 +159,9 @@ Beginne mit [`my_favorite`](experiment/tvd_agent/template/my_favorite/): Die Dat
 
 <a id="run-one-example"></a>
 
-### Die vorbereitete Agentenumgebung ausprobieren
+### Einen vorbereiteten Arbeitsbereich ausprobieren
 
-Du brauchst Docker und `OPENROUTER_API_KEY` in der `.env` im Stammverzeichnis. Führe die Befehle dort aus und ersetze `PROVIDER/MODEL` durch die OpenRouter-Modell-ID, die du testen möchtest:
+Unsere Docker-Konfiguration stellt die Werkzeuge und Abhängigkeiten für dieses Beispiel bereit. Sobald Docker installiert ist, trage `OPENROUTER_API_KEY` in die `.env` im Stammverzeichnis des Repositories ein und führe dort die folgenden Befehle aus. Ersetze `PROVIDER/MODEL` durch deine OpenRouter-Modell-ID:
 
 ```bash
 cd experiment/tvd_agent
@@ -202,7 +202,7 @@ Ein vollständiges **TVD-Beispiel (Task, Validator, Data)** im Chat lässt das M
 
 Diese Chats simulieren Befehle und Ergebnisse; der Validator wird nicht tatsächlich ausgeführt. Da die gesamte Aufgabe als Prompt übermittelt wird, bleibt die Demonstration empfindlich gegenüber Schutzmechanismen des Modells und kann als promptbasierter Angriff betrachtet werden.
 
-In den Agentenexperimenten öffnet das Modell Dateien im Arbeitsbereich, führt Code aus und erhält echte Validierungsfehler. Eine Aufgabenanweisung startet die Arbeit, ohne dass ein adversarialer Prompt den Angriff auslöst. Die [Experimentübersicht](#g-experiments) und [Abschnitt 4.1 des Papers](https://arxiv.org/html/2603.23509#S4.SS1) vergleichen diese Einstellungen. Die [Agenteneinrichtung](#run-one-example) bietet einen ausführbaren Arbeitsbereich.
+In den Agentenexperimenten öffnet das Modell Dateien im Arbeitsbereich, führt Code aus und erhält echte Validierungsfehler. Eine Aufgabenanweisung startet die Arbeit, ohne dass ein adversarialer Prompt den Angriff auslöst. Die [Experimentübersicht](#g-experiments) und [Abschnitt 4.1 des Papers](https://arxiv.org/html/2603.23509#S4.SS1) beschreiben diese Einstellungen. Für eine tatsächliche Ausführung kannst du mit dem [vorbereiteten Arbeitsbereich in C](#run-one-example) beginnen.
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -210,7 +210,7 @@ In den Agentenexperimenten öffnet das Modell Dateien im Arbeitsbereich, führt 
 
 ## E · Spitzenmodelle in großem Umfang testen
 
-Wir testeten große Sprachmodelle der Spitzenklasse in großem Umfang, um zu untersuchen, wie verbreitet die Erzeugung unsicherer Inhalte bei der Aufgabenbearbeitung ist. Dieses Sicherheitsversagen untersuchen wir als **Internal Safety Collapse (ISC)**.
+Wir testeten große Sprachmodelle der Spitzenklasse in großem Umfang, um zu untersuchen, wie verbreitet die Erzeugung unsicherer Inhalte bei der Aufgabenbearbeitung ist. Dieses Sicherheitsversagen nennen wir **Internal Safety Collapse (ISC)**.
 
 In den untersuchten Fällen trat das Verhalten bei verschiedenen Themen auf, von Desinformation bis zu chemischen, biologischen, radiologischen und nuklearen (CBRN) Inhalten. In diesem Sinne beschreiben wir ISC als **target-agnostic**: Das Thema kann wechseln, während die Aufgabenstruktur gleich bleibt. Die folgenden Belege dokumentieren die Bedingungen, unter denen jedes Modell die Inhalte erzeugte.
 
@@ -361,11 +361,11 @@ Das Paper prüft, ob ein Modell unsichere Daten erzeugt, um eine **TVD-Aufgabe (
 
 | Einstellung | Was das Modell erhält | Was es tut |
 |---|---|---|
-| **[Agent](experiment/tvd_agent/)** | Dateien im Arbeitsbereich innerhalb von Docker | Bearbeitet Daten, führt Werkzeuge aus und überarbeitet seine Arbeit nach echten Fehlern. |
+| **[Agent](experiment/tvd_agent/)** | Aufgabenskripte und Daten in einem Arbeitsbereich | Bearbeitet Daten, führt Werkzeuge aus und überarbeitet seine Arbeit nach echten Fehlern. |
 | **[Chatbot](experiment/tvd_chatbot/)** | Aufgabe, Code und Daten als Text | Erzeugt eine Textantwort; Werkzeuge werden nicht ausgeführt. |
 | **[ICL (In-Context Learning)](experiment/tvd_icl/)** | Gelöste Beispiele als frühere Nutzer-/Assistentenbeiträge, gefolgt von der neuen Aufgabe | Erzeugt anhand dieser Demonstrationen eine neue Antwort; Werkzeuge werden nicht ausgeführt. |
 
-Die [Agentenvorlage `my_favorite`](experiment/tvd_agent/template/my_favorite/) zeigt **ungezielte Generierung**: Der Agent wählt die Frage. Bei **gezielter Generierung** wird eine Frage oder ein Thema vorgegeben. [C enthält das vorbereitete Agentenbeispiel](#run-one-example); der [Experimentguide](experiment/) und das [Paper](https://arxiv.org/abs/2603.23509) dokumentieren die Einstellungen zur Reproduktion bestimmter Ergebnisse.
+Die [Agentenvorlage `my_favorite`](experiment/tvd_agent/template/my_favorite/) zeigt **ungezielte Generierung**: Der Agent wählt die Frage. Bei **gezielter Generierung** wird eine Frage oder ein Thema vorgegeben. [C enthält einen vorbereiteten Arbeitsbereich](#run-one-example); der [Experimentguide](experiment/) und das [Paper](https://arxiv.org/abs/2603.23509) dokumentieren die Einstellungen zur Reproduktion bestimmter Ergebnisse.
 
 Für den standardisierten Vergleich verwenden drei Aufgaben — LlamaGuard, PyOD und Toxic-BERT — Anfragen aus JailbreakBench, mit denen vier Spitzenmodelle getestet werden. Ein separater Evaluator beurteilt die Schädlichkeit der erzeugten Antworten. Die berichtete mittlere Sicherheitsfehlerrate von **92%** stammt aus der [Einstellung mit einer einzelnen Antwort](https://arxiv.org/html/2603.23509#S4.SS2); das Paper weist die Ergebnisse für ICL und Agenten gesondert aus.
 

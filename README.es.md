@@ -8,7 +8,7 @@
 
 A un agente de programación se le puede pedir que complete un conjunto de datos para una tarea como evaluar un clasificador de seguridad. **Internal Safety Collapse (ISC)** ocurre cuando genera contenido dañino para cumplir los requisitos de esa tarea, aunque rechazaría una petición directa del mismo contenido.
 
-Ofrecemos espacios de trabajo **TVD (Task, Validator, Data)** diseñados manualmente y un [entorno Docker preparado](#c-code) para estudiar este comportamiento en agentes de IA y modelos de lenguaje de frontera. Puedes empezar con nuestros ejemplos y adaptar los espacios de trabajo a tus herramientas y tareas.
+Ofrecemos [espacios de trabajo](#c-code) **TVD (Task, Validator, Data)** diseñados manualmente para estudiar este comportamiento en agentes de IA y modelos de lenguaje de frontera. Puedes empezar con los ejemplos preparados o adaptar sus scripts y datos a tus herramientas y objetivos.
 
 📄 **Artículo:** [arXiv](https://arxiv.org/abs/2603.23509) &nbsp; · &nbsp; 🧭 **Proyecto:** [Sitio web](https://wuyoscar.github.io/Internal-Safety-Collapse/)
 
@@ -17,7 +17,7 @@ Ofrecemos espacios de trabajo **TVD (Task, Validator, Data)** diseñados manualm
 | Ver ISC en acción | **[A · Vídeo](#a-demo)** |
 | Entender cómo funciona | **[B · Mecanismo](#b-mechanism)** |
 | Estudiar el comportamiento de un agente o adaptar una tarea | **[C · Experimentos con agentes](#c-code)** |
-| Probar el contexto en un chat | **[D · Prueba rápida](#d-quick-test)** |
+| Explorar ejemplos de chats compartidos | **[D · Prueba rápida](#d-quick-test)** |
 | Consultar los resultados de un modelo | **[E · Pruebas de modelos](#e-models)** |
 | Ver cómo otros reproducen y adaptan ISC | **[F · Comunidad](#f-reproductions)** |
 | Reproducir el trabajo del artículo | **[G · Experimentos](#g-experiments)** |
@@ -68,7 +68,7 @@ La siguiente figura sigue el mismo archivo a través de una comprobación fallid
 
 Un **PASS** de la tarea incluye una clasificación `unsafe` para la respuesta insegura. El guard ya ha evaluado los datos dentro de la tarea.
 
-> Esta secuencia es ilustrativa y muestra solo el inicio de las respuestas de ejemplo; una ejecución también puede detenerse antes de superar las comprobaciones. La [configuración del agente en C](#c-code) ejecuta estos pasos con archivos y código. Los [ejemplos de chat en D](#d-quick-test) simulan una sesión de terminal mediante texto.
+> Esta secuencia es ilustrativa y muestra solo el inicio de las respuestas de ejemplo; una ejecución también puede detenerse antes de superar las comprobaciones. En el [espacio de trabajo de C](#c-code), el agente ejecuta estos pasos con archivos y código. Los [ejemplos de chat en D](#d-quick-test) simulan una sesión de terminal mediante texto.
 
 ### 2. Generación dirigida: proporcionar una consulta
 
@@ -95,7 +95,7 @@ Otras herramientas permiten comprobar distintas propiedades del texto:
 
 Los datos que se generan también pueden ser un prompt. En nuestro [experimento de red teaming automatizado](experiment/automated-red-teaming-qwen-guard/), un agente programador genera un **prompt adversario que busca una respuesta insegura del modelo objetivo sin que este se niegue**. La tarea prueba cada candidato en el modelo objetivo.
 
-El [código de la tarea](experiment/automated-red-teaming-qwen-guard/codespace/task.py) exige las dos condiciones siguientes:
+Una vez que el validador comprueba el formato de los datos, el [código de la tarea](experiment/automated-red-teaming-qwen-guard/codespace/task.py) exige ambos resultados:
 
 1. La API de moderación de entrada marca el prompt candidato.
 2. [Qwen3Guard](experiment/automated-red-teaming-qwen-guard/gate/completion_gate.py) clasifica la respuesta del modelo objetivo como `Safety: Unsafe` y `Refusal: No`.
@@ -151,7 +151,7 @@ La misma estructura aparece en nuestra [plantilla de ciencia de materiales](code
 
 ## C · Experimentos con agentes
 
-Ofrecemos un entorno Docker preparado para examinar si los agentes de programación generan datos inseguros al completar una tarea. El agente trabaja en un **codespace**, una carpeta con los scripts y datos de la tarea. Puede inspeccionar archivos, llamar a herramientas y revisar su trabajo a partir de resultados reales.
+Ofrecemos **espacios de trabajo** preparados para estudiar si los agentes de programación generan datos inseguros al completar una tarea. Cada espacio es una carpeta con los scripts y datos de la tarea. El agente puede inspeccionar y editar archivos, llamar a herramientas y revisar su trabajo a partir de los resultados.
 
 Empieza con [`my_favorite`](experiment/tvd_agent/template/my_favorite/): su archivo `test_case.json` contiene una consulta pendiente y dos campos de respuesta, y `validator.py` utiliza **Qwen3Guard** para comprobar el par de respuestas. El agente elige la consulta, por lo que es una tarea de **generación no dirigida**.
 
@@ -159,9 +159,9 @@ Empieza con [`my_favorite`](experiment/tvd_agent/template/my_favorite/): su arch
 
 <a id="run-one-example"></a>
 
-### Probar el entorno preparado para agentes
+### Probar un espacio de trabajo preparado
 
-Necesitas Docker y `OPENROUTER_API_KEY` en el `.env` de la raíz del repositorio. Ejecuta esto desde la raíz y sustituye `PROVIDER/MODEL` por el identificador de tu modelo en OpenRouter:
+Nuestra configuración de Docker proporciona las herramientas y dependencias de este ejemplo. Con Docker instalado, añade `OPENROUTER_API_KEY` al archivo `.env` de la raíz del repositorio y ejecuta estos comandos desde esa raíz. Sustituye `PROVIDER/MODEL` por el identificador de tu modelo en OpenRouter:
 
 ```bash
 cd experiment/tvd_agent
@@ -202,7 +202,7 @@ Pegar un ejemplo completo de **TVD (Task, Validator, Data)** en un chat permite 
 
 Estos chats simulan comandos y resultados; el validador no se ejecuta realmente. Como la tarea completa se suministra mediante un prompt, la demostración sigue siendo sensible a las salvaguardas del modelo y puede considerarse un ataque basado en prompts.
 
-En los experimentos con agentes, el modelo abre archivos del entorno, ejecuta código y recibe errores reales de validación. Una instrucción de tarea inicia el trabajo, sin un prompt adversario que desencadene el ataque. El [resumen de experimentos](#g-experiments) y la [sección 4.1 del artículo](https://arxiv.org/html/2603.23509#S4.SS1) comparan estas configuraciones; la [configuración del agente](#run-one-example) ofrece un entorno ejecutable.
+En los experimentos con agentes, el modelo abre archivos del entorno, ejecuta código y recibe errores reales de validación. Una instrucción de tarea inicia el trabajo, sin un prompt adversario que desencadene el ataque. El [resumen de experimentos](#g-experiments) y la [sección 4.1 del artículo](https://arxiv.org/html/2603.23509#S4.SS1) describen estas configuraciones. Para probar la ejecución real, empieza por el [espacio de trabajo preparado en C](#run-one-example).
 
 <a id="e-models"></a>
 <a id="d-models"></a>
@@ -210,7 +210,7 @@ En los experimentos con agentes, el modelo abre archivos del entorno, ejecuta c�
 
 ## E · Pruebas de modelos de frontera a gran escala
 
-Probamos modelos de lenguaje de frontera a gran escala para observar hasta qué punto producen contenido inseguro al completar una tarea. Estudiamos este fallo de seguridad como **Internal Safety Collapse (ISC)**.
+Probamos modelos de lenguaje de frontera a gran escala para conocer hasta qué punto generan contenido inseguro al completar una tarea, un fallo de seguridad que llamamos **Internal Safety Collapse (ISC)**.
 
 En los casos examinados, el comportamiento se repitió en distintos temas, desde desinformación hasta material químico, biológico, radiológico y nuclear (CBRN). En este sentido describimos ISC como **target-agnostic**: el tema puede cambiar mientras la estructura de la tarea se mantiene. La evidencia siguiente documenta las condiciones en las que cada modelo produjo el material.
 
@@ -361,11 +361,11 @@ El artículo prueba si un modelo produce datos inseguros para completar una tare
 
 | Configuración | Qué recibe el modelo | Qué hace |
 |---|---|---|
-| **[Agent](experiment/tvd_agent/)** | Archivos del espacio de trabajo dentro de Docker | Modifica datos, ejecuta herramientas y revisa su trabajo tras errores reales. |
+| **[Agent](experiment/tvd_agent/)** | Scripts y datos de la tarea en un espacio de trabajo | Modifica datos, ejecuta herramientas y revisa su trabajo tras errores reales. |
 | **[Chatbot](experiment/tvd_chatbot/)** | La tarea, el código y los datos como texto | Produce una respuesta de texto; las herramientas no se ejecutan. |
 | **[ICL (aprendizaje en contexto)](experiment/tvd_icl/)** | Ejemplos completados como turnos anteriores de usuario y asistente, seguidos de la nueva tarea | Genera una nueva respuesta usando esas demostraciones; las herramientas no se ejecutan. |
 
-La [plantilla de agente `my_favorite`](experiment/tvd_agent/template/my_favorite/) ilustra la **generación no dirigida**: el agente elige la consulta. En la **generación dirigida**, se proporciona una consulta o un tema de antemano. [C ofrece el ejemplo preparado para agentes](#run-one-example); la [guía de experimentos](experiment/) y el [artículo](https://arxiv.org/abs/2603.23509) documentan las configuraciones para reproducir resultados concretos.
+La [plantilla de agente `my_favorite`](experiment/tvd_agent/template/my_favorite/) ilustra la **generación no dirigida**: el agente elige la consulta. En la **generación dirigida**, se proporciona una consulta o un tema de antemano. [C ofrece un espacio de trabajo preparado](#run-one-example); la [guía de experimentos](experiment/) y el [artículo](https://arxiv.org/abs/2603.23509) documentan las configuraciones para reproducir resultados concretos.
 
 Para la comparación estandarizada, tres tareas —LlamaGuard, PyOD y Toxic-BERT— utilizan consultas de JailbreakBench con cuatro modelos de frontera. Un evaluador separado juzga si las respuestas generadas son dañinas. La tasa media de fallos de seguridad del **92%** corresponde a la [configuración de un solo turno](https://arxiv.org/html/2603.23509#S4.SS2); el artículo presenta por separado los resultados de ICL y Agent.
 
